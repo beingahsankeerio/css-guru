@@ -158,6 +158,11 @@ table.pattern{border-collapse:collapse;font-size:14px;min-width:460px;background
 table.pattern th,table.pattern td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line)}
 table.pattern th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 @media (max-width:560px){ .tagrow{grid-template-columns:minmax(0,1fr)} }
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipb{font:inherit;font-size:13px;text-align:left;padding:5px 10px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;max-width:100%}
+.chipb:hover{border-color:var(--accent)}
+.chipb.done{background:var(--ok-soft);border-color:var(--ok)}
+.chipb.cur{border-color:var(--ink);font-weight:600}
 @media (max-width:820px){
   .navg{padding:6px 4px;flex:none;align-self:center}
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -172,7 +177,7 @@ table.pattern th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;co
   <header class="top">
     <div>
       <h1>CCE English Gym</h1>
-      <p>Three tracks: paragraph writing for the Essay paper, every question of the Précis &amp; Composition paper, and the grammar behind clean sentences. Built on real CSS past-paper items.</p>
+      <p>Paragraph writing and a topic-sentence trainer for the Essay paper, every question of the Précis &amp; Composition paper, and the grammar behind clean sentences. Built on real CSS past-paper items.</p>
     </div>
     <div class="overall"><b id="overallPct">0%</b>drills completed</div>
   </header>
@@ -825,6 +830,200 @@ EX.push(
   ]}
 );
 
+/* ---------- essay topic bank ---------- */
+const BANK = [
+ ["Youth Bulge: a demographic dividend or a demographic bomb?","2026","Pakistan's youth bulge will become a demographic bomb rather than a dividend unless the state invests urgently in skills and jobs for its young population."],
+ ["Local Government System: the missing link in Pakistan's governance structure.","2026","Pakistan's governance fails at the grassroots because successive governments have starved elected local bodies of power, funds and continuity."],
+ ["Cyber Security as the new national security frontier.","2026","In an age when conflicts are fought through networks, Pakistan's security depends as much on protecting its digital infrastructure as on guarding its borders."],
+ ["Emerging Multipolar World Order: opportunities and risks for Pakistan.","2026","A multipolar world lets Pakistan diversify its partnerships, but only a strong economy will keep it from becoming a pawn in great-power rivalry."],
+ ["The one who controls the sea, rules the world.","2026","Because most world trade travels by sea, maritime power remains the foundation of global influence, as China's rapid naval expansion shows."],
+ ["There is nothing so likely to produce peace as to be well prepared to meet an enemy.","2026","Credible military preparedness preserves peace because it convinces a potential aggressor that war would cost more than it could gain."],
+ ["Revitalising agriculture sector of Pakistan.","2026","Pakistan's agriculture can be revived only by replacing water-wasting traditional practices with research-led, climate-smart farming."],
+ ["Countering the growing menace of beggary.","2026","Because beggary in Pakistan has become an organised business, it can be countered only by breaking begging networks while giving the genuinely destitute real social protection."],
+ ["Politicisation of sports – a new challenge.","2026","When governments turn sport into a political tool, they destroy merit in national teams and weaken sport's power to bring rival nations together."],
+ ["Nations have no permanent friends and enemies, they have only permanent interests.","2026","Pakistan's changing relationship with the United States shows that foreign policy is driven by national interest rather than lasting friendship."],
+ ["Dynastic Politics is the Worst Mockery of Democracy.","2025","Dynastic politics mocks democracy because it turns political parties into family property and denies ordinary members any path to leadership."],
+ ["Hamas–Israel Conflict: A Test Case for World Conscience.","2025","The Hamas–Israel conflict has tested the world's conscience by exposing how inconsistently the international community applies humanitarian law to civilian suffering."],
+ ["An investment in knowledge pays the best interest.","2025","For a developing country like Pakistan, investment in knowledge pays the best interest because skilled people create wealth long after factories and roads have aged."],
+ ["Frailty is no more the name of woman.","2025","Frailty is no longer the name of woman, as women today lead governments, armies and economies once thought to be men's domain."],
+ ["Reforestation as a global urgency.","2025","Reforestation has become a global urgency because forests are the cheapest and most effective defence against both climate change and biodiversity loss."],
+ ["True peace is the presence of justice.","2025","Peace imposed without justice is only a pause between conflicts, because people denied their rights will eventually rise against the order that wrongs them."],
+ ["Hope: the greatest driving force.","2024","Hope is the greatest driving force in human life because it gives individuals and nations the courage to act when the odds seem impossible."],
+ ["CPEC and \"Indo–Middle East–Europe\", new war fronts.","2024","The rivalry between CPEC and the India–Middle East–Europe Corridor shows that great powers now compete through trade routes rather than armies."],
+ ["The power of propaganda and the Muslim World.","2024","The Muslim world keeps losing the battle of narratives because it reacts to propaganda instead of building credible media institutions of its own."],
+ ["Phase out of fossil fuel and Arab economies.","2024","The global shift away from fossil fuels threatens oil-dependent Arab economies unless they speed up diversification into finance, tourism and renewable energy."],
+ ["Pragmatism vs Passion in politics.","2024","Passion may win elections, but only pragmatism can deliver the compromises that effective governance requires."],
+ ["BRICS and Pakistan: Prospects of Recovery.","2024","Closer ties with BRICS could widen Pakistan's access to trade and finance, but they cannot replace the domestic reforms that economic recovery demands."],
+ ["Artificial Intelligence: The Death of Creativity.","2024","Artificial intelligence will not kill human creativity; by automating routine and imitative work, it will make original thought more valuable than ever."],
+ ["Pathways to Pakistan's Prosperity.","2024","Pakistan's path to prosperity runs through human capital, because no economy can grow sustainably while millions of its children remain out of school."],
+ ["Globalization and National Economies.","2024","Globalisation rewards national economies that compete through productivity and punishes those that survive on imports and borrowing."],
+ ["Political Polarization; Governance and Society.","2024","Political polarisation paralyses governance in Pakistan because it turns every policy into a partisan battle and every opponent into an enemy."],
+ ["Instruction in youth is like engraving in stone.","2023","What a child learns early shapes the adult for life, which is why a nation's character is decided in its primary schools rather than its universities."],
+ ["The one who uses force is afraid of reasoning.","2023","Those who resort to force reveal the weakness of their case, because people confident of their arguments rely on persuasion rather than coercion."],
+ ["Not all recycling projects are cost-effective.","2023","Recycling is worthwhile only where collection and processing cost less than the resources saved, so governments should fund it selectively rather than as a symbol."],
+ ["The fool speaks, and the wise listens.","2023","The wise listen more than they speak because listening is how they learn, while the fool speaks to display what he does not know."],
+ ["A friend walks in when everyone else walks out.","2023","True friendship is proved in adversity, because only a real friend stays when there is nothing left to gain."],
+ ["Online learning is not only convenient but often more effective than traditional classroom instruction.","2023","Online learning may be more convenient, but in Pakistan it is rarely more effective than classroom teaching because most students lack devices, connectivity and supervision."],
+ ["To encourage healthy eating, higher taxes should be imposed on soft drinks and junk food.","2023","Higher taxes on sugary drinks and junk food can improve public health, but only if the revenue is spent on making healthy food cheaper."],
+ ["People have become overly dependent on technology.","2023","Dependence on technology becomes harmful when people let devices replace the skills of thinking, remembering and relating that they once exercised themselves."],
+ ["Both parents should assume equal responsibility in raising a child.","2023","Children grow up more confident and balanced when both parents share responsibility for raising them, rather than leaving it to the mother alone."],
+ ["Boys will be boys.","2023","The saying 'boys will be boys' does lasting harm because it excuses aggressive behaviour in males and teaches society to tolerate it."],
+ ["An analysis of the concept of globalization of markets.","2022","The globalisation of markets has increased world wealth but distributed it unequally, rewarding countries with skilled workforces and penalising those that export only raw materials."],
+ ["Digital democracy: social media and political participation.","2022","Social media has widened political participation in Pakistan, but it has also replaced informed debate with viral outrage."],
+ ["Global trade and trade policies of China.","2022","China's trade policies have reshaped global commerce by combining export-led growth with infrastructure lending that binds partner economies to it."],
+ ["Imagination is more important than knowledge.","2022","Imagination matters more than knowledge because knowledge records what is already known, while imagination creates what does not yet exist."],
+ ["Global politics and international relations.","2022","International relations today are shaped less by military alliances than by economic interdependence, which makes economic strength the real basis of global influence."],
+ ["The controversial issues of feminism in contemporary women's rights movements.","2022","Contemporary feminism is divided less over women's rights than over how far those rights should challenge local culture and religion."],
+ ["World food systems: the economics of agriculture.","2022","World food systems produce enough to feed everyone, yet hunger persists because distribution, prices and waste, not production, decide who eats."],
+ ["Is there such a thing as ethical consumerism?","2022","Ethical consumerism exists, but it cannot reform global markets alone because most consumers choose on price, not principle."],
+ ["Human development and economic sustainability.","2022","Economic growth is sustainable only when it is built on human development, because healthy and educated people are the engine of lasting productivity."],
+ ["How is terrorism and its perception shaped by the Mass Media?","2022","Mass media shape the perception of terrorism by amplifying spectacular attacks, which gives terrorists the publicity they seek."],
+ ["Do not waste water even if you were at a running stream.","2021","Pakistan's water crisis shows the wisdom of this teaching, because a nation that wastes water in times of plenty will thirst in times of scarcity."],
+ ["Meaning purposive education.","2021","Purposive education prepares students to think, work and live as responsible citizens, rather than merely to pass examinations."],
+ ["COVID-19: A wake up call for Pakistani researchers.","2021","COVID-19 exposed how little Pakistan invests in research, and it showed that a country which cannot produce its own knowledge must depend on others in a crisis."],
+ ["Human inventions move the societies backward.","2021","Human inventions move societies backward only when they outpace the wisdom and laws needed to use them responsibly."],
+ ["Universal human equality is utopic.","2021","Universal human equality may never be fully achieved, but striving for it remains essential because every gain in equality has expanded human freedom."],
+ ["Bureaucracy doldrums.","2021","Pakistan's bureaucracy is stuck in the doldrums because a colonial-era structure rewards caution and seniority instead of performance."],
+ ["Gender equality: A popular slogan.","2021","In Pakistan gender equality has remained a popular slogan rather than a reality, because laws protecting women are poorly enforced."],
+ ["Pros and cons of globalization.","2021","Globalisation has lifted millions out of poverty, but it has also left weak economies more exposed to shocks they cannot control."],
+ ["Intercultural communication is a panacea to avoid the 3rd world war.","2021","Intercultural communication can reduce the risk of global war by replacing stereotypes with understanding, though it cannot by itself resolve conflicts of interest."],
+ ["I fall upon the thorns of life! I bleed.","2021","Suffering, as Shelley's line suggests, is inseparable from a sensitive life, but it can also become the source of deeper understanding and art."],
+ ["Do we really need literature in our lives?","2020","We need literature because it teaches empathy, letting us live other lives and understand people unlike ourselves."],
+ ["Women universities as agents of change.","2020","Women's universities act as agents of change in conservative societies by opening higher education to women whose families would not otherwise allow it."],
+ ["Pakistan and the future of Kashmir cause.","2020","The future of the Kashmir cause depends less on rhetoric than on Pakistan's ability to build economic and diplomatic strength and keep the issue before the international community."],
+ ["Polarized politics: the issues and challenges of democracy in Pakistan.","2020","Polarised politics threatens democracy in Pakistan because parties now treat each other as enemies to be eliminated rather than rivals to be defeated at the polls."],
+ ["Global power dynamics and Pakistan's foreign policy.","2020","Shifting global power dynamics demand that Pakistan balance its ties with China and the United States instead of depending on either one."],
+ ["Pakistan's informal economy: the way forward.","2020","Pakistan's large informal economy can be brought into the tax net only by making formal registration simpler and cheaper than staying outside it."],
+ ["Promoting tourism in Pakistan: opportunities and challenges.","2020","Pakistan's natural and cultural wealth could make tourism a major earner, but poor infrastructure and security perceptions keep that potential unrealised."],
+ ["I do not agree with what you have to say, but I'll defend to the death your right to say it.","2020","Freedom of expression means defending even the speech we dislike, because a right granted only to agreeable opinions is no right at all."],
+ ["Is Pakistan ready for digital revolution?","2020","Pakistan is not yet ready for a digital revolution, because low digital literacy and patchy connectivity exclude most of its population."],
+ ["IMF bailouts: roads to stability or recipes for disaster.","2020","IMF bailouts bring Pakistan only temporary relief, because without structural reform each programme simply postpones the next crisis."],
+ ["Let there be more light in the corridors of worship places.","2019","Places of worship can become centres of learning and tolerance only if they open themselves to knowledge rather than sectarian division."],
+ ["New war fronts lie in economic zones.","2019","Modern rivalries are fought increasingly in economic zones, where control of trade routes and markets matters more than control of territory."],
+ ["Urdu literature and progressive movement.","2019","The Progressive Writers' Movement transformed Urdu literature by turning it from romance towards the struggles of ordinary people."],
+ ["Art for peace.","2019","Art promotes peace by revealing the shared humanity behind the labels that divide nations and communities."],
+ ["Truth is lived, not taught.","2019","Truth is learned more from the example of people's lives than from sermons, which is why children imitate what adults do rather than what they say."],
+ ["New Waves of feminism and our culture.","2019","New waves of feminism will take root in Pakistan only if they speak to local realities, such as women's education, safety and economic rights."],
+ ["Democracy and illiteracy do not move together.","2019","Democracy struggles where illiteracy is widespread, because voters who cannot read are easily swayed by patronage and propaganda."],
+ ["Sometimes we do not see what we see.","2019","We often fail to see what is in front of us, because prejudice and habit filter reality before it reaches our judgement."],
+ ["Expanding information technology: a curse or blessing.","2019","Information technology is a blessing when it spreads knowledge and opportunity, but it becomes a curse when it spreads misinformation faster than truth."],
+ ["Classrooms decide the future of the nation.","2019","A nation's future is decided in its classrooms, because the quality of teaching today determines the quality of citizens tomorrow."],
+ ["Real development should transform people's lives, not just economic statistics.","2018","Real development is measured by better health, education and opportunity for ordinary people, not by GDP growth alone."],
+ ["Higher Education in Pakistan: Ills and Remedies.","2018","Higher education in Pakistan produces degrees rather than skills, because universities reward rote learning over research and critical thought."],
+ ["Too many of us are not living our dreams because we are living our fears.","2018","Most people fail to pursue their dreams not for lack of ability but because fear of failure keeps them in safe, unfulfilling routines."],
+ ["China Pakistan Economic Corridor (CPEC) and its Socio-economic Implications for the Region and the World.","2018","CPEC could transform Pakistan's economy and regional connectivity, but only if its benefits reach ordinary workers and less-developed provinces."],
+ ["Beware the barrenness of a busy life!","2018","A life filled with constant activity can be barren if busyness leaves no time for reflection, relationships and purpose."],
+ ["The Emerging Power of Social Media: Prospects and Problems.","2018","Social media gives ordinary citizens unprecedented power to be heard, but the same openness makes it a powerful tool for misinformation."],
+ ["In the fight against terrorism and corruption, it is imperative not to compromise human rights and civil liberties.","2018","Fighting terrorism and corruption by sacrificing civil liberties is self-defeating, because it destroys the very rights the state is meant to protect."],
+ ["The threat of Global Warming and the ways to counter it.","2018","Global warming can be countered only through a rapid shift to clean energy combined with adaptation for vulnerable countries like Pakistan."],
+ ["Will 'Rule of law' always remain an impracticable myth in our country?","2018","Rule of law need not remain a myth in Pakistan, but it will become real only when the powerful are held to the same law as the weak."],
+ ["Democracy in Pakistan: Hopes and Hurdles.","2018","Democracy in Pakistan survives despite repeated interruptions, but weak political parties remain its biggest hurdle."],
+ ["Is colonial mentality impeding Pakistan's progress?","2017","A colonial mentality still impedes Pakistan's progress, as seen in a governance system that treats citizens as subjects to be controlled rather than served."],
+ ["Brexit means globalization is the rhetoric of the privileged, and capitalism will return ferociously as ever.","2017","Brexit revealed that globalisation has lost the support of those it left behind, who now see it as a project serving the privileged."],
+ ["More and more International military engagements by the United Nations; is the world moving towards peace?","2017","More UN military engagements do not mean the world is moving towards peace; they show how often the UN is called in after prevention has failed."],
+ ["Modernity is an unending project.","2017","Modernity is an unending project because each generation must reinvent its institutions to meet new technologies and new demands for freedom."],
+ ["Feminism is not really a Third World issue.","2017","Feminism is very much a Third World issue, because women in developing countries face the starkest denials of education, safety and economic rights."],
+ ["Literature is a lonely planet of idealists.","2017","Literature may be a lonely planet of idealists, but its ideals have repeatedly inspired the real-world reforms that practical people later carry out."],
+ ["Being a minority is a fate no one wants. Can nationalism be really inclusive?","2017","Nationalism can be inclusive only when it is based on shared citizenship rather than a single religion, language or ethnicity."],
+ ["Ideologies thrive on notions of resistance, yet change is a simulation.","2017","Ideologies draw their energy from resisting an enemy, but once in power they often reproduce the very order they promised to change."],
+ ["Are modern wars not holy wars?","2017","Modern wars are rarely holy wars; religion is usually invoked to mobilise support for conflicts driven by power, resources and territory."],
+ ["Life without controversy is no life. But why one should not choose the safe haven of conformism?","2017","Choosing controversy over conformity is often worthwhile, because progress begins with those willing to question accepted ideas."],
+ ["World as a global village: Learning to live together.","2016","As technology turns the world into a global village, peaceful coexistence depends on learning to respect cultures unlike our own."],
+ ["We have to learn to be our own best friends, because we fall too easily into the trap of being our own worst enemies.","2016","Self-respect is the foundation of achievement, because people who constantly doubt themselves defeat their own efforts before others can."],
+ ["Water crisis and national unity.","2016","Pakistan's water crisis threatens national unity because disputes over the sharing of Indus waters deepen mistrust between the provinces."],
+ ["The place of Urdu in Pakistan and Supreme Court's ruling on making Urdu the official language of the country.","2016","Making Urdu the official language would bring government closer to ordinary citizens, but it must be done without marginalising English or the regional languages."],
+ ["Crisis of good governance in Pakistan: Need for reforms and institution building.","2016","Pakistan's crisis of governance stems from weak institutions, so lasting reform depends on building institutions rather than relying on individuals."],
+ ["Promotion of tax culture in Pakistan: Perspective, prospects, and challenges.","2016","A tax culture will take root in Pakistan only when citizens see their taxes return to them as better public services."],
+ ["Gender equality is a myth!","2016","Gender equality is not a myth but an unfinished project, as the steady expansion of women's rights over the last century shows."],
+ ["The creation of new provinces in Pakistan: Implications for an integrated country.","2016","New provinces could strengthen Pakistan's unity by bringing government closer to neglected regions, provided they are created by consensus rather than imposed."],
+ ["Does foreign aid help to achieve economic stability?","2016","Foreign aid rarely brings lasting economic stability, because it eases the pressure for the domestic reforms that stability requires."],
+ ["Frailty, thy name is woman.","2016","Shakespeare's line reflects the prejudice of its age rather than any truth about women, whose resilience history has repeatedly shown."],
+ ["The war on terror has contributed to the growing abuse of human rights.","2015","The war on terror has eroded human rights worldwide by normalising detention without trial, surveillance and targeted killings."],
+ ["Anticipation is often greater than realization.","2015","Anticipation is often sweeter than achievement, because the imagined reward is free of the disappointments that reality brings."],
+ ["Punctuality is the virtue of the bored.","2015","Punctuality is not the virtue of the bored but the discipline of the purposeful, because it shows respect for other people's time."],
+ ["The introduction of new digital technologies has radically altered identities.","2015","Digital technologies have altered identity by letting people present curated online selves that can differ sharply from their real lives."],
+ ["In a hierarchy, every employee tends to rise to his level of incompetence.","2015","The Peter Principle describes Pakistan's public sector well, because promotion by seniority lifts officers into roles they are not equipped to perform."],
+ ["I disapprove of what you say, but I defend to death your right to say it.","2015","Tolerance of opposing views is the foundation of a free society, because silencing others today makes it easier to silence ourselves tomorrow."],
+ ["Luxury predecessors become the necessity of successors.","2015","Yesterday's luxuries become today's necessities, as mobile phones show, and this constant expansion of wants fuels both progress and debt."],
+ ["When life throws you lemons, make lemonade.","2015","Adversity can be turned into opportunity by those who treat setbacks as lessons rather than defeats."],
+ ["Government should eliminate subsidies and incentives for manufacturers and consumers of electric cars.","2015","Governments should not yet eliminate incentives for electric cars, because the shift away from fossil fuels still needs public support to reach scale."],
+ ["Labor-saving devices are more troublesome than they are worth.","2015","Labour-saving devices are worth their trouble, because the time they free has allowed millions, especially women, to pursue education and work."]
+];
+EX.push(
+{ id:24, group:"essay", title:"Topic sentence trainer", sub:"Real CSS essay topics",
+  lede:"One essay title, one strong topic sentence, every day. Take a position, narrow it to one reason, and write it in a single clean sentence.",
+  lesson:`<h3>From an essay title to a topic sentence in three moves</h3>
+  <ol class="steps"><li><b>Decide your position.</b> Is it true or false? A dividend or a bomb? Agree or disagree? Write it in a few words before anything else.</li>
+  <li><b>Find your main reason.</b> Ask "why?" once. The answer becomes your controlling idea.</li>
+  <li><b>Write one sentence:</b> topic + position + reason. Check that someone could disagree with it.</li></ol>
+  <div class="formula">[Topic] + [your position] + because / unless / by + [one reason]</div>
+  <div class="pair"><div class="w"><b>Weak: no position</b>The youth bulge is an important issue for Pakistan.</div><div class="s"><b>Strong</b>Pakistan's youth bulge will become a demographic bomb unless the state invests in skills and jobs for its young people.</div></div>
+  <p><b>Useful frames:</b> "X will … unless …" · "X is … because …" · "Although …, X …" · "X is not … but …" · "Only by … can Pakistan …"</p>
+  <p class="note">All titles are from the actual CSS English Essay papers, 2015–2026, with all ten topics for every year except 2025, where six of the ten could be confirmed. The sample sentences show one possible position, and you may argue the other side.</p>`,
+  items:[{t:"bank"}]}
+);
+
+function rBank(ex){
+  const wrap = el("div");
+  const filt = el("select",{class:"top","aria-label":"Filter topics"}, [["all","All years (2015–2026)"]].concat(["2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016","2015"].map(y=>[y,"CSS "+y])).map(([v,l])=>el("option",{value:v},l)));
+  filt.value = state.drafts["bank-filter"] || "all"; if (!filt.value) filt.value = "all";
+  const list = ()=>BANK.map((b,k)=>k).filter(k=>filt.value==="all"||BANK[k][1]===filt.value);
+  let cur = +(state.drafts["bank-cur"]||0); if (!(cur>=0 && cur<BANK.length)) cur = 0;
+  const body = el("div");
+  function go(k){ cur = k; state.drafts["bank-cur"]=String(k); save(); draw(); }
+  filt.addEventListener("change",()=>{ state.drafts["bank-filter"]=filt.value; save(); const l=list(); if(!l.includes(cur)) go(l[0]); else draw(); });
+  function draw(){
+    body.innerHTML="";
+    const [topic, yr, model] = BANK[cur], l = list(), pos = l.indexOf(cur);
+    const done = !!state.items["bank-"+cur];
+    const prevB = el("button",{class:"btn ghost",type:"button",onclick:()=>go(l[(pos-1+l.length)%l.length])},"← Previous");
+    const nextB = el("button",{class:"btn ghost",type:"button",onclick:()=>go(l[(pos+1)%l.length])},"Next →");
+    const randB = el("button",{class:"btn ghost",type:"button",onclick:()=>{ const pool=l.filter(k=>k!==cur); if(pool.length) go(pool[Math.floor(Math.random()*pool.length)]); }},"Random");
+    const untried = el("button",{class:"btn ghost",type:"button",onclick:()=>{ const u = l.filter(k=>!state.items["bank-"+k]&&k!==cur); if(u.length) go(u[0]); }},"Next untried");
+    const stance = el("input",{type:"text",class:"titlein",placeholder:"e.g. a bomb, unless jobs are created"}); stance.value = state.drafts["bank-st-"+cur]||"";
+    stance.addEventListener("input",()=>{ state.drafts["bank-st-"+cur]=stance.value; save(); });
+    const cnt = el("span",{class:"meta"});
+    const ta = paper("bank-ts-"+cur, true, "Your topic sentence…", ()=>cnt.textContent = wc(ta.value)+" words · aim for 15–35");
+    cnt.textContent = wc(ta.value)+" words · aim for 15–35";
+    const checks = ["It names the topic of the title","It takes a clear position someone could disagree with","It gives one specific reason or condition (because / unless / by…)","It is one idea: not a list, not a question, not an announcement","It is free of clichés ('backbone of a nation', 'burning issue')","It is grammatically correct, with no comma splice"];
+    const checkEl = el("div",{class:"opts"}, checks.map(c=>el("label",{class:"chk",style:"font-family:var(--sans);font-size:14px"}, el("input",{type:"checkbox"}), el("span",null,c))));
+    const sample = el("div",{class:"why",hidden:true}, el("b",null,"Sample topic sentence: "), model, el("div",{class:"meta",style:"margin-top:4px"},"This is one possible position. Compare its structure with yours: topic, position, then reason."));
+    const markDone = ()=>{ if(!state.items["bank-"+cur]){ state.items["bank-"+cur]=true; save(); updateNav(); drawGrid(); } };
+    const showB = el("button",{class:"btn ghost",type:"button",onclick:()=>{ if (wc(ta.value)<4 && sample.hidden){ ta.focus(); ta.placeholder="Write your own attempt first, then compare."; return; } sample.hidden=!sample.hidden; showB.textContent=sample.hidden?"Compare with a sample":"Hide sample"; markDone(); }},"Compare with a sample");
+    const fb = feedbackBlock(()=>{ if (wc(ta.value)<4){ ta.focus(); return null; } markDone();
+      return {task:"Write one topic sentence that takes a clear position on the CSS essay title: \""+topic+"\"", context:stance.value.trim()?"Candidate's intended position: "+stance.value.trim():"", text:ta.value.trim(),
+        fmt:`Reply in plain text, under 200 words, in exactly this shape:
+Score: n/5 (1 mark each: names the topic; clear arguable position; one specific reason or condition; single focused idea with no cliché, question or announcement; grammatically correct)
+What works: one sentence.
+Main problem: one sentence, quoting the candidate's words.
+Grammar: list any errors with corrections, or write "None".
+Stronger version (keeping the candidate's position): one sentence.
+Opposite position: one strong topic sentence arguing the other side.`, focus:"writing an effective topic sentence for a CSS essay title."}; });
+    body.append(el("div",{class:"card"},
+      el("div",{class:"qn"}, el("span",null,"Topic "+(pos+1)+" of "+l.length+(done?" · done ✓":"")), el("span",{class:"pill"}, "CSS "+yr)),
+      el("div",{class:"topicbox"}, topic),
+      el("div",{class:"row"}, prevB, nextB, randB, untried),
+      el("label",{class:"subl"},"Step 1 · Your position in a few words"), stance,
+      el("label",{class:"subl"},"Step 2 · Your topic sentence"), ta, el("div",{class:"row"},cnt),
+      el("div",{class:"subl"},"Step 3 · Check it yourself"), checkEl,
+      el("div",{class:"row"}, showB), sample, fb));
+  }
+  const gridBox = el("div",{class:"card"});
+  function drawGrid(){
+    gridBox.innerHTML="";
+    const n = BANK.filter((b,k)=>state.items["bank-"+k]).length;
+    gridBox.append(el("div",{class:"qn"}, el("span",null,"All topics"), el("span",null,n+"/"+BANK.length+" practised")));
+    const g = el("div",{class:"chips"});
+    BANK.forEach((b,k)=>g.append(el("button",{type:"button",class:"chipb"+(state.items["bank-"+k]?" done":"")+(k===cur?" cur":""),title:b[0],onclick:()=>{ if(filt.value!=="all"&&b[1]!==filt.value){ filt.value="all"; state.drafts["bank-filter"]="all"; } go(k); drawGrid(); window.scrollTo({top:wrap.offsetTop-10}); }}, (state.items["bank-"+k]?"✓ ":"")+b[0])));
+    gridBox.append(g);
+  }
+  const origGo = go; go = function(k){ origGo(k); drawGrid(); };
+  wrap.append(el("div",{class:"row",style:"margin:0 0 12px"}, el("b",null,"Show:"), filt), body, gridBox);
+  draw(); drawGrid();
+  return wrap;
+}
+{ const GO = {para:0, essay:1, gram:2, comp:3}; EX.sort((a,b)=>(GO[a.group||"para"]-GO[b.group||"para"]) || a.id-b.id); }
+
 /* ---------- helpers ---------- */
 const $ = (s,r=document)=>r.querySelector(s);
 function el(tag, attrs, ...kids){
@@ -862,6 +1061,7 @@ function seededShuffle(arr, seed){
 }
 function autoItems(ex){ return ex.items.map((it,i)=>({it,i})).filter(x=>!["write","peel","timed","comp","precis"].includes(x.it.t)); }
 function exProgress(ex){
+  if (ex.items[0] && ex.items[0].t==="bank") return {done: BANK.filter((b,k)=>state.items["bank-"+k]).length, total: BANK.length};
   const auto = autoItems(ex);
   if (!auto.length){ const k = ex.id+"-done"; return {done: state.items[k]?1:0, total:1}; }
   const done = auto.filter(x=>state.items[ex.id+"-"+x.i]).length;
@@ -1294,7 +1494,7 @@ function updateNav(){
   nav.append(el("a",{href:"#start",class:cur===0?"on":""}, el("span",{class:"n"},"★"), el("span",{class:"lbl"},"Start here",el("small",null,"How to use the gym"))));
   let d=0,t=0,lastG=null;
   EX.forEach(ex=>{ const p = exProgress(ex); d+=p.done; t+=p.total;
-    const g = ex.group||"para"; if (g!==lastG){ nav.append(el("div",{class:"navg"}, g==="comp"?"Composition paper":g==="gram"?"Grammar & structure":"Paragraph track")); lastG=g; }
+    const g = ex.group||"para"; if (g!==lastG){ nav.append(el("div",{class:"navg"}, g==="comp"?"Composition paper":g==="gram"?"Grammar & structure":g==="essay"?"Essay topic bank":"Paragraph track")); lastG=g; }
     const done = p.done===p.total;
     nav.append(el("a",{href:"#ex-"+ex.id,class:cur===ex.id?"on":""}, el("span",{class:"n"+(done?" done":"")}, done?"✓":ex.id), el("span",{class:"lbl"}, ex.title, el("small",null, ex.sub+" · "+p.done+"/"+p.total)))); });
   $("#overallPct").textContent = Math.round(d/t*100)+"%";
@@ -1309,8 +1509,8 @@ function renderStart(){
       el("li",null,"Writing tasks are marked by Claude: press Get feedback. If that isn't available here, press Copy for marking and paste it into our chat."),
       el("li",null,"Aim for 15/20 or more on Exercise 7 three times in a row before moving to Exercise 8."),
       el("li",null,"When Exercise 8 scores 15+ consistently, start full essays: outline first, then one paragraph at a time."))));
-  const card = ex=>{ const p=exProgress(ex); return el("a",{href:"#ex-"+ex.id}, el("div",{class:"k"},(ex.group==="comp"?"Paper skill ":ex.group==="gram"?"Grammar ":"Exercise ")+ex.id), el("h3",null,ex.title), el("p",null,ex.sub), el("div",{class:"bar"}, el("i",{style:"width:"+Math.round(p.done/p.total*100)+"%"}))); };
-  m.append(el("h3",{style:"margin:22px 0 10px"},"Paragraph track: for the essay"), el("div",{class:"grid"}, EX.filter(e=>!e.group).map(card)));
+  const card = ex=>{ const p=exProgress(ex); return el("a",{href:"#ex-"+ex.id}, el("div",{class:"k"},(ex.group==="comp"?"Paper skill ":ex.group==="gram"?"Grammar ":ex.group==="essay"?"Daily practice · ":"Exercise ")+ex.id), el("h3",null,ex.title), el("p",null,ex.sub), el("div",{class:"bar"}, el("i",{style:"width:"+Math.round(p.done/p.total*100)+"%"}))); };
+  m.append(el("h3",{style:"margin:22px 0 10px"},"Paragraph track: for the essay"), el("div",{class:"grid"}, EX.filter(e=>!e.group||e.group==="essay").map(card)));
   m.append(el("h3",{style:"margin:28px 0 6px"},"Composition paper track: English (Précis & Composition)"),
     el("p",{class:"lede",style:"margin-bottom:10px"},"Pattern of recent CSS papers (2022, 2023, 2026). The SPSC CCE English paper follows a similar précis-and-composition pattern, so check the current CCE syllabus for exact marks."),
     el("div",{style:"overflow-x:auto;margin-bottom:14px"}, el("table",{class:"pattern"},
@@ -1326,7 +1526,7 @@ function renderEx(id){
   clearInterval(timerInt);
   m.append(el("div",{class:"eyebrow"},"Exercise "+ex.id+" of "+EX.length), el("h2",null,ex.title), el("p",{class:"lede"},ex.lede), el("div",{class:"lesson",html:ex.lesson}));
   ex.items.forEach((it,i)=>{
-    const f = {mcq:rMcq,multi:rMulti,spot:rSpot,fill:rFill,order:rOrder,write:rWrite,peel:rPeel,timed:rTimed,comp:rComp,tag:rTag,precis:rPrecis,correct:rCorrect,prep:rPrep}[it.t];
+    const f = {mcq:rMcq,multi:rMulti,spot:rSpot,fill:rFill,order:rOrder,write:rWrite,peel:rPeel,timed:rTimed,comp:rComp,tag:rTag,precis:rPrecis,correct:rCorrect,prep:rPrep,bank:rBank}[it.t];
     m.append(f(ex,it,i));
   });
   const prev = EX.find(e=>e.id===id-1), next = EX.find(e=>e.id===id+1);
