@@ -172,7 +172,7 @@ table.pattern th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;co
   <header class="top">
     <div>
       <h1>CCE English Gym</h1>
-      <p>Two tracks: paragraph writing for the Essay paper, and every question of the Précis &amp; Composition paper, built on real CSS past-paper items.</p>
+      <p>Three tracks: paragraph writing for the Essay paper, every question of the Précis &amp; Composition paper, and the grammar behind clean sentences. Built on real CSS past-paper items.</p>
     </div>
     <div class="overall"><b id="overallPct">0%</b>drills completed</div>
   </header>
@@ -664,6 +664,167 @@ EX.push(
   ]}
 );
 
+/* ---------- grammar & sentence structure track ---------- */
+const COMBO_NOTE = "Your version may differ. Mark it right if it is grammatical and keeps the same logic.";
+EX.push(
+{ id:16, group:"gram", title:"Sentence boundaries", sub:"Fragments, run-ons, comma splices",
+  lede:"The most common structural error in exam scripts, and the one in your own CPEC sentence: two sentences glued together with a comma, or half a sentence standing alone.",
+  lesson:`<h3>What makes a sentence</h3>
+  <div class="formula">Subject + finite verb + a complete thought</div>
+  <ul><li><b>Fragment:</b> "Because the floods destroyed the crops." There is a subject and a verb, but the thought is incomplete.</li>
+  <li><b>Run-on:</b> "Education is important it builds nations." Two sentences with nothing between them.</li>
+  <li><b>Comma splice:</b> "CPEC began in 2015, it has not delivered." A comma cannot join two full sentences.</li></ul>
+  <p><b>Five ways to fix a comma splice:</b></p>
+  <ul><li>Full stop: "…in 2015. It has not…"</li>
+  <li>Semicolon: "…in 2015; it has not…"</li>
+  <li>Comma + and / but / so / yet / or: "…in 2015, but it has not…"</li>
+  <li>Subordinator: "<i>Although</i> CPEC began in 2015, it has not…"</li>
+  <li>Semicolon + connective + comma: "…in 2015; <i>however,</i> it has not…"</li></ul>
+  <p class="note">However, therefore, moreover and consequently are adverbs, not conjunctions, so they can never join two sentences with only a comma.</p>`,
+  items:[
+   {t:"mcq", q:"Which sentence is a comma splice?", o:["Although prices rose, wages stayed flat.","Prices rose, wages stayed flat.","Prices rose, but wages stayed flat.","Prices rose; wages stayed flat."], a:1, why:"B joins two complete sentences with only a comma. The others use a subordinator, a comma + conjunction, or a semicolon."},
+   {t:"mcq", q:"What is wrong with: \"Pakistan imports oil, however, its own reserves are untapped.\"", o:["Nothing","'However' cannot join two sentences with commas; use '; however,'","'Oil' needs an article","'Untapped' should be 'untapping'"], a:1, why:"Correct: \"Pakistan imports oil; however, its own reserves are untapped.\""},
+   {t:"mcq", q:"Which is a fragment?", o:["The government announced a new policy.","Although the government announced a new policy.","The government announced a new policy, but nothing changed.","Nothing changed after the announcement."], a:1, why:"'Although' makes the clause dependent: although it did, what happened? It needs a main clause."},
+   {t:"mcq", q:"Best correction of: \"The floods destroyed the crops, prices rose sharply.\"", o:["The floods destroyed the crops prices rose sharply.","The floods destroyed the crops, and, prices rose sharply.","The floods destroyed the crops, so prices rose sharply.","The floods destroyed the crops however prices rose sharply."], a:2, why:"A comma + 'so' joins the clauses and shows cause and effect."},
+   {t:"correct", s:"CPEC was started in 2015, it is almost eleven years passed but the results are yet to come.", a:"CPEC was launched in 2015; almost eleven years have passed, but the promised results have yet to arrive.", why:"This is your own sentence. Fix the comma splice with a semicolon, and change 'it is … passed' to the present perfect 'have passed'."},
+   {t:"correct", s:"Education is important it builds a nation.", a:"Education is important because it builds a nation.", why:"A run-on. Join the clauses with 'because', a semicolon or a full stop."},
+   {t:"correct", s:"Because the population is growing rapidly. The demand for water has increased.", a:"Because the population is growing rapidly, the demand for water has increased.", why:"The first part is a fragment. Attach it to the main clause with a comma."},
+   {t:"correct", s:"The government raised taxes, people protested, the decision was withdrawn.", a:"The government raised taxes, but after people protested, the decision was withdrawn.", why:"Three sentences spliced together. Show the logic with 'but' and 'after'."},
+   {t:"correct", s:"Many children work in hotels. Instead of going to school. Their parents need the money.", a:"Many children work in hotels instead of going to school because their parents need the money.", why:"'Instead of going to school' is a fragment. Join everything into one sentence."}
+  ]},
+{ id:17, group:"gram", title:"Subject–verb agreement", sub:"Find the real subject",
+  lede:"Examiners plant agreement errors in nearly every sentence-correction question. The trick is finding the real subject.",
+  lesson:`<h3>Rules that catch candidates</h3>
+  <ul><li><b>Ignore the phrase in between:</b> "The <i>quality</i> of government schools <b>is</b> declining."</li>
+  <li><b>along with / as well as / with</b> do not add to the subject: "The minister, along with his staff, <b>was</b> present."</li>
+  <li><b>each, every, everyone, either, neither</b> are singular: "Each of the provinces <b>has</b>…"</li>
+  <li><b>either…or / neither…nor:</b> the verb agrees with the nearer subject: "Neither the minister nor his advisers <b>were</b>…"</li>
+  <li><b>the number of</b> takes a singular verb; <b>a number of</b> takes a plural: "The number of girls <b>has</b> risen; a number of NGOs <b>have</b> opened schools."</li>
+  <li><b>one of the + plural noun + who/that:</b> the verb agrees with the plural noun: "one of those officers who <b>have</b> never taken a bribe."</li>
+  <li><b>Uncountable and -ics nouns</b> are singular: news, information, advice, economics, politics (as a subject).</li></ul>`,
+  items:[
+   {t:"fill", q:"Choose the correct verb for each gap.", parts:["The quality of government schools ","{0}"," declining. One of the main reasons ","{1}"," the shortage of trained teachers. There ","{2}"," also many schools without boundary walls."], choices:["is","are"], a:["is","is","are"], why:"The subjects are quality (singular), one (singular) and many schools (plural)."},
+   {t:"fill", q:"Choose the correct verb for each gap.", parts:["Each of the provinces ","{0}"," its own education department. The number of out-of-school girls ","{1}"," risen, while a number of NGOs ","{2}"," opened community schools."], choices:["has","have"], a:["has","has","have"], why:"Each takes a singular verb, 'the number of' is singular, and 'a number of' is plural."},
+   {t:"fill", q:"Choose the correct verb for each gap.", parts:["Neither the minister nor his advisers ","{0}"," present. The committee, along with its chairman, ","{1}"," criticised in the press. Bread and butter ","{2}"," his only breakfast."], choices:["was","were"], a:["were","was","was"], why:"The verb agrees with the nearer subject (advisers). 'Along with' adds nothing to the subject. 'Bread and butter' is one dish."},
+   {t:"mcq", q:"The news from the flood-hit districts ___ alarming.", o:["are","is","were","have been"], a:1, why:"'News' is uncountable and takes a singular verb."},
+   {t:"correct", s:"The standard of education in rural areas are very low.", a:"The standard of education in rural areas is very low.", why:"The subject is 'standard' (singular)."},
+   {t:"correct", s:"Every one of the candidates have submitted their forms.", a:"Every one of the candidates has submitted his or her form.", why:"'Every one' is singular, so the verb and the pronoun are singular too."},
+   {t:"correct", s:"He is one of those officers who has never taken a bribe.", a:"He is one of those officers who have never taken a bribe.", why:"'Who' refers to 'officers' (plural), not to 'one'."},
+   {t:"correct", s:"His knowledge of languages and economics help him a lot.", a:"His knowledge of languages and economics helps him a great deal.", why:"The subject is 'knowledge'. This is the same trap as CSS 2023."}
+  ]},
+{ id:18, group:"gram", title:"Tenses", sub:"Present perfect & sequence",
+  lede:"Your 'it is almost eleven years passed' was a tense error. Most tense mistakes in essays come from three rules.",
+  lesson:`<h3>Three rules</h3>
+  <ol class="steps"><li><b>Present perfect</b> (have/has + V3) for a period that continues to now: <i>since 2015, for eleven years, so far, yet, already, recently</i>. "Almost eleven years <b>have passed</b>."</li>
+  <li><b>Simple past</b> for a finished time: <i>in 2015, yesterday, ago, last year</i>. Never "has won in 1992".</li>
+  <li><b>Sequence of tenses:</b> after a past reporting verb, the next clause also moves to the past: "He said that he <b>was</b> tired." The exception is universal truths: "The teacher said that the earth <b>moves</b> round the sun."</li></ol>
+  <p><b>since</b> + a point in time (since 2010) · <b>for</b> + a length of time (for eight years) · <b>ago</b> + simple past (three years ago).</p>
+  <p><b>Conditionals:</b> no "will" in the if-clause: "If he <b>works</b> hard, he will pass."</p>`,
+  items:[
+   {t:"fill", q:"Choose the right verb form for each gap.", parts:["CPEC ","{0}"," in 2015. Since then, almost eleven years ","{1}",", and the project ","{2}"," roads and power plants, but few industrial jobs."], choices:["was launched","has been launched","have passed","passed","has delivered","delivered"], a:["was launched","have passed","has delivered"], why:"'In 2015' is a finished time, so simple past. 'Since then' runs up to now, so present perfect."},
+   {t:"fill", q:"Choose since, for or ago.", parts:["He has lived in Hyderabad ","{0}"," 2010. He has taught at the university ","{1}"," eight years. He started his PhD three years ","{2}","."], choices:["since","for","ago"], a:["since","for","ago"], why:"Since + a point, for + a period, ago + simple past."},
+   {t:"mcq", q:"I ___ the Vice Chancellor yesterday.", o:["have met","met","have been meeting","had met"], a:1, why:"'Yesterday' is a finished time, so simple past."},
+   {t:"mcq", q:"He said that he ___ tired.", o:["is","was","has been","will be"], a:1, why:"A past reporting verb moves the next clause back into the past."},
+   {t:"mcq", q:"Our teacher told us that the earth ___ round the sun.", o:["moved","moves","had moved","was moving"], a:1, why:"A universal truth stays in the present, even after a past reporting verb."},
+   {t:"correct", s:"I am living in Hyderabad since 2010.", a:"I have been living in Hyderabad since 2010.", why:"'Since' needs the present perfect (continuous), not the present continuous."},
+   {t:"correct", s:"Pakistan has won the Cricket World Cup in 1992.", a:"Pakistan won the Cricket World Cup in 1992.", why:"A definite past time ('in 1992') takes the simple past."},
+   {t:"correct", s:"When I reached the station, the train already left.", a:"When I reached the station, the train had already left.", why:"Use the past perfect for the earlier of two past actions."},
+   {t:"correct", s:"If he will work hard, he will pass the examination.", a:"If he works hard, he will pass the examination.", why:"First conditional: present tense in the if-clause."},
+   {t:"correct", s:"It is not raining since last month.", a:"It has not rained since last month.", why:"'Since' needs the present perfect. This is from CSS 2022."}
+  ]},
+{ id:19, group:"gram", title:"Articles", sub:"a, an, the, or nothing",
+  lede:"Articles are the error examiners notice first, and there is no equivalent in Sindhi or Urdu. Learn the rules once and check every noun.",
+  lesson:`<h3>The rules that matter in exam writing</h3>
+  <ul><li><b>a / an:</b> a singular countable noun, mentioned for the first time or in general. Choose by <i>sound</i>: an hour, an MPhil, an SP; a university, a European, a one-day match.</li>
+  <li><b>the:</b> something specific or already mentioned; unique things (the sun, the world); superlatives (the most…); ordinals (the first); rivers, seas and mountain ranges (the Indus, the Arabian Sea, the Himalayas); musical instruments (plays the guitar); countries with "Republic", "Kingdom" or plural names (the UK, the United States).</li>
+  <li><b>No article:</b> abstract or uncountable nouns used in general (<i>Education is</i>… <i>Poverty causes crime</i>); plural nouns in general (<i>Children need</i>…); most countries, cities and languages (Pakistan, Sindhi); games (plays cricket); meals (at lunch).</li></ul>`,
+  items:[
+   {t:"fill", q:"Choose a, an, the, or — (no article).", parts:["","{0}"," Indus is ","{1}"," longest river in Pakistan. It is ","{2}"," important source of water for ","{3}"," agriculture."], choices:["a","an","the","—"], a:["the","the","an","—"], why:"Rivers take 'the'; superlatives take 'the'; 'an important' (vowel sound); agriculture in general takes no article."},
+   {t:"fill", q:"Choose a, an, the, or — (no article).", parts:["He is ","{0}"," honest officer and ","{1}"," university lecturer. He plays ","{2}"," flute but dislikes ","{3}"," cricket."], choices:["a","an","the","—"], a:["an","a","the","—"], why:"'An honest' (silent h); 'a university' (a 'yoo' sound); instruments take 'the'; games take no article."},
+   {t:"mcq", q:"___ education is the right of every child.", o:["The","An","A","No article"], a:3, why:"An abstract noun used in general takes no article."},
+   {t:"mcq", q:"She has completed ___ MPhil in linguistics.", o:["a","an","the","no article"], a:1, why:"MPhil is pronounced 'em-fil', which begins with a vowel sound, so 'an'."},
+   {t:"correct", s:"Honesty is a best policy.", a:"Honesty is the best policy.", why:"A superlative takes 'the'."},
+   {t:"correct", s:"The poverty is a major cause of the crime in our society.", a:"Poverty is a major cause of crime in our society.", why:"Abstract nouns used in general take no article."},
+   {t:"correct", s:"He is an European and an useful member of the team.", a:"He is a European and a useful member of the team.", why:"'European' and 'useful' begin with a 'yoo' (consonant) sound."},
+   {t:"correct", s:"Sun rises in east and sets in west.", a:"The sun rises in the east and sets in the west.", why:"Unique things and compass directions take 'the'."}
+  ]},
+{ id:20, group:"gram", title:"Parallelism & correlatives", sub:"not only… but also, either… or",
+  lede:"Your first topic sentence ('The question is not about that… but it is what about…') broke this rule. Balanced structures make sentences sound educated.",
+  lesson:`<h3>Keep paired and listed items in the same form</h3>
+  <ul><li><b>Lists:</b> "The policy aims at reducing poverty, improving schools and creating jobs", not "…and to create jobs".</li>
+  <li><b>Correlatives</b> are not only… but also, either… or, neither… nor, both… and, whether… or. Put the <i>same grammatical form</i> after each half, and place the first half directly before the part being paired.</li></ul>
+  <div class="pair"><div class="w"><b>Unbalanced</b>He not only failed in English but also in Essay.</div><div class="s"><b>Balanced</b>He failed not only in English but also in Essay.</div></div>
+  <ul><li><b>not X but Y:</b> "The problem is not <i>how many</i> children are out of school but <i>how much</i> those in school are learning."</li>
+  <li><b>Comparisons:</b> compare like with like: "Pakistan's literacy rate is lower than <i>that of</i> Sri Lanka", not "…lower than Sri Lanka".</li></ul>`,
+  items:[
+   {t:"mcq", q:"Which sentence is correctly parallel?", o:["The policy aims at reducing poverty, improving schools, and to create jobs.","The policy aims at reducing poverty, improving schools, and creating jobs.","The policy aims to reduce poverty, improving schools, and job creation.","The policy aims at poverty reduction, to improve schools, and creating jobs."], a:1, why:"All three items are -ing forms after 'aims at'."},
+   {t:"mcq", q:"Which places 'not only' correctly?", o:["He not only failed in English but also in Essay.","Not only he failed in English but also in Essay.","He failed not only in English but also in Essay.","He failed in not only English but also failed in Essay."], a:2, why:"'Not only… but also' pairs 'in English' with 'in Essay', so each half comes directly before its phrase."},
+   {t:"mcq", q:"Choose the correct comparison.", o:["Pakistan's literacy rate is lower than Sri Lanka.","Pakistan's literacy rate is lower than that of Sri Lanka.","Pakistan's literacy rate is lower than Sri Lanka's literacy.","Pakistan's literacy rate is more lower than Sri Lanka."], a:1, why:"Compare rate with rate ('that of'), not a rate with a country."},
+   {t:"correct", s:"The question is not about that Pakistan has the most out-of-school children, but it is what about the students who are enrolled in schools.", a:"The real question is not how many children are out of school but how much those in school are learning.", why:"This is your own sentence, rebuilt with a balanced 'not X but Y'. Both halves are 'how + clause'."},
+   {t:"correct", s:"She likes reading, writing and to travel.", a:"She likes reading, writing and travelling.", why:"Keep all list items in the -ing form."},
+   {t:"correct", s:"Either you can apply now or wait until next year.", a:"You can either apply now or wait until next year.", why:"'Either… or' should pair two verbs: 'either apply… or wait'."},
+   {t:"correct", s:"Our aim is not to punish but reforming offenders.", a:"Our aim is not to punish offenders but to reform them.", why:"Both halves must be infinitives: 'to punish… to reform'."},
+   {t:"write", q:"Write THREE sentences on exam topics: one with 'not only… but also', one with 'either… or' or 'neither… nor', and one with 'not X but Y'.", task:"Write three sentences on Pakistani exam topics using (1) not only… but also, (2) either… or / neither… nor, (3) not X but Y.", focus:"parallel structure and correct use of correlative conjunctions: is each correlative placed directly before the pair it joins, and are both halves in the same grammatical form? Also check articles, agreement and tense.", max:9}
+  ]},
+{ id:21, group:"gram", title:"Sentence combining", sub:"Build complex sentences",
+  lede:"Short, choppy sentences read as weak English. Combining two or three ideas into one controlled sentence is what separates a 12/20 essay from a 16/20 one.",
+  lesson:`<h3>Five combining tools</h3>
+  <ul><li><b>Coordination:</b> and, but, so, yet, or, with a comma before them when joining full clauses.</li>
+  <li><b>Subordination:</b> although, because, while, whereas, unless, since, when, if. "<i>Although</i> Pakistan has coal, it imports fuel."</li>
+  <li><b>Relative clause:</b> who, which, whose. Put commas around it if it adds extra information: "The Indus, <i>which</i> is Pakistan's lifeline, is shrinking."</li>
+  <li><b>Participial phrase:</b> "<i>Hit by floods,</i> Sindh lost much of its cotton crop."</li>
+  <li><b>Appositive:</b> "Dr Abdus Salam, <i>a Pakistani physicist</i>, won the Nobel Prize."</li></ul>
+  <p>Variety is the goal. Don't make every sentence long; mix one combined sentence with a short, punchy one.</p>`,
+  items:[
+   {t:"mcq", q:"Best combination: \"Pakistan has abundant coal. It still imports expensive fuel.\"", o:["Pakistan has abundant coal and it still imports expensive fuel.","Although Pakistan has abundant coal, it still imports expensive fuel.","Pakistan has abundant coal, it still imports expensive fuel.","Because Pakistan has abundant coal, it still imports expensive fuel."], a:1, why:"'Although' shows the contrast. 'And' hides the logic, C is a comma splice, and 'because' gives the wrong logic."},
+   {t:"mcq", q:"Which relative clause is punctuated correctly (Pakistan has only one capital)?", o:["Islamabad which is the capital of Pakistan is a planned city.","Islamabad, which is the capital of Pakistan, is a planned city.","Islamabad, that is the capital of Pakistan, is a planned city.","Islamabad which is the capital of Pakistan, is a planned city."], a:1, why:"It is extra information, so it needs commas on both sides and 'which', not 'that'."},
+   {t:"correct", s:"The Indus is Pakistan's lifeline. It is shrinking because of climate change.", a:"The Indus, which is Pakistan's lifeline, is shrinking because of climate change.", why:"A non-defining relative clause. "+COMBO_NOTE},
+   {t:"correct", s:"The floods hit Sindh in 2022. Millions of people lost their homes.", a:"When the floods hit Sindh in 2022, millions of people lost their homes.", why:"Subordinate with 'when'. "+COMBO_NOTE},
+   {t:"correct", s:"Dr Abdus Salam won the Nobel Prize in Physics. He was a Pakistani scientist.", a:"Dr Abdus Salam, a Pakistani scientist, won the Nobel Prize in Physics.", why:"An appositive. "+COMBO_NOTE},
+   {t:"correct", s:"Girls' education is neglected. This hurts the economy. Educated women add to the workforce.", a:"Neglecting girls' education hurts the economy, because educated women add to the workforce.", why:"Three ideas in one sentence: a gerund subject plus a 'because' clause. "+COMBO_NOTE},
+   {t:"correct", s:"The government announced free textbooks. Many parents still keep their children at home. They need them to earn.", a:"Although the government announced free textbooks, many parents still keep their children at home because they need them to earn.", why:"Contrast ('although') plus a reason ('because'). "+COMBO_NOTE},
+   {t:"write", q:"Combine these short sentences into a smooth paragraph of 3–4 sentences. Use at least one 'although/whereas', one relative clause and one participial phrase.", ctx:"Sindh is an agricultural province. Most of its farmers depend on the Indus. The river's flow is falling. Glaciers are melting faster. Rainfall has become irregular. Farmers are planting less cotton. Rural incomes are dropping. Many young men are moving to Karachi.",
+     task:"Combine the given short sentences into a smooth paragraph of 3–4 sentences, using at least one 'although/whereas', one relative clause and one participial phrase.", focus:"sentence combining. Are the ideas joined with correct subordinators, relative clauses and participial phrases? Is the logic (cause, contrast, result) clear? Are there any comma splices, dangling participles or agreement errors?", max:10}
+  ]},
+{ id:22, group:"gram", title:"Punctuation", sub:"5 marks in the paper",
+  lede:"CSS sets an unpunctuated passage every year (Q5a, 5 marks). The same rules keep your essays free of comma splices.",
+  lesson:`<h3>Rules you'll use every time</h3>
+  <ul><li><b>Capitals:</b> sentence starts, proper nouns, days, months, languages, the pronoun I.</li>
+  <li><b>Comma:</b> after an introductory word or clause ("However, …", "When the rains came, …"); before and/but/so when joining two full clauses; around extra (non-defining) information; between list items; before a direct quotation.</li>
+  <li><b>Semicolon:</b> between two closely linked full sentences, and before however, therefore or moreover when they join sentences.</li>
+  <li><b>Colon:</b> before a list or an explanation that the first clause sets up.</li>
+  <li><b>Apostrophe:</b> possession (the children's books, the boys' hostel, Ali's pen). Remember <i>it's</i> = it is, but <i>its</i> = belonging to it.</li>
+  <li><b>Inverted commas:</b> around exact spoken words, with the end punctuation inside: He said, "Open your books."</li></ul>
+  <p>Method for the paper: first mark the sentence ends, then the speech, then the commas.</p>`,
+  items:[
+   {t:"mcq", q:"Choose the correct sentence.", o:["The committee submitted it's report.","The committee submitted its report.","The committee submitted its' report.","The committee submitted it is report."], a:1, why:"'Its' is possessive. 'It's' means 'it is'."},
+   {t:"mcq", q:"Choose the correctly punctuated sentence.", o:["Prices are rising, therefore, people are cutting spending.","Prices are rising; therefore, people are cutting spending.","Prices are rising therefore people are cutting spending.","Prices are rising: therefore people, are cutting spending."], a:1, why:"'Therefore' joins two sentences, so use a semicolon before it and a comma after it."},
+   {t:"mcq", q:"\"My brother who lives in Karachi is a doctor.\" The writer has only one brother. What is needed?", o:["Nothing","Commas around 'who lives in Karachi'","A semicolon after 'brother'","A colon after 'Karachi'"], a:1, why:"With only one brother, the clause is extra information (non-defining), so it takes commas."},
+   {t:"correct", s:"pakistan which came into being in 1947 is the fifth most populous country in the world", a:"Pakistan, which came into being in 1947, is the fifth most populous country in the world.", why:"A capital letter, commas around the non-defining clause, and a full stop."},
+   {t:"correct", s:"the teacher said open your books on page ten", a:"The teacher said, \"Open your books on page ten.\"", why:"A comma before the speech, inverted commas, a capital at the start of the speech, and the full stop inside."},
+   {t:"correct", s:"however the government did not listen to the farmers demands", a:"However, the government did not listen to the farmers' demands.", why:"A comma after an introductory 'however', and a plural possessive: farmers'."},
+   {t:"correct", s:"ali asked his father why do the rich get richer his father smiled and said because they make money work for them while the poor work for money", a:"Ali asked his father, \"Why do the rich get richer?\" His father smiled and said, \"Because they make money work for them, while the poor work for money.\"", why:"This is exam-style: two speech sentences, a question mark inside the inverted commas, and capitals for names and sentence starts."}
+  ]},
+{ id:23, group:"gram", title:"Common errors", sub:"Errors examiners see every year",
+  lede:"These errors are so common in South Asian English that examiners look for them. Each one costs marks in every paper you write.",
+  lesson:`<h3>Wrong → right</h3>
+  <div style="overflow-x:auto"><table class="pattern"><tr><th>Avoid</th><th>Write</th></tr>
+  ${[["discuss about","discuss"],["return back / revert back","return / revert"],["cope up with","cope with"],["each and every","every"],["one of the best student","one of the best students"],["he told that","he said that / he told me that"],["since two years","for two years"],["I am agree","I agree"],["reply me","reply to me"],["married with","married to"],["good in English","good at English"],["in the other hand","on the other hand"],["comprises of","comprises / consists of"],["pay attention towards","pay attention to"],["more better","better"],["inspite of","in spite of / despite"],["prepone","bring forward"],["the reason is because","the reason is that"]].map(r=>`<tr><td style="color:var(--bad)">${r[0]}</td><td style="color:var(--ok)">${r[1]}</td></tr>`).join("")}</table></div>`,
+  items:[
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The committee will","discuss about","the new budget","in tomorrow's meeting."], a:1, why:"'Discuss' already means 'talk about': the committee will discuss the new budget."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["He is","one of the best student","in our","department."], a:1, why:"'One of the best students': 'one of' takes a plural noun."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["I have been teaching","at this university","since","eight years."], a:2, why:"'For eight years'. Use 'since' with a starting point, such as 'since 2018'."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["My cousin","is married with","a doctor","from Karachi."], a:1, why:"'Married to' someone."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["On the one hand, education is free;","in the other hand,","books are expensive."], a:1, why:"'On the other hand'."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["Pakistan must","cope up with","the challenge of","climate change."], a:1, why:"'Cope with'. 'Cope up' is not standard English."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The report","comprises of","twelve chapters","on governance."], a:1, why:"'Comprises twelve chapters' or 'consists of twelve chapters'."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The minister","told that","the project","would be completed soon."], a:1, why:"'Said that', or 'told the reporters that'. 'Tell' needs a person as its object. This error appears in CSS 2022."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The reason for his failure","is because","he did not","practise writing."], a:1, why:"'The reason… is that'. 'Reason' and 'because' say the same thing twice."},
+   {t:"correct", s:"Each and every student should return back the library books before the exams.", a:"Every student should return the library books before the exams.", why:"'Each and every' is wordy, and 'return back' is redundant."},
+   {t:"correct", s:"I am agree that he is more better in English than me.", a:"I agree that he is better at English than I am.", why:"'Agree' is a verb (not 'am agree'); 'more better' is a double comparative; 'good at' a subject; 'than I am'."}
+  ]}
+);
+
 /* ---------- helpers ---------- */
 const $ = (s,r=document)=>r.querySelector(s);
 function el(tag, attrs, ...kids){
@@ -860,7 +1021,7 @@ function rSpot(ex,it,i){
     why.hidden=false; retry.hidden=false;
     if(!silent) record(key,{c:j,ok:j===it.a});
   }
-  card.append(el("div",{class:"qn"},"Paragraph "+(i+1)), el("p",{class:"q"},"Click the sentence that breaks unity."), para, why, el("div",{class:"row"},retry));
+  card.append(el("div",{class:"qn"},(it.label||"Paragraph")+" "+(i+1)), el("p",{class:"q"},it.q||"Click the sentence that breaks unity."), para, why, el("div",{class:"row"},retry));
   if (prev) pick(prev.c,true);
   return card;
 }
@@ -1096,14 +1257,14 @@ Two biggest fixes:
 function rCorrect(ex,it,i){
   const key = ex.id+"-"+i, prev = state.items[key];
   const card = el("div",{class:"card"});
-  const ta = paper("cor-"+i, true, "Rewrite the corrected sentence…"); ta.style.minHeight="64px";
+  const ta = paper(ex.id===14 ? "cor-"+i : "cor-"+ex.id+"-"+i, true, "Rewrite the corrected sentence…"); ta.style.minHeight="64px";
   const key2 = el("div",{class:"why",hidden:true}, el("b",null,"Key: "), it.a, el("br"), el("span",{class:"meta"},it.why));
   const verdict = el("span",{class:"meta"});
   const gotIt = el("button",{class:"btn ghost",type:"button",hidden:true,onclick:()=>{ record(key,{ok:true}); verdict.textContent="Marked correct ✓"; }},"I got it");
   const missed = el("button",{class:"btn ghost",type:"button",hidden:true,onclick:()=>{ record(key,{ok:false}); verdict.textContent="Marked for review"; }},"I missed it");
   const show = el("button",{class:"btn",type:"button",onclick:()=>{ key2.hidden=false; gotIt.hidden=false; missed.hidden=false; show.hidden=true; }},"Check");
   if (prev){ key2.hidden=false; show.hidden=true; gotIt.hidden=false; missed.hidden=false; verdict.textContent = prev.ok?"Marked correct ✓":"Marked for review"; }
-  card.append(el("div",{class:"qn"},el("span",null,"Sentence "+(i+1)),el("span",{class:"pill"},"CSS "+it.y)), el("p",{class:"q",style:"font-family:var(--serif);font-size:17px"},it.s), ta, el("div",{class:"row"},show,gotIt,missed,verdict), key2);
+  card.append(el("div",{class:"qn"},el("span",null,"Sentence "+(i+1)),el("span",{class:"pill"},it.y?"CSS "+it.y:"Rewrite it")), el("p",{class:"q",style:"font-family:var(--serif);font-size:17px"},it.s), ta, el("div",{class:"row"},show,gotIt,missed,verdict), key2);
   return card;
 }
 function rPrep(ex,it,i){
@@ -1133,7 +1294,7 @@ function updateNav(){
   nav.append(el("a",{href:"#start",class:cur===0?"on":""}, el("span",{class:"n"},"★"), el("span",{class:"lbl"},"Start here",el("small",null,"How to use the gym"))));
   let d=0,t=0,lastG=null;
   EX.forEach(ex=>{ const p = exProgress(ex); d+=p.done; t+=p.total;
-    const g = ex.group||"para"; if (g!==lastG){ nav.append(el("div",{class:"navg"}, g==="comp"?"Composition paper":"Paragraph track")); lastG=g; }
+    const g = ex.group||"para"; if (g!==lastG){ nav.append(el("div",{class:"navg"}, g==="comp"?"Composition paper":g==="gram"?"Grammar & structure":"Paragraph track")); lastG=g; }
     const done = p.done===p.total;
     nav.append(el("a",{href:"#ex-"+ex.id,class:cur===ex.id?"on":""}, el("span",{class:"n"+(done?" done":"")}, done?"✓":ex.id), el("span",{class:"lbl"}, ex.title, el("small",null, ex.sub+" · "+p.done+"/"+p.total)))); });
   $("#overallPct").textContent = Math.round(d/t*100)+"%";
@@ -1148,14 +1309,17 @@ function renderStart(){
       el("li",null,"Writing tasks are marked by Claude: press Get feedback. If that isn't available here, press Copy for marking and paste it into our chat."),
       el("li",null,"Aim for 15/20 or more on Exercise 7 three times in a row before moving to Exercise 8."),
       el("li",null,"When Exercise 8 scores 15+ consistently, start full essays: outline first, then one paragraph at a time."))));
-  const card = ex=>{ const p=exProgress(ex); return el("a",{href:"#ex-"+ex.id}, el("div",{class:"k"},(ex.group==="comp"?"Paper skill ":"Exercise ")+ex.id), el("h3",null,ex.title), el("p",null,ex.sub), el("div",{class:"bar"}, el("i",{style:"width:"+Math.round(p.done/p.total*100)+"%"}))); };
+  const card = ex=>{ const p=exProgress(ex); return el("a",{href:"#ex-"+ex.id}, el("div",{class:"k"},(ex.group==="comp"?"Paper skill ":ex.group==="gram"?"Grammar ":"Exercise ")+ex.id), el("h3",null,ex.title), el("p",null,ex.sub), el("div",{class:"bar"}, el("i",{style:"width:"+Math.round(p.done/p.total*100)+"%"}))); };
   m.append(el("h3",{style:"margin:22px 0 10px"},"Paragraph track: for the essay"), el("div",{class:"grid"}, EX.filter(e=>!e.group).map(card)));
   m.append(el("h3",{style:"margin:28px 0 6px"},"Composition paper track: English (Précis & Composition)"),
     el("p",{class:"lede",style:"margin-bottom:10px"},"Pattern of recent CSS papers (2022, 2023, 2026). The SPSC CCE English paper follows a similar précis-and-composition pattern, so check the current CCE syllabus for exact marks."),
     el("div",{style:"overflow-x:auto;margin-bottom:14px"}, el("table",{class:"pattern"},
       el("tr",null, el("th",null,"Question"), el("th",null,"Marks"), el("th",null,"Practise in")),
-      [["Synonyms + antonyms (MCQs)","10 + 10","Synonyms & antonyms"],["Précis with title","20","Précis"],["Comprehension (5 questions)","20","Comprehension"],["Sentence correction (5 of 8)","10","Sentence correction"],["Punctuation","5","Paragraph track: Coherence"],["Prepositions (5 of 8)","5","Prepositions"],["Pairs of words (5 of 8)","10","Pairs of words"],["Urdu → English translation","10","Idioms & phrases"]].map(r=>el("tr",null,r.map(c=>el("td",null,c)))))),
+      [["Synonyms + antonyms (MCQs)","10 + 10","Synonyms & antonyms"],["Précis with title","20","Précis"],["Comprehension (5 questions)","20","Comprehension"],["Sentence correction (5 of 8)","10","Sentence correction"],["Punctuation","5","Grammar: Punctuation"],["Prepositions (5 of 8)","5","Prepositions"],["Pairs of words (5 of 8)","10","Pairs of words"],["Urdu → English translation","10","Idioms & phrases"]].map(r=>el("tr",null,r.map(c=>el("td",null,c)))))),
     el("div",{class:"grid"}, EX.filter(e=>e.group==="comp").map(card)));
+  m.append(el("h3",{style:"margin:28px 0 6px"},"Grammar & sentence structure track"),
+    el("p",{class:"lede",style:"margin-bottom:10px"},"Built around the errors that cost marks in every paper: comma splices, agreement, tenses, articles and unbalanced structures. Do one topic a day alongside the paragraph track."),
+    el("div",{class:"grid"}, EX.filter(e=>e.group==="gram").map(card)));
 }
 function renderEx(id){
   const ex = EX.find(e=>e.id===id); const m = $("#main"); m.innerHTML="";
