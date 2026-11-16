@@ -1,0 +1,1532 @@
+<title>CCE English Gym</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f5f2ea; --surface:#fffdf8; --ink:#1c2331; --muted:#5b6372; --line:#e2dccd;
+  --rule:#dbe3ee; --margin:#d4455c; --accent:#1f4e8c; --accent-ink:#ffffff; --accent-soft:#e3ebf6;
+  --ok:#2b7a4b; --ok-soft:#e2f1e7; --bad:#b0291f; --bad-soft:#fae6e3; --warn-soft:#fbf1d9;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13161c; --surface:#1b1f27; --ink:#e6e8ed; --muted:#9aa2b0; --line:#2c313b;
+  --rule:#262d3a; --margin:#e26b7e; --accent:#8db3ee; --accent-ink:#0f1b2e; --accent-soft:#21304a;
+  --ok:#6cc48e; --ok-soft:#1c3226; --bad:#f08b81; --bad-soft:#3a2321; --warn-soft:#3a321c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161c; --surface:#1b1f27; --ink:#e6e8ed; --muted:#9aa2b0; --line:#2c313b;
+  --rule:#262d3a; --margin:#e26b7e; --accent:#8db3ee; --accent-ink:#0f1b2e; --accent-soft:#21304a;
+  --ok:#6cc48e; --ok-soft:#1c3226; --bad:#f08b81; --bad-soft:#3a2321; --warn-soft:#3a321c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:24px}
+header.top h1{font-family:var(--serif);font-size:clamp(28px,4vw,40px);line-height:1.05;margin:0;letter-spacing:-.01em}
+header.top p{margin:4px 0 0;color:var(--muted);max-width:60ch}
+.overall{font-size:13px;color:var(--muted);text-align:right}
+.overall b{font-family:var(--serif);font-size:24px;color:var(--ink);display:block;line-height:1}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
+nav.ex{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 32px);overflow-y:auto}
+nav.ex a{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px;border:1px solid transparent}
+nav.ex a:hover{background:var(--surface);border-color:var(--line)}
+nav.ex a.on{background:var(--surface);border-color:var(--ink)}
+nav.ex .n{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;border:1.5px solid var(--muted);color:var(--muted)}
+nav.ex a.on .n{border-color:var(--accent);color:var(--accent)}
+nav.ex .n.done{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+nav.ex .lbl{min-width:0}
+nav.ex .lbl small{display:block;color:var(--muted);font-size:11.5px}
+main{min-width:0}
+.eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--margin);font-weight:600}
+h2{font-family:var(--serif);font-size:clamp(24px,3vw,32px);line-height:1.15;margin:4px 0 8px;text-wrap:balance}
+h3{font-family:var(--serif);font-size:20px;margin:0 0 6px;text-wrap:balance}
+.lede{color:var(--muted);max-width:65ch;margin:0 0 20px}
+.lesson{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--margin);border-radius:10px;padding:18px 20px;margin-bottom:22px}
+.lesson p,.lesson li{max-width:68ch}
+.lesson ul{padding-left:20px;margin:8px 0}
+.formula{font-family:var(--serif);font-size:18px;background:var(--accent-soft);border-radius:8px;padding:10px 14px;margin:10px 0}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:10px}
+.pair div{border-radius:8px;padding:10px 12px;font-family:var(--serif);font-size:16px}
+.pair .w{background:var(--bad-soft)} .pair .s{background:var(--ok-soft)}
+.pair b{font-family:var(--sans);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.card .qn{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.card .q{font-weight:500;margin:0 0 10px}
+.ctx{font-family:var(--serif);font-size:16.5px;line-height:1.6;background:var(--bg);border-radius:8px;padding:12px 14px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;font-family:var(--serif);font-size:16px;line-height:1.45;background:var(--surface);color:var(--ink)}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.why{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--warn-soft);font-size:14px}
+.why b{color:var(--ink)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:var(--serif);font-size:16px;cursor:pointer}
+.chk input{margin-top:5px;accent-color:var(--accent)}
+.chk.right{border-color:var(--ok);background:var(--ok-soft)} .chk.wrong{border-color:var(--bad);background:var(--bad-soft)} .chk.missed{border-color:var(--ok);border-style:dashed}
+.spot{font-family:var(--serif);font-size:17px;line-height:1.75}
+.spot button{all:unset;cursor:pointer;border-radius:4px;padding:1px 2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.spot button:hover:not([disabled]){background:var(--accent-soft)}
+.spot button:focus-visible{outline:2px solid var(--accent)}
+.spot button.right{background:var(--ok-soft);text-decoration:line-through;text-decoration-color:var(--margin)}
+.spot button.wrong{background:var(--bad-soft)}
+.fill{font-family:var(--serif);font-size:17px;line-height:2}
+.fill select{font:inherit;font-size:15px;font-family:var(--sans);padding:2px 6px;border-radius:6px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);max-width:100%}
+.fill select.right{border-color:var(--ok);background:var(--ok-soft)} .fill select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.pool,.built{display:flex;flex-direction:column;gap:6px}
+.pool button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 12px;border:1.5px dashed var(--muted);border-radius:8px;font-family:var(--serif);font-size:16px}
+.pool button:hover{border-color:var(--accent);border-style:solid}
+.pool button:focus-visible{outline:2px solid var(--accent)}
+.built ol{margin:0;padding-left:22px;font-family:var(--serif);font-size:16px;display:flex;flex-direction:column;gap:4px}
+.built li.right{color:var(--ok)} .built li.wrong{color:var(--bad)}
+.subl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin:10px 0 4px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.btn{font:inherit;font-size:14px;font-weight:500;padding:8px 14px;border-radius:8px;border:1.5px solid var(--ink);background:var(--ink);color:var(--surface);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.paper{width:100%;min-height:160px;resize:vertical;font-family:var(--serif);font-size:17px;line-height:30px;padding:4px 14px 4px 52px;border:1px solid var(--line);border-radius:8px;color:var(--ink);
+  background-color:var(--surface);
+  background-image:linear-gradient(to right,transparent 40px,var(--margin) 40px,var(--margin) 41.5px,transparent 41.5px),repeating-linear-gradient(to bottom,transparent 0,transparent 29px,var(--rule) 29px,var(--rule) 30px);
+  background-attachment:local;background-position:0 4px}
+.paper.short{min-height:94px}
+.paper:focus{outline:2px solid var(--accent);outline-offset:1px}
+.meta{font-size:12.5px;color:var(--muted)}
+.fb{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;font-size:14.5px}
+.fb .mark{border-left:3px solid var(--margin);padding-left:12px;white-space:normal}
+.fb .mark p{margin:0 0 6px}
+.fb .mark ul{margin:0 0 6px;padding-left:18px}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.copied{color:var(--ok);font-size:13px}
+textarea.copyout{width:100%;min-height:120px;font-size:12.5px;margin-top:8px;font-family:var(--sans);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px}
+.peel{display:grid;gap:12px}
+.peel label{display:block;font-weight:600;font-size:13.5px;margin-bottom:4px}
+.peel label span{font-weight:400;color:var(--muted)}
+.peel .tag{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;background:var(--margin);color:var(--surface);font-size:12px;margin-right:6px}
+.preview{font-family:var(--serif);font-size:17px;line-height:1.65;background:var(--bg);border-radius:8px;padding:14px 16px;min-height:60px;max-width:72ch}
+.preview .ph{color:var(--muted);font-style:italic}
+.timer{font-family:var(--serif);font-size:44px;font-variant-numeric:tabular-nums;line-height:1}
+.timer.over{color:var(--margin)}
+.topicbox{font-family:var(--serif);font-size:20px;line-height:1.35;padding:12px 16px;border:1.5px solid var(--ink);border-radius:8px;background:var(--surface)}
+select.top{font:inherit;padding:7px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.grid a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.grid a:hover{border-color:var(--ink)}
+.grid .k{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--margin);font-weight:600}
+.grid h3{margin:4px 0}
+.grid p{margin:0;color:var(--muted);font-size:13.5px}
+.bar{height:5px;background:var(--line);border-radius:3px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:8px;max-width:68ch}
+.steps li{counter-increment:s;padding-left:34px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:12px;display:grid;place-items:center}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:24px;flex-wrap:wrap}
+.pager a{color:var(--accent);text-decoration:none;font-weight:500}
+.pill{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:500;text-transform:none;letter-spacing:0}
+.navg{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--margin);font-weight:600;padding:14px 10px 4px}
+.navg:first-of-type{padding-top:4px}
+.passage p{margin:0 0 10px}
+.passage sup{color:var(--margin);font-family:var(--sans);font-size:10px;font-weight:600;margin-right:2px}
+.ptitle{font-family:var(--sans);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+details summary{cursor:pointer;font-weight:500;margin-bottom:8px}
+.tagrows{display:flex;flex-direction:column;gap:6px}
+.tagrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px}
+.tagrow.right{border-color:var(--ok);background:var(--ok-soft)} .tagrow.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tagrow .ts{font-family:var(--serif);font-size:15.5px;line-height:1.45}
+.tagrow sup{color:var(--margin);font-family:var(--sans);font-size:10px;font-weight:600;margin-right:3px}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-size:12.5px;padding:5px 9px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on.tM{background:var(--ok);color:var(--surface)} .seg button.on.tS{background:var(--accent);color:var(--accent-ink)} .seg button.on.tC{background:var(--margin);color:var(--surface)}
+.seg button:disabled{cursor:default}
+.titlein,.prepin{font-family:var(--serif);font-size:17px;padding:6px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);max-width:100%}
+.titlein{width:100%}
+.prepin{width:7.5em;margin:0 4px}
+.prepin.right{border-color:var(--ok);background:var(--ok-soft)} .prepin.wrong{border-color:var(--bad);background:var(--bad-soft)}
+table.pattern{border-collapse:collapse;font-size:14px;min-width:460px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table.pattern th,table.pattern td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line)}
+table.pattern th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+@media (max-width:560px){ .tagrow{grid-template-columns:minmax(0,1fr)} }
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipb{font:inherit;font-size:13px;text-align:left;padding:5px 10px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;max-width:100%}
+.chipb:hover{border-color:var(--accent)}
+.chipb.done{background:var(--ok-soft);border-color:var(--ok)}
+.chipb.cur{border-color:var(--ink);font-weight:600}
+@media (max-width:820px){
+  .navg{padding:6px 4px;flex:none;align-self:center}
+  .layout{grid-template-columns:minmax(0,1fr)}
+  nav.ex{position:static;flex-direction:row;overflow-x:auto;overflow-y:visible;max-height:none;padding-bottom:6px;gap:6px}
+  nav.ex a{flex:none;padding:6px 10px}
+  nav.ex .lbl small{display:none}
+  .overall{text-align:left}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>CCE English Gym</h1>
+      <p>Paragraph writing and a topic-sentence trainer for the Essay paper, every question of the Précis &amp; Composition paper, and the grammar behind clean sentences. Built on real CSS past-paper items.</p>
+    </div>
+    <div class="overall"><b id="overallPct">0%</b>drills completed</div>
+  </header>
+  <div class="layout">
+    <nav class="ex" id="nav" aria-label="Exercises"></nav>
+    <main id="main"></main>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- storage (per-viewer convenience only) ---------- */
+const KEY = "paragraph-gym-v1";
+let state = { items:{}, drafts:{} };
+try { const raw = localStorage.getItem(KEY); if (raw) { const s = JSON.parse(raw); if (s && typeof s === "object") state = Object.assign(state, s); } } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+/* ---------- AI feedback via Claude (optional) ---------- */
+let sample = null, aiStatus = "pending";
+const aiListeners = [];
+function setAi(s){ aiStatus = s; aiListeners.forEach(f=>{ try{f();}catch(e){} }); }
+try {
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("sample").then(fn => { sample = fn; setAi(fn ? "ready" : "none"); }).catch(()=>setAi("none"));
+  } else { setTimeout(()=>setAi("none"),0); }
+} catch(e){ setTimeout(()=>setAi("none"),0); }
+
+/* ---------- content ---------- */
+const TOPICS = [
+  "Climate change and Pakistan's food security",
+  "Out-of-school children in Pakistan",
+  "Women's economic empowerment",
+  "Corruption and accountability",
+  "Population growth as a challenge",
+  "Social media and political polarisation",
+  "CPEC: opportunity or debt trap?",
+  "Local government and service delivery",
+  "The energy crisis and circular debt",
+  "Brain drain from Pakistan",
+  "Artificial intelligence and jobs",
+  "Water scarcity in Sindh",
+  "Democracy and economic development",
+  "Terrorism and national security",
+  "The role of youth in nation-building"
+];
+
+const EX = [
+{ id:1, title:"Topic sentences", sub:"Topic + controlling idea",
+  lede:"Every exam paragraph lives or dies by its first sentence. The examiner should know your point before reading further.",
+  lesson:`<h3>What a topic sentence does</h3>
+  <p>It names the <b>topic</b> and makes a specific, arguable claim about it, the <b>controlling idea</b>. Everything else in the paragraph proves that claim.</p>
+  <div class="formula">Topic + controlling idea (+ reason, if it fits) = topic sentence</div>
+  <p>Four common faults:</p>
+  <ul><li><b>Too broad or a cliché:</b> "Education is the backbone of a nation."</li>
+  <li><b>Too narrow, just a fact:</b> "Pakistan's literacy rate is about 60 per cent." A fact is evidence, not a claim.</li>
+  <li><b>An announcement:</b> "In this paragraph I will discuss…"</li>
+  <li><b>A question:</b> "Is democracy good for Pakistan?"</li></ul>
+  <div class="pair"><div class="w"><b>Weak</b>Corruption is a big problem.</div><div class="s"><b>Strong</b>Corruption persists in Pakistan largely because accountability institutions are not independent of the governments they are meant to check.</div></div>`,
+  items:[
+   {t:"mcq", q:"Topic: climate change. Which is the strongest topic sentence?", o:[
+     "Climate change is a big problem in the world today.",
+     "Pakistan contributes less than one per cent of global greenhouse gas emissions.",
+     "Climate change threatens Pakistan's food security above all, because its agriculture depends on predictable water.",
+     "In this paragraph I will discuss climate change."], a:2,
+     why:"Option C names the topic and makes a focused claim (food security) with a reason. A is a cliché, B is a fact (good evidence, poor topic sentence), D is an announcement."},
+   {t:"mcq", q:"Topic: women's empowerment. Pick the strongest topic sentence.", o:[
+     "What is women's empowerment?",
+     "Women make up about half of Pakistan's population.",
+     "Women's empowerment has many aspects, causes, effects and solutions in every country.",
+     "Economic independence is the surest route to women's empowerment in Pakistan, because it gives women a voice at home and in society."], a:3,
+     why:"D has one controlling idea (economic independence) and a reason. A is a question, B is a bare fact, and C lists everything, so it controls nothing."},
+   {t:"mcq", q:"Topic: social media. Pick the strongest topic sentence.", o:[
+     "Social media has deepened political polarisation in Pakistan by rewarding outrage over evidence.",
+     "Social media, which includes Facebook, X, TikTok, YouTube and Instagram, is used by many people.",
+     "Is social media a blessing or a curse?",
+     "Social media has good and bad effects."], a:0,
+     why:"A makes a debatable claim and says how (rewarding outrage). B is description, C is a question, and D is too vague to argue."},
+   {t:"mcq", q:"What is wrong with this topic sentence: \"Education is the backbone of a nation\"?", o:[
+     "It is a cliché with no specific controlling idea.",
+     "It is too narrow.",
+     "It is a question.",
+     "It is grammatically incorrect."], a:0,
+     why:"Examiners read this line hundreds of times. It claims nothing specific about Pakistan or about education. Try: \"Pakistan cannot become a knowledge economy while 26 million of its children are out of school.\""},
+   {t:"mcq", q:"Which sentence is a fact that belongs in the body, not a topic sentence?", o:[
+     "Weak local government is the main reason basic services fail in Pakistan's cities.",
+     "The 2023 census counted about 241 million people in Pakistan.",
+     "Pakistan's population growth will cancel out its economic gains unless family planning becomes a national priority.",
+     "Brain drain is costing Pakistan the very professionals it needs for reform."], a:1,
+     why:"B can be checked but not argued, so it is evidence. A, C and D each take a position you would then have to prove."},
+   {t:"write", q:"Write ONE topic sentence for each topic below (three sentences in all). Give each a clear controlling idea.", ctx:"1. Out-of-school children\n2. Population growth\n3. CPEC", short:false,
+     task:"Write one topic sentence each for: (1) out-of-school children, (2) population growth, (3) CPEC.",
+     focus:"topic sentences. For EACH of the three sentences: does it have a clear topic plus a specific, arguable controlling idea? Is it neither too broad nor too narrow? Is it free of clichés, announcements and questions?", max:9}
+  ]},
+{ id:2, title:"Supporting details", sub:"Explain the controlling idea",
+  lede:"Support sentences answer the reader's question \"Why?\" or \"How?\" after your topic sentence.",
+  lesson:`<h3>Support explains; it doesn't wander</h3>
+  <p>After the topic sentence, add two or three sentences that <b>explain</b> the claim: reasons, causes, mechanisms, consequences. Every one must connect to the <b>controlling idea</b>, not just to the general topic.</p>
+  <ul><li>Ask "why?" or "how?" about your topic sentence. The answers are your support.</li>
+  <li>Move from general to specific: a reason, then how it works.</li>
+  <li>Background facts ("X was founded in…") are not support unless they prove the claim.</li></ul>
+  <div class="pair"><div class="w"><b>Off target</b>TS: Economic independence empowers women. → "Pakistan has many talented women cricketers."</div><div class="s"><b>On target</b>"A woman who earns her own income gains a say in decisions about her children's schooling, her health and her marriage."</div></div>`,
+  items:[
+   {t:"multi", q:"Topic sentence: \"Rapid population growth is straining Pakistan's public services.\" Tick every sentence that SUPPORTS it.", o:[
+     "Government schools in big cities often crowd more than sixty pupils into one classroom.",
+     "Pakistan's northern areas attract thousands of tourists every summer.",
+     "Every year millions more people need water, housing and jobs, but budgets grow far more slowly.",
+     "Public hospitals in Karachi and Lahore have long queues for basic treatment.",
+     "Cricket is the most popular sport in Pakistan."], a:[0,2,3],
+     why:"The supporting sentences show the strain: crowded schools, demand outrunning budgets, and hospital queues. Tourism and cricket are about Pakistan but not about this controlling idea."},
+   {t:"multi", q:"Topic sentence: \"Online learning cannot fully replace classroom teaching in Pakistan.\" Tick the supporting sentences.", o:[
+     "Many rural students have no reliable internet or personal device.",
+     "Universities in South Asia were first established in the colonial era.",
+     "In a classroom a teacher can notice confusion and respond at once.",
+     "Young children need supervision and social contact that a screen cannot give.",
+     "Pakistan's first television station opened in Lahore."], a:[0,2,3],
+     why:"Access, teacher responsiveness and children's needs each explain why online learning falls short. The two history facts are background and prove nothing."},
+   {t:"mcq", q:"Topic sentence: \"Economic independence is the surest route to women's empowerment.\" Which sentence best EXPLAINS it?", o:[
+     "Women have played an important role throughout history.",
+     "When a woman earns her own income, she gains bargaining power in family decisions about education, health and marriage.",
+     "Many countries have passed laws on women's rights.",
+     "Empowerment is a word with many meanings."], a:1,
+     why:"B shows how income becomes power, which is exactly what the controlling idea needs. The others are true but general."},
+   {t:"mcq", q:"Topic sentence: \"Load-shedding cripples Pakistan's small industries.\" Which support sentence is strongest?", o:[
+     "Electricity is very important in modern life.",
+     "Some people use solar panels at home.",
+     "When power fails for hours, small workshops lose production and must pay for diesel generators, which raises costs beyond what they can recover.",
+     "WAPDA was created in 1958."], a:2,
+     why:"C states the mechanism (lost hours plus generator costs) that leads to the damage. A is too general, B is off-topic, and D is background."},
+   {t:"write", q:"Write THREE supporting sentences for this topic sentence. Explain why or how; save statistics for Exercise 3.", ctx:"Topic sentence: Weak local government is the main reason basic services fail in Pakistan's cities.",
+     task:"Write three supporting sentences for the topic sentence: 'Weak local government is the main reason basic services fail in Pakistan's cities.'",
+     focus:"supporting details. Does every sentence explain WHY or HOW weak local government causes service failure (the controlling idea), rather than drifting to the general topic? Are they logically ordered, and is each one a full, clear sentence?", max:9}
+  ]},
+{ id:3, title:"Examples & evidence", sub:"Prove it with specifics",
+  lede:"A claim without evidence is opinion. CSS examiners reward specific, Pakistan-relevant proof.",
+  lesson:`<h3>Four kinds of evidence</h3>
+  <ul><li><b>Statistic:</b> "About 26 million children aged 5–16 are out of school."</li>
+  <li><b>Case or event:</b> "The 2022 floods…"</li>
+  <li><b>Authority or report:</b> "According to UNICEF…", "The Economic Survey notes…"</li>
+  <li><b>Comparison:</b> "Unlike Bangladesh, which…"</li></ul>
+  <p>Introduce evidence with a signal phrase (<i>For instance, A case in point is, According to</i>), then add <b>one sentence that explains what it proves</b>. Evidence never speaks for itself.</p>
+  <div class="pair"><div class="w"><b>Vague</b>For example, everyone knows the floods were very bad.</div><div class="s"><b>Specific</b>A case in point is the 2022 floods, which affected about 33 million people and caused damage and losses estimated at over 30 billion dollars.</div></div>
+  <p class="note">Check every figure against a current source (the Economic Survey, PBS, UNICEF, the World Bank) before the exam. Rounded and attributed numbers are safer than invented exact ones.</p>`,
+  items:[
+   {t:"mcq", q:"Claim: \"Pakistan is among the countries most vulnerable to climate change.\" Which is the best evidence?", o:[
+     "Many people say the weather is changing.",
+     "Climate change is often discussed at the United Nations.",
+     "The 2022 floods affected about 33 million people and caused damage and losses estimated at over 30 billion dollars.",
+     "Pakistan has four provinces and several territories."], a:2,
+     why:"C is specific, attributable and directly shows vulnerability. A is hearsay, B is general, and D is irrelevant."},
+   {t:"mcq", q:"Claim: \"Pakistan's tax base is too narrow to fund its development.\" Which evidence fits best?", o:[
+     "Taxes are collected in most countries of the world.",
+     "Pakistan's tax-to-GDP ratio has hovered around ten per cent, well below what most comparable developing economies collect.",
+     "The Federal Board of Revenue has offices in many cities.",
+     "Some people do not like paying taxes."], a:1,
+     why:"B gives a measurable indicator and a comparison, which is what makes evidence persuasive."},
+   {t:"mcq", q:"Why is this evidence weak? \"For example, everybody knows that corruption is everywhere.\"", o:[
+     "It uses a signal phrase.",
+     "It is too long.",
+     "It is vague and unattributed: no case, figure or source.",
+     "It is written in the passive voice."], a:2,
+     why:"'Everybody knows' is an appeal to common opinion. Replace it with a case, a report (for example, Transparency International's Corruption Perceptions Index), or a documented example."},
+   {t:"mcq", q:"After giving evidence, what should the next sentence normally do?", o:[
+     "Start a new topic.",
+     "Explain how the evidence proves the controlling idea.",
+     "Repeat the evidence in different words.",
+     "Ask the reader a question."], a:1,
+     why:"This is the 'E' in PEEL: link the evidence back to the claim. Examiners call missing explanation 'dumping facts'."},
+   {t:"write", q:"Write ONE evidence sentence (use a signal phrase) and ONE sentence explaining what it proves.", ctx:"Topic sentence: Pakistan's education system suffers above all from a crisis of access.",
+     task:"Write one evidence sentence (with a signal phrase) and one explaining sentence for: 'Pakistan's education system suffers above all from a crisis of access.'",
+     focus:"use of evidence. Is the evidence specific (a figure, case or source), relevant to ACCESS rather than quality, introduced with a signal phrase, and followed by a sentence that explains how it proves the claim? Flag any figure that looks doubtful or implausibly precise.", max:8}
+  ]},
+{ id:4, title:"Concluding sentences", sub:"Close the loop",
+  lede:"The last sentence tells the examiner the point has been proved, and why it matters.",
+  lesson:`<h3>Three good ways to end</h3>
+  <ul><li><b>Restate in new words:</b> return to the controlling idea, but not word for word.</li>
+  <li><b>Show significance:</b> so what? What follows if the claim is true?</li>
+  <li><b>Link forward:</b> in an essay, point toward the next paragraph's idea.</li></ul>
+  <p><b>Avoid:</b> introducing a new point, copying the topic sentence word for word, "In conclusion, as I said above…", or "That is all about…".</p>
+  <div class="pair"><div class="w"><b>Weak</b>So, corruption is a big problem, as discussed above.</div><div class="s"><b>Strong</b>Without truly independent watchdogs, anti-corruption drives will remain slogans rather than reforms.</div></div>`,
+  items:[
+   {t:"mcq", q:"Choose the best concluding sentence for this paragraph.", ctx:"Climate change threatens Pakistan's food security above all. Its farms rely on glacier melt and monsoon rains, both now less predictable. Heatwaves in spring shrink wheat yields, while floods destroy standing crops. In 2022, millions of acres of cropland were submerged in Sindh alone. ______",
+     o:["Climate change threatens Pakistan's food security above all.",
+        "Unless Pakistan adapts its farming to an uncertain climate, its food security will remain at the mercy of the weather.",
+        "Moreover, climate change also affects tourism in the north.",
+        "That is all about climate change."], a:1,
+     why:"B restates the idea in new words and adds significance. A copies the topic sentence, C opens a new point, and D is filler."},
+   {t:"mcq", q:"Choose the best concluding sentence.", ctx:"Accountability fails in Pakistan mainly because watchdog institutions are not independent. Their heads are often appointed and removed by the governments they investigate. As a result, cases against those in power stall while cases against opponents move quickly. ______",
+     o:["In conclusion, as I have said above, accountability is important.",
+        "Corruption also exists in many other countries such as India.",
+        "Without truly independent watchdogs, anti-corruption drives will remain slogans rather than reforms.",
+        "Accountability is a very wide topic."], a:2,
+     why:"C draws the logical consequence of the argument. A is empty, B opens a new comparison, and D is vague."},
+   {t:"mcq", q:"Which concluding sentence makes the classic mistake of introducing a NEW idea?", o:[
+     "Investing in girls' education, therefore, is not charity but sound economics.",
+     "Thus, the energy crisis is as much a governance failure as a technical one.",
+     "Additionally, the government should also focus on tourism and sports.",
+     "Only a smaller, better-educated population can turn growth into prosperity."], a:2,
+     why:"'Additionally… tourism and sports' starts a new argument at the very end. A conclusion should close the current point, not open another."},
+   {t:"write", q:"Write a concluding sentence for this paragraph.", ctx:"Brain drain is costing Pakistan the very professionals it needs for reform. Each year, hundreds of thousands of Pakistanis leave for jobs abroad, among them doctors, engineers and IT specialists. Those who remain struggle under heavier workloads, and hospitals and universities lose experienced staff. Remittances help the balance of payments, but they cannot replace the skills that have left.",
+     short:true,
+     task:"Write a concluding sentence for a paragraph arguing that brain drain is costing Pakistan the professionals it needs for reform.",
+     focus:"the concluding sentence. Does it restate the controlling idea in NEW words or show its significance, without copying the topic sentence, adding a new idea, or using filler such as 'in conclusion, as discussed above'?", max:4}
+  ]},
+{ id:5, title:"Unity", sub:"Cut the sentence that strays",
+  lede:"A unified paragraph proves ONE idea. One off-topic sentence costs marks under 'Unity & development'.",
+  lesson:`<h3>The unity test</h3>
+  <p>Hold each sentence against the <b>controlling idea</b>, not the broad topic, and ask: "Does this help prove that claim?" If not, it goes, however true or interesting it is.</p>
+  <p>Exam candidates usually break unity in three ways: adding a related fact they happen to know, drifting into a solution when the paragraph is about causes, or adding a quotation that sounds impressive but proves nothing.</p>
+  <p><b>In the drills below, click the sentence that breaks unity.</b></p>`,
+  items:[
+   {t:"spot", s:["Load-shedding is crippling Pakistan's small industries.","Textile workshops in Faisalabad lose hours of production whenever the power fails.","Owners must buy generators and diesel, which raises their costs sharply.","Pakistan's mountains include some of the highest peaks in the world.","As a result, many small firms can no longer compete with cheaper imports."], a:3,
+     why:"The mountains are true but have nothing to do with load-shedding and industry."},
+   {t:"spot", s:["Reading habits among Pakistani youth are declining.","Many students now spend more hours on short videos than on books.","Allama Iqbal was born in Sialkot in 1877.","Public libraries in many towns are poorly stocked and rarely visited.","Even university students often read only what the syllabus demands."], a:2,
+     why:"Iqbal's birth is a 'famous fact' dropped in. It does not show that reading is declining."},
+   {t:"spot", s:["Local government is essential for effective service delivery.","Local councillors know which streets need drains and which schools need teachers.","Citizens can hold a councillor to account far more easily than a distant minister.","The National Assembly debates the federal budget every June.","When local bodies are suspended, these decisions return to provincial departments far from the problem."], a:3,
+     why:"The federal budget debate concerns the national level. It does not explain why local government matters for services."},
+   {t:"spot", s:["Social media has deepened political polarisation in Pakistan.","Its algorithms reward posts that provoke anger, so the angriest voices travel furthest.","Supporters of each party increasingly see only content that confirms their views.","The government should launch digital literacy programmes in every school.","As a result, compromise now looks like betrayal to many voters."], a:3,
+     why:"This is a solution sentence inside a paragraph about causes and effects. Save it for the solutions section of your essay."}
+  ]},
+{ id:6, title:"Coherence", sub:"Transitions and logical order",
+  lede:"Coherence is how smoothly the reader moves from one sentence to the next: the right linking words in the right order.",
+  lesson:`<h3>Transitions by job</h3>
+  <ul><li><b>Addition:</b> moreover, furthermore, in addition</li>
+  <li><b>Contrast:</b> however, by contrast, nevertheless, yet</li>
+  <li><b>Cause and effect:</b> therefore, consequently, as a result, thus</li>
+  <li><b>Example:</b> for instance, a case in point is</li>
+  <li><b>Sequence and conclusion:</b> first, then, ultimately</li></ul>
+  <p>Coherence also comes from <b>repeating key terms</b> and <b>pronouns</b> that point back clearly ("this policy", "such shocks"). Do not overuse transitions: one in every sentence reads as mechanical.</p>
+  <p>Logical order: claim → explanation → evidence → consequence → link.</p>`,
+  items:[
+   {t:"fill", q:"Choose the right transition for each gap.", parts:["Pakistan has one of the youngest populations in the world. ","{0}",", this could become a demographic dividend. ","{1}",", without education and jobs, it may turn into a burden. ","{2}",", investment in skills is urgent."],
+     choices:["However","Therefore","In theory","For instance","Moreover"], a:["In theory","However","Therefore"],
+     why:"'In theory' sets up a possibility, 'However' turns to the risk, and 'Therefore' draws the conclusion."},
+   {t:"fill", q:"Choose the right transition for each gap.", parts:["Most farmers in Sindh still use flood irrigation. ","{0}",", a large share of canal water is lost before it reaches crops. ","{1}",", drip and sprinkler systems deliver water directly to the roots. ","{2}",", the province should subsidise efficient irrigation."],
+     choices:["As a result","By contrast","Thus","For example","Furthermore"], a:["As a result","By contrast","Thus"],
+     why:"Cause → effect (As a result), alternative (By contrast), conclusion (Thus)."},
+   {t:"order", q:"Put these sentences in the most logical order. Click them one by one.", s:[
+     "Accountability fails in Pakistan mainly because watchdog institutions are not independent.",
+     "Their heads are often appointed and removed by the very governments they are supposed to investigate.",
+     "As a result, cases against ruling parties stall, while cases against opponents move quickly.",
+     "This selective justice has damaged public trust in the whole process.",
+     "Real reform, therefore, must begin by shielding these institutions from political control."],
+     why:"Claim → cause → consequence ('As a result') → wider effect ('This selective justice') → link ('therefore'). The pronouns and transitions are the clues."},
+   {t:"order", q:"Put these sentences in the most logical order.", s:[
+     "Climate change is turning water security into Pakistan's most urgent national challenge.",
+     "Its rivers depend on glaciers and monsoon rains, both of which are becoming less predictable.",
+     "For instance, the 2022 floods followed an extreme monsoon, while other years bring severe drought.",
+     "Such swings damage crops, homes and infrastructure alike.",
+     "Unless storage and water management improve, these shocks will keep reversing development gains."],
+     why:"Topic sentence → explanation → example ('For instance') → consequence ('Such swings') → concluding link ('Unless…')."}
+  ]},
+{ id:7, title:"Build a PEEL paragraph", sub:"Put it all together",
+  lede:"Now build a full 150–220 word paragraph, one part at a time. The preview assembles it as you write.",
+  lesson:`<h3>PEEL</h3>
+  <div class="formula"><b>P</b>oint → <b>E</b>xplain → <b>E</b>vidence / Example → <b>L</b>ink</div>
+  <ul><li><b>Point:</b> one topic sentence with a clear controlling idea (Ex 1).</li>
+  <li><b>Explain:</b> two or three sentences on why or how (Ex 2).</li>
+  <li><b>Evidence:</b> a specific figure, case or report, plus what it proves (Ex 3).</li>
+  <li><b>Link:</b> a concluding sentence that closes the point or leads on (Ex 4).</li></ul>
+  <p>Then check unity (Ex 5) and transitions (Ex 6). It is marked out of 20 on the Workshop rubric: topic sentence, unity and development, evidence and example, coherence, and language accuracy, at 4 marks each.</p>`,
+  items:[{t:"peel"}]},
+{ id:8, title:"Timed paragraph", sub:"Exam conditions",
+  lede:"Exam conditions: one topic, 20 minutes, 180–250 words, no notes. Plan for 3 minutes, write for 14, revise for 3.",
+  lesson:`<h3>Exam routine</h3>
+  <ol class="steps"><li>Read the topic and decide your stance in one line.</li>
+  <li>Jot P–E–E–L in the margin: four or five words each.</li>
+  <li>Write. Start with the topic sentence and do not stop to polish.</li>
+  <li>Spend the last three minutes on revision: articles, subject–verb agreement, tenses, one clear transition per idea.</li></ol>
+  <p>Score 15 or more out of 20 consistently here, and you're ready to start full essays.</p>`,
+  items:[{t:"timed"}]}
+];
+
+/* ---------- composition paper track ---------- */
+const PASS = {
+ civil:{title:"The Quiet Republic of Associations", paras:[
+  ["A healthy society rests not only on its government but on the countless associations that citizens form among themselves.","Trade unions, mosque committees, parent–teacher bodies, neighbourhood welfare groups and bar councils all occupy the ground between the household and the state.","This ground, which scholars call civil society, is where people learn the habits of self-government long before they cast a vote.","A farmer who helps run a water users' association learns to keep accounts, settle disputes and answer to his fellows; these are the same virtues that a parliament demands of its members."],
+  ["Yet civil society is fragile.","Where the state is suspicious of any organisation it does not control, associations are either banned or quietly starved of registration and funds.","Where the state is absent, on the other hand, they may be captured by the powerful, so that a welfare trust becomes the private instrument of a landlord or a political family.","In both cases the citizen is pushed back into isolation, and isolation breeds either apathy or rage."],
+  ["The remedy is not to multiply organisations for their own sake.","Numbers mean little if associations are hollow shells kept alive by foreign grants or official patronage.","What matters is that they are voluntary, accountable to their members and willing to cooperate across lines of class, sect and language.","A society with fewer but genuine associations is stronger than one crowded with letterhead bodies.","Governments that understand this treat civil society not as a rival but as a partner, for a citizen who has learned to manage a small common good is better prepared to judge the management of a large one."]]},
+ simple:{title:"The Weight of Possessions", paras:[
+  ["Every generation believes that it has discovered the secret of a good life, and ours believes that the secret can be bought.","Advertisements no longer sell a product; they sell an identity, promising that the right phone or the right brand of tea will make us admired, calm or young.","The promise is never kept, and so it must be renewed, endlessly, with the next purchase."],
+  ["Against this restless appetite, a small number of people have chosen what is sometimes called voluntary simplicity.","They are not ascetics who despise comfort, nor are they poor people making a virtue of necessity.","They are, for the most part, people who could afford more but have decided that more is not better.","They own fewer things, borrow and repair what they can, and spend the time saved on friendship, reading, prayer or work they find meaningful."],
+  ["Critics object that such a choice is a luxury of the comfortable, and there is some truth in this.","A labourer in Hyderabad who cannot pay his child's school fees is not helped by a lecture on the joys of owning less.","But the argument cuts both ways.","It is precisely the comfortable whose consumption drives the waste, debt and pollution that the poor suffer most.","If those who have enough learned to want less, the gain would not be merely spiritual; it would be measured in cleaner rivers and lighter debts."],
+  ["Simplicity, then, is not a rejection of the world but a way of choosing what in it deserves our attention."]]},
+ edu:{title:"Passage A · Education and the free mind", paras:[
+  ["The purpose of education has been argued over for as long as there have been schools, but one answer deserves to be heard more often than it is.","Education exists to make a mind free.","It is not enough that a student leaves school knowing the dates of battles, the formulae of chemistry and the rules of grammar; a parrot could be trained to repeat as much.","What distinguishes an educated person is the habit of asking whether what he has been told is true, and the courage to follow the answer wherever it leads."],
+  ["Our classrooms too often teach the opposite habit.","The student who memorises the notes and reproduces them word for word is rewarded with high marks, while the student who questions the textbook is regarded as troublesome.","Examinations test recall rather than reasoning, and so teachers, who are judged by results, teach recall.","The cycle is complete when these students, now adults, accept every rumour that circulates on their phones, because no one ever taught them to weigh evidence."],
+  ["It may be objected that young minds need discipline before they can be trusted with freedom, and that a child who questions everything learns nothing.","This is true, but it confuses freedom with disorder.","A free mind is not one that rejects all authority; it is one that knows why it accepts the authority it does.","The student of medicine accepts the findings of anatomy not because the professor is senior, but because the findings can be checked."],
+  ["To reform education, then, we need not more subjects but a different spirit: examinations that reward argument, teachers who welcome questions, and a society that values the doubting student as much as the obedient one.","A nation of free minds is harder to govern carelessly, and for that very reason it is better governed."]],
+  tags:["C","M","S","M","M","S","M","S","M","M","M","C","M","S"],
+  notes:{0:"An introductory flourish that carries no content.",2:"Keep only the idea that facts alone are not enough; drop the list and the parrot.",11:"The medicine example only illustrates sentence 11."},
+  model:{title:"Education for Free Minds", text:"The true aim of education is to free the mind, teaching students to question what they are told and to follow the truth fearlessly rather than merely to store facts. Our schools do the reverse. Because examinations reward memory rather than reasoning, teachers encourage rote learning and discourage inquiry, producing adults who believe every rumour. It is argued that the young need discipline before freedom, but freedom is not disorder: a free mind accepts authority only when it understands the grounds for it. Reform therefore needs a new spirit rather than new subjects: examinations that reward argument, teachers who welcome questions and a society that values doubt. Free minds make for better government."}},
+ labour:{title:"Passage B · Masters, workers and the new economy", paras:[
+  ["When the first factories rose in the towns of England, the relationship between master and worker was simple and brutal.","The master owned the machines, the worker owned nothing but his hands, and wages were whatever hunger would accept.","Children of seven worked fourteen hours a day, and an injured labourer was simply replaced.","It was widely believed that this was the natural order, and that any interference would ruin trade."],
+  ["That belief did not survive the century.","Workers combined into unions, reformers exposed conditions in the mills, and parliaments passed laws limiting hours, forbidding child labour and requiring safety in mines.","Employers predicted disaster, yet industry grew faster than before.","A healthier, better-educated workforce proved more productive, and workers with money to spend became customers for the goods they made."],
+  ["The lesson is that employer and employee are not enemies in a contest that one must lose.","Each depends on the other: capital without skilled and willing labour is idle, and labour without capital has no tools.","The quarrel over how the product should be shared is real, but it is a quarrel between partners, and partners who ruin each other ruin the business."],
+  ["Today the factory is giving way to the platform and the algorithm, and the old questions have returned in new dress.","A delivery rider who is called an 'independent contractor' may have no fixed wage, no insurance and no one to complain to.","Whether societies extend to him the protections won by the mill workers of the past will decide whether the new economy repeats the cruelty of the old one or its eventual wisdom."]],
+  tags:["S","S","C","M","M","S","M","M","M","M","S","M","C","M"],
+  notes:{2:"A vivid illustration. 'Exploited labour' covers it in two words.",12:"The delivery rider is an example. Generalise it to 'gig workers'."},
+  model:{title:"Partners, Not Enemies", text:"In early industrial England workers had no protection: wages were fixed by hunger, even children were ruthlessly exploited, and reform was thought fatal to trade. Unions, reformers and laws limiting hours and child labour disproved this, for industry prospered as healthier, educated workers produced and bought more. Employers and workers are therefore interdependent partners: capital and labour are useless without each other, and their dispute over shares must not destroy the enterprise. Today digital platforms revive the old problem, leaving gig workers without wages, insurance or redress. Whether they receive the earlier protections will decide if the new economy repeats past cruelty or past wisdom."}}
+};
+const allSent = p => p.paras.flat();
+const passWords = p => wc(allSent(p).join(" "));
+
+const PAIRS = [
+ ["Compliment / Complement","praise / something that completes","Her paper was a perfect ___ to his research.","complement",["compliment","complement"]],
+ ["Eminent / Imminent","famous, distinguished / about to happen","The weather office warned of an ___ flood.","imminent",["eminent","imminent"]],
+ ["Draught / Drought","a current of cold air; a drink / a long period without rain","Thar suffered a severe ___ that killed livestock.","drought",["draught","drought"]],
+ ["Momentary / Momentous","lasting a moment / very important","Independence was a ___ event in the history of the subcontinent.","momentous",["momentary","momentous"]],
+ ["Immigrant / Emigrant","one who comes into a country / one who leaves it","As an ___ from Pakistan, he missed his family in Karachi.","emigrant",["immigrant","emigrant"]],
+ ["Faint / Feint","weak; to lose consciousness / a pretend attack meant to deceive","The boxer made a ___ with his left before striking with his right.","feint",["faint","feint"]],
+ ["Ingenious / Ingenuous","clever, inventive / innocent, naive","The ___ villager believed every promise the candidate made.","ingenuous",["ingenious","ingenuous"]],
+ ["Luxuriant / Luxurious","growing richly / expensive and comfortable","The valley was covered with ___ vegetation after the rains.","luxuriant",["luxuriant","luxurious"]],
+ ["Hoard / Horde","a hidden store / a large crowd","A ___ of shoppers rushed into the market before Eid.","horde",["hoard","horde"]],
+ ["Dependant / Dependent","a person supported by another (noun) / relying on (adjective)","Pakistan's economy remains ___ on imported oil.","dependent",["dependant","dependent"]],
+ ["Funeral / Funereal","a burial ceremony / gloomy, mournful","The meeting ended in a ___ silence after the result was announced.","funereal",["funeral","funereal"]],
+ ["Gamble / Gambol","to bet / to skip and play","Lambs ___ in the spring meadows.","gambol",["gamble","gambol"]],
+ ["Annalist / Analyst","one who writes yearly records / one who examines data","The ___ studied the budget figures line by line.","analyst",["annalist","analyst"]],
+ ["Key / Quay","a tool for a lock; essential / a landing place for ships","The ship was tied up at the ___ in Karachi port.","quay",["key","quay"]],
+ ["Wile / While","a trick / a period of time; whereas","The fox used every ___ to escape the hounds.","wile",["wile","while"]],
+ ["Quaint / Queer","attractively old-fashioned / strange, odd","The old town has ___ wooden balconies.","quaint",["quaint","queer"]]
+];
+const IDIOMS = [
+ ["To bell the cat","to undertake a dangerous task for the common good"],
+ ["A white elephant","a costly possession that is useless or a burden"],
+ ["At sixes and sevens","in confusion and disorder"],
+ ["To burn the midnight oil","to work or study late into the night"],
+ ["A fly in the ointment","a small flaw that spoils something good"],
+ ["A red-letter day","a day of special happiness or importance"],
+ ["To throw down the gauntlet","to issue a challenge"],
+ ["By fits and starts","irregularly, not continuously"],
+ ["To bury the hatchet","to make peace after a quarrel"],
+ ["Hobson's choice","no real choice at all: take it or leave it"],
+ ["To smell a rat","to suspect a trick or wrongdoing"],
+ ["A dark horse","a little-known competitor who unexpectedly succeeds"],
+ ["To turn a deaf ear","to refuse to listen"],
+ ["To call a spade a spade","to speak plainly and frankly"],
+ ["The lion's share","the largest part"],
+ ["Achilles' heel","a weak point in an otherwise strong position"],
+ ["A bolt from the blue","a complete surprise"],
+ ["To steal a march on","to gain an advantage by acting first"],
+ ["A wild goose chase","a hopeless, foolish pursuit"],
+ ["To leave no stone unturned","to try every possible means"],
+ ["To cry over spilt milk","to regret what cannot be undone"],
+ ["To pay lip service","to support something in words but not in action"],
+ ["A storm in a teacup","great excitement over a trivial matter"],
+ ["To take the bull by the horns","to face a difficulty boldly"]
+];
+function idiomMcq(i){
+  const [id, m] = IDIOMS[i];
+  const pool = IDIOMS.map(x=>x[1]).filter(x=>x!==m);
+  const pick = seededShuffle(pool, i*13+5).slice(0,3).map(k=>pool[k]);
+  const pos = (i*7)%4; const o = pick.slice(); o.splice(pos,0,m);
+  return {t:"mcq", q:"\""+id+"\" means:", o, a:pos, why:id+": "+m+"."};
+}
+
+const SYN26 = [["Enigma",["Stature","Axiom","Adage","Conundrum"],3],["Hackneyed",["Unplanned","Intriguing","Stubborn","Clichéd"],3],["Panacea",["Elixir","Destitution","Deprivation","Predicament"],0],["Cajole",["Lure","Intimidate","Harass","Tease"],0],["Inscrutable",["Unattainable","Mysterious","Obstinate","Vigilant"],1],["Reverie",["Palimpsest","Phantom","Daydream","Curio"],2],["Sumptuous",["Delirious","Gorgeous","Perilous","Luxurious"],3],["Appal",["Delirious","Covered","Dismay","Confuse"],2],["Abject",["Indigent","Desire","Despondent","Extreme"],0],["Bespoke",["Tailored","Quiet","Gentle","Handsome"],0]];
+const ANT26 = [["Candour",["Rebuttal","Evasiveness","Restraint","Candidness"],1],["Colloquial",["Vernacular","Informal","Literary","Quarrelsome"],2],["Euphoria",["Ecstasy","Obnoxious","Nostalgic","Melancholy"],3],["Surrogate",["Proxy","Soothing","Forbidden","Real"],3],["Oblivious",["Ignorant","Conscious","Sober","Flamboyant"],1],["Ameliorate",["Impair","Rectify","Precipitate","Renew"],0],["Benign",["Amiable","Effective","Boost","Malicious"],3],["Cacophony",["Noise","Disaster","Stillness","Rattle"],2],["Doleful",["Witty","Rich","Empty","Vivacious"],3]];
+const SYN_OLD = [["Largesse","2023","generosity",["meanness","generosity","largeness","dignity"]],["Condone","2023","overlook (an offence)",["condemn","console","overlook","punish"]],["Aficionado","2023","enthusiast",["enthusiast","critic","official","beginner"]],["Inure","2023","accustom, harden",["injure","accustom","insure","refuse"]],["Inveigh","2023","protest strongly",["persuade","protest strongly","invest","delay"]],["Palliate","2023","ease, alleviate",["worsen","alleviate","paint","examine"]],["Assuage","2023","soothe",["soothe","provoke","assume","suggest"]],["Quell","2022","suppress",["question","suppress","excite","fill"]],["Draconian","2022","very harsh",["very harsh","mythical","lenient","ancient"]],["Panache","2022","stylish confidence",["cure","stylish confidence","fear","delay"]],["Renascent","2022","reviving",["dying","reviving","resentful","reasonable"]],["Pliant","2022","flexible",["rigid","flexible","plain","pleasant"]]];
+const ANT_OLD = [["Temerity","2023","rashness","caution",["boldness","caution","fear","temper"]],["Brusque","2023","abrupt, curt","courteous",["rude","courteous","quick","brisk"]],["Abet","2023","help (a wrongdoer)","hinder",["assist","hinder","bet","encourage"]],["Tyro","2023","beginner","expert",["novice","expert","tyrant","student"]],["Modicum","2023","small amount","abundance",["abundance","trace","method","moderation"]],["Rancour","2023","bitter ill will","goodwill",["hatred","goodwill","anger","rank"]],["Germane","2022","relevant","irrelevant",["pertinent","irrelevant","German","generous"]],["Recondite","2022","obscure, little known","obvious",["obscure","obvious","reconciled","recent"]],["Protean","2022","constantly changing","unchanging",["unchanging","versatile","protective","professional"]],["Flaunt","2022","show off","conceal",["display","conceal","flout","float"]]];
+function synItem(w,o,a,kind,yr){ return {t:"mcq", q:(kind==="syn"?"Synonym":"Antonym")+(yr?" · CSS "+yr:"")+": "+w.toUpperCase(), o, a, why: kind==="syn" ? w+" ≈ "+o[a]+"." : w+" ↔ "+o[a]+"."}; }
+
+EX.push(
+{ id:9, group:"comp", title:"Comprehension", sub:"20 marks · 5 questions",
+  lede:"Read once for the gist, then once for detail. Answer in your own words, two to four sentences each, and lift no full sentences from the passage.",
+  lesson:`<h3>How the comprehension question works</h3>
+  <p>CSS sets one passage of about 400–500 words with five questions of 4 marks each (2022: civil society; 2023: voluntary simplicity; 2026: a woman's dreams of luxury). The passages below are <b>originals written in the same style and on those themes</b>, because the past-paper passages are copyrighted extracts.</p>
+  <ul><li><b>Locate:</b> underline the sentence that each question points to. The answer is almost always in one or two sentences.</li>
+  <li><b>Rephrase:</b> examiners deduct marks for copying. Change the structure as well as the words.</li>
+  <li><b>"Explain the line" questions:</b> give its literal meaning, then what it means in context.</li>
+  <li><b>Vocabulary in context:</b> give the meaning the word has <i>here</i>, not its dictionary meaning.</li></ul>`,
+  items:[
+   {t:"comp", p:"civil", qs:[
+    {q:"What does the author mean by 'civil society'?", m:"Civil society is the network of voluntary associations, such as unions, committees, welfare groups and bar councils, that occupies the space between the family and the state."},
+    {q:"How does a water users' association prepare citizens for democracy?", m:"By running it, ordinary people practise keeping accounts, resolving disputes and being answerable to others, which are the same qualities a parliament requires of its members."},
+    {q:"What two dangers threaten civil society?", m:"First, a suspicious state may ban associations or deny them registration and funds. Second, where the state is absent, powerful individuals may take them over for their own ends."},
+    {q:"Why, according to the author, are numbers alone not enough?", m:"Many organisations are empty shells that survive on foreign grants or official favour. Real strength comes from associations that are voluntary, accountable and able to cooperate across class, sect and language."},
+    {q:"Explain: 'isolation breeds either apathy or rage.'", m:"Citizens who are denied collective action either lose interest in public life altogether or, having no peaceful outlet, turn their frustration into anger and unrest."}]},
+   {t:"mcq", q:"In the passage, 'quietly starved of registration and funds' means the associations are…", o:["openly banned by law","slowly weakened by being denied what they need","fed by the government","forced to merge"], a:1, why:"'Starved' is figurative: they are not banned outright but are denied registration and money until they wither."},
+   {t:"mcq", q:"'Letterhead bodies' (para 3) are organisations that…", o:["print official newspapers","exist mainly on paper, with little real activity","are led by educated people","work only in letters and journalism"], a:1, why:"The contrast with 'genuine associations' shows they exist in name only."},
+   {t:"comp", p:"simple", qs:[
+    {q:"How has advertising changed, according to the passage?", m:"Instead of selling products, advertising now sells identities, promising admiration, calm or youth. Because the promise is never fulfilled, people must keep buying."},
+    {q:"Who practise voluntary simplicity, and who do not count?", m:"It is practised mainly by people who could afford more but choose to own less. It does not include ascetics who reject comfort, or the poor, who have no choice."},
+    {q:"What is the critics' objection, and how does the author answer it?", m:"Critics call simplicity a luxury of the well-off. The author partly agrees, but argues that the well-off cause most of the waste, debt and pollution that hurt the poor, so their restraint would bring real material benefits."},
+    {q:"Explain: 'the argument cuts both ways.'", m:"The fact that simplicity concerns the comfortable, which critics use against it, also shows why it matters: the comfortable are exactly the people whose consumption must change."},
+    {q:"Suggest a suitable title and explain the last sentence.", m:"Title: 'The Freedom of Wanting Less'. The last sentence means that simplicity is not withdrawal from life but a deliberate choice of what is worth our time and attention."}]},
+   {t:"mcq", q:"'Making a virtue of necessity' (para 2) means…", o:["praising a limitation one cannot avoid","becoming virtuous through hardship","doing what is necessary for virtue","rejecting wealth on principle"], a:0, why:"It means presenting something you are forced into as if it were a noble choice, as the poor might do with owning little."}
+  ]},
+{ id:10, group:"comp", title:"Précis", sub:"20 marks · find the relevant data",
+  lede:"A précis keeps the argument and drops the decoration. First learn to sort sentences, then write the précis in about one-third of the words.",
+  lesson:`<h3>The précis method</h3>
+  <ol class="steps"><li>Read twice. Write the central idea in one line: this becomes your title and first sentence.</li>
+  <li><b>Sort every sentence:</b> <b>Main</b> (a step in the argument, so keep it), <b>Support</b> (compress it into a phrase), or <b>Cut</b> (an example, illustration, quotation, repetition or rhetorical flourish).</li>
+  <li>Write about one-third of the original length, in your own words, in the third person and the past or present tense. Add no opinion.</li>
+  <li>Give a short, precise title that names the central idea, not just the topic.</li></ol>
+  <p>CSS passages have covered education and freedom (2023), ancient oracles (2022) and labour welfare (2026). The two passages here are originals on those themes.</p>`,
+  items:[
+   {t:"tag", p:"edu"},
+   {t:"mcq", q:"Best title for Passage A?", o:["Education","Problems of Our Examination System","Education for Free Minds","Students and Teachers"], a:2, why:"It names the central idea (education's purpose is mental freedom). A is only the topic, B covers one paragraph, and D is vague."},
+   {t:"precis", p:"edu"},
+   {t:"tag", p:"labour"},
+   {t:"mcq", q:"Best title for Passage B?", o:["The Industrial Revolution","Partners, Not Enemies","Child Labour in England","The Gig Economy"], a:1, why:"The central idea is the interdependence of employers and workers, then and now. The others name single parts of the passage."},
+   {t:"precis", p:"labour"}
+  ]},
+{ id:11, group:"comp", title:"Synonyms & antonyms", sub:"20 MCQs in the paper",
+  lede:"Part I of the paper is 20 one-mark MCQs. These are the real words from CSS 2026, 2023 and 2022.",
+  lesson:`<h3>How to prepare</h3>
+  <ul><li>Words repeat across years, and 'Panacea' appeared in both 2023 and 2026. Keep a notebook of every past-paper word with its meaning and one example sentence.</li>
+  <li>Use roots: <i>bene-</i> (good) → benign; <i>mal-</i> (bad) → malicious; <i>-phony</i> (sound) → cacophony; <i>pro-/re-</i> patterns.</li>
+  <li>For antonyms, first decide the word's meaning, then find its opposite. Distractors often include a <b>synonym</b> to trap you (for example, Candour → 'Candidness').</li>
+  <li>There is no negative marking in CSS MCQs, so never leave one blank.</li></ul>
+  <p class="note">The 2026 items use the options as printed in the paper. For 2023 and 2022 the words are from the papers, but I wrote the options.</p>`,
+  items:[].concat(
+    SYN26.map(([w,o,a])=>synItem(w,o,a,"syn","2026")),
+    ANT26.map(([w,o,a])=>synItem(w,o,a,"ant","2026")),
+    SYN_OLD.map(([w,y,m,o])=>{ const it = synItem(w,o,o.findIndex(x=>m.includes(x)),"syn",y); it.why = w+" means "+m+"."; return it; }),
+    ANT_OLD.map(([w,y,m,ans,o])=>{ const it = synItem(w,o,o.indexOf(ans),"ant",y); it.why = w+" ("+m+") ↔ "+ans+"."; return it; })
+  )},
+{ id:12, group:"comp", title:"Pairs of words", sub:"10 marks · use 5 of 8",
+  lede:"You are given eight confusable pairs and must use five in sentences that clearly show the difference. These pairs are from CSS 2026, 2023 and 2022.",
+  lesson:`<h3>How to score full marks</h3>
+  <p>Write <b>one sentence for each word</b>, so two per pair, and make the context show the meaning unmistakably. "He is eminent" earns little; "Dr Abdus Salam was an eminent physicist" earns full marks.</p>
+  <div class="pair"><div class="w"><b>Weak</b>I got a compliment. The colours complement.</div><div class="s"><b>Strong</b>The examiner paid her a compliment on her clear handwriting. / A good title should complement the précis, not repeat it.</div></div>
+  <p class="subl">Reference list</p>
+  <div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:14px;min-width:420px">${PAIRS.map(p=>`<tr><td style="padding:6px 10px 6px 0;border-bottom:1px solid var(--line);font-weight:600;white-space:nowrap">${p[0]}</td><td style="padding:6px 0;border-bottom:1px solid var(--line)">${p[1]}</td></tr>`).join("")}</table></div>`,
+  items:[].concat(
+    PAIRS.map(p=>({t:"mcq", q:"Fill the blank: "+p[2], o:p[4], a:p[4].indexOf(p[3]), why:p[0]+": "+p[1]+"."})),
+    [{t:"write", q:"Use any FIVE pairs from the list above in sentences that show the difference (ten sentences in all).", task:"Use five pairs of confusable words in sentences (two sentences per pair) that clearly show the difference in meaning, as in the CSS English paper.", focus:"pairs of words. For each pair: is each word used correctly, and does the sentence context make its meaning unmistakable? Are the sentences grammatically correct? Score 2 marks per pair.", max:10}]
+  )},
+{ id:13, group:"comp", title:"Idioms & phrases", sub:"Meaning + use in a sentence",
+  lede:"Older CSS papers and PMS papers ask you to use idioms in sentences. They also show up in the translation question and lift an essay when used sparingly.",
+  lesson:`<h3>Using an idiom well</h3>
+  <p>The sentence must show that you understand the meaning. It is not enough to place the idiom correctly.</p>
+  <div class="pair"><div class="w"><b>Weak</b>The motorway is a white elephant.</div><div class="s"><b>Strong</b>The airport, built at great cost but used by only two flights a week, has become a white elephant for the provincial government.</div></div>
+  <p>In an essay, use at most one or two idioms. Never use an idiom you are unsure of: one wrong idiom costs more than a plain sentence.</p>
+  <p class="note">These are classic exam idioms that recur in CSS and PMS papers and guidebooks. Recent CSS papers (2022–2026) test idioms mainly through translation.</p>`,
+  items:[].concat(IDIOMS.map((x,i)=>idiomMcq(i)),
+    [{t:"write", q:"Use any FIVE idioms from this exercise in sentences of your own that make the meaning clear.", task:"Use five English idioms in original sentences that make their meaning clear.", focus:"use of idioms. For each sentence: is the idiom's form exact (wording, articles, prepositions), is its meaning shown clearly by the context, and is the sentence grammatical? 2 marks per idiom.", max:10}])},
+{ id:14, group:"comp", title:"Sentence correction", sub:"10 marks · correct 5 of 8",
+  lede:"These are the actual sentences from CSS 2023 and 2022. Write your correction, check it against the key, then mark yourself honestly.",
+  lesson:`<h3>What examiners plant in these sentences</h3>
+  <ul><li><b>Subject–verb agreement:</b> 'His knowledge … <i>aids</i>'; 'The ambassador, with his staff, <i>invites</i>'.</li>
+  <li><b>Tense sequence:</b> a past main clause takes a past subordinate clause.</li>
+  <li><b>Pronoun case:</b> 'Aslam and <i>I</i> plan'.</li>
+  <li><b>Indirect question word order:</b> 'what the salary <i>was</i>', not 'what is the salary'.</li>
+  <li><b>Correlatives:</b> 'so … that', not 'too … that'.</li>
+  <li><b>Articles and prepositions:</b> '<i>the</i> guitar', 'smiled <i>at</i> me', 'sit <i>for</i> an examination'.</li></ul>
+  <p>Rewrite the <b>whole</b> sentence in the exam, and change only what is wrong.</p>`,
+  items:[
+   {t:"correct", y:"2023", s:"His knowledge of languages and international relations aid him in his work.", a:"His knowledge of languages and international relations aids him in his work.", why:"The subject is 'knowledge' (singular). 'Languages and international relations' sit inside the prepositional phrase."},
+   {t:"correct", y:"2023", s:"The ambassador, with his family and staff, invite you to a reception at the embassy on Tuesday afternoon.", a:"The ambassador, with his family and staff, invites you to a reception at the embassy on Tuesday afternoon.", why:"A phrase beginning 'with' or 'along with' does not make the subject plural."},
+   {t:"correct", y:"2023", s:"This year, he will sit in the CSS examination.", a:"This year, he will sit for the CSS examination.", why:"The idiom is 'sit for an examination' (or 'take')."},
+   {t:"correct", y:"2023", s:"The Chief Executive will let us know whether or not he can attend the meeting.", a:"The Chief Executive will let us know whether he can attend the meeting.", why:"'Whether' already includes the alternative, so 'or not' is redundant here."},
+   {t:"correct", y:"2023", s:"When he came back from vacation, Aslam and me plan to look for another apartment.", a:"When he came back from vacation, Aslam and I planned to look for another apartment.", why:"Use the subject pronoun 'I', and keep the tense consistent: came → planned."},
+   {t:"correct", y:"2023", s:"If some of you make a noise, they shall be punished.", a:"If any of you makes a noise, you will be punished.", why:"In a conditional use 'any', not 'some'. The pronoun must refer back to 'you', not 'they', and 'will' is the normal future here."},
+   {t:"correct", y:"2023", s:"He came to me to enquire what is the salary attached to the appointment.", a:"He came to me to enquire what the salary attached to the appointment was.", why:"An indirect question uses statement word order (subject before verb), and the past reporting verb takes a past tense."},
+   {t:"correct", y:"2023", s:"I am too tired that I do not hunt words and idioms in my English book.", a:"I am so tired that I cannot hunt for words and idioms in my English book.", why:"Use 'so … that' (or 'too tired to hunt'). 'Hunt for' takes a preposition."},
+   {t:"correct", y:"2022", s:"I must walk two miles to school every morning when I was a child.", a:"I had to walk two miles to school every morning when I was a child.", why:"'Must' has no past form. Use 'had to' for past obligation."},
+   {t:"correct", y:"2022", s:"After the storm, we had got to pick up some fallen branches.", a:"After the storm, we had to pick up some fallen branches.", why:"The simple past 'had to' fits. 'Had got to' is a wrong tense here."},
+   {t:"correct", y:"2022", s:"Guitar is most popular instrument among teen age boys, but not girls.", a:"The guitar is the most popular instrument among teenage boys, but not among girls.", why:"'The' for a musical instrument, 'the' with a superlative, 'teenage' as one word, and a parallel 'among girls'."},
+   {t:"correct", y:"2022", s:"You are not well and I wish you feel better soon.", a:"You are not well, and I hope you feel better soon.", why:"'Hope' for something possible in the future. 'Wish' is used for unreal situations."},
+   {t:"correct", y:"2022", s:"The grass not looking green now because it is not raining since last month.", a:"The grass is not looking green now because it has not rained since last month.", why:"The auxiliary 'is' is missing, and 'since last month' needs the present perfect."},
+   {t:"correct", y:"2022", s:"The cold air made me shiver a little when I was waiting for him.", a:"The cold air made me shiver a little while I was waiting for him.", why:"'While' for an action in progress during the main event."},
+   {t:"correct", y:"2022", s:"I offered my seat to an older woman who just smiled me.", a:"I offered my seat to an older woman, who just smiled at me.", why:"'Smile at someone'. A comma is natural before a non-defining clause."},
+   {t:"correct", y:"2022", s:"She packed her bags, carried downstairs and put the back seat of her car.", a:"She packed her bags, carried them downstairs and put them on the back seat of her car.", why:"'Carried' and 'put' need objects ('them'), and 'put … on the back seat' needs a preposition."}
+  ]},
+{ id:15, group:"comp", title:"Prepositions", sub:"5 marks · fill and rewrite",
+  lede:"These are the real items from CSS 2023 and 2022. Type the preposition; some blanks accept more than one answer.",
+  lesson:`<h3>Prepositions are learned as phrases, not rules</h3>
+  <p>Learn them in fixed combinations: <i>good at, of one's own accord, under the weather, up to something, enter into an agreement, trip over, in ruins</i>. When you meet a new one, write the whole phrase in your notebook.</p>`,
+  items:[
+   {t:"prep", y:"2023", s:"The neighbours came ___ my house to see what was going on.", a:["to","over to","round to","into"], why:"'Came to/over to my house'."},
+   {t:"prep", y:"2023", s:"She sat ___ the shade of the tree.", a:["in"], why:"'In the shade'. 'Under' goes with the tree itself: 'under the tree'."},
+   {t:"prep", y:"2023", s:"The moon does not shine ___ its own light.", a:["by","with"], why:"'By its own light' or 'with its own light'. The moon reflects the sun's light."},
+   {t:"prep", y:"2023", s:"The burglar jumped ___ the compound wall.", a:["over"], why:"'Jump over' a wall."},
+   {t:"prep", y:"2023", s:"She entered ___ an agreement with them.", a:["into"], why:"'Enter into an agreement, a contract or a discussion'. 'Enter a room' takes no preposition."},
+   {t:"prep", y:"2023", s:"I have been working hard ___ arithmetic.", a:["at","on"], why:"'Work hard at a subject', or 'work on' it."},
+   {t:"prep", y:"2023", s:"He got ___ his bicycle.", a:["on","off"], why:"'Get on' (mount) or 'get off' (dismount) a bicycle."},
+   {t:"prep", y:"2023", s:"It cannot be done ___ offence.", a:["without"], why:"'Without (giving) offence'."},
+   {t:"prep", y:"2022", s:"Despite regular practice he never seems to win ___ tennis.", a:["at"], why:"'Win at a game'."},
+   {t:"prep", y:"2022", s:"___ luck, we should be in Islamabad by 5 p.m.", a:["with"], why:"'With luck' means if things go well."},
+   {t:"prep", y:"2022", s:"He went ___ his own accord: nobody forced him to go.", a:["of"], why:"'Of one's own accord' means voluntarily."},
+   {t:"prep", y:"2022", s:"My husband brought me some flowers today. He must be ___ something!", a:["up to"], why:"'Up to something' means planning something secretly."},
+   {t:"prep", y:"2022", s:"My younger son tripped ___ the cat and fell downstairs.", a:["over"], why:"'Trip over' an obstacle."},
+   {t:"prep", y:"2022", s:"You look really ___ the weather. Are you ill?", a:["under"], why:"'Under the weather' means slightly unwell."},
+   {t:"prep", y:"2022", s:"The car went ___ the brow of the hill and was soon out of sight.", a:["over"], why:"'Over the brow of the hill'."},
+   {t:"prep", y:"2022", s:"He said that his career was ___ ruins because of the pandemic.", a:["in"], why:"'In ruins'. (The paper's 'He told that' is itself an error: use 'He said that'.)"}
+  ]}
+);
+
+/* ---------- grammar & sentence structure track ---------- */
+const COMBO_NOTE = "Your version may differ. Mark it right if it is grammatical and keeps the same logic.";
+EX.push(
+{ id:16, group:"gram", title:"Sentence boundaries", sub:"Fragments, run-ons, comma splices",
+  lede:"The most common structural error in exam scripts, and the one in your own CPEC sentence: two sentences glued together with a comma, or half a sentence standing alone.",
+  lesson:`<h3>What makes a sentence</h3>
+  <div class="formula">Subject + finite verb + a complete thought</div>
+  <ul><li><b>Fragment:</b> "Because the floods destroyed the crops." There is a subject and a verb, but the thought is incomplete.</li>
+  <li><b>Run-on:</b> "Education is important it builds nations." Two sentences with nothing between them.</li>
+  <li><b>Comma splice:</b> "CPEC began in 2015, it has not delivered." A comma cannot join two full sentences.</li></ul>
+  <p><b>Five ways to fix a comma splice:</b></p>
+  <ul><li>Full stop: "…in 2015. It has not…"</li>
+  <li>Semicolon: "…in 2015; it has not…"</li>
+  <li>Comma + and / but / so / yet / or: "…in 2015, but it has not…"</li>
+  <li>Subordinator: "<i>Although</i> CPEC began in 2015, it has not…"</li>
+  <li>Semicolon + connective + comma: "…in 2015; <i>however,</i> it has not…"</li></ul>
+  <p class="note">However, therefore, moreover and consequently are adverbs, not conjunctions, so they can never join two sentences with only a comma.</p>`,
+  items:[
+   {t:"mcq", q:"Which sentence is a comma splice?", o:["Although prices rose, wages stayed flat.","Prices rose, wages stayed flat.","Prices rose, but wages stayed flat.","Prices rose; wages stayed flat."], a:1, why:"B joins two complete sentences with only a comma. The others use a subordinator, a comma + conjunction, or a semicolon."},
+   {t:"mcq", q:"What is wrong with: \"Pakistan imports oil, however, its own reserves are untapped.\"", o:["Nothing","'However' cannot join two sentences with commas; use '; however,'","'Oil' needs an article","'Untapped' should be 'untapping'"], a:1, why:"Correct: \"Pakistan imports oil; however, its own reserves are untapped.\""},
+   {t:"mcq", q:"Which is a fragment?", o:["The government announced a new policy.","Although the government announced a new policy.","The government announced a new policy, but nothing changed.","Nothing changed after the announcement."], a:1, why:"'Although' makes the clause dependent: although it did, what happened? It needs a main clause."},
+   {t:"mcq", q:"Best correction of: \"The floods destroyed the crops, prices rose sharply.\"", o:["The floods destroyed the crops prices rose sharply.","The floods destroyed the crops, and, prices rose sharply.","The floods destroyed the crops, so prices rose sharply.","The floods destroyed the crops however prices rose sharply."], a:2, why:"A comma + 'so' joins the clauses and shows cause and effect."},
+   {t:"correct", s:"CPEC was started in 2015, it is almost eleven years passed but the results are yet to come.", a:"CPEC was launched in 2015; almost eleven years have passed, but the promised results have yet to arrive.", why:"This is your own sentence. Fix the comma splice with a semicolon, and change 'it is … passed' to the present perfect 'have passed'."},
+   {t:"correct", s:"Education is important it builds a nation.", a:"Education is important because it builds a nation.", why:"A run-on. Join the clauses with 'because', a semicolon or a full stop."},
+   {t:"correct", s:"Because the population is growing rapidly. The demand for water has increased.", a:"Because the population is growing rapidly, the demand for water has increased.", why:"The first part is a fragment. Attach it to the main clause with a comma."},
+   {t:"correct", s:"The government raised taxes, people protested, the decision was withdrawn.", a:"The government raised taxes, but after people protested, the decision was withdrawn.", why:"Three sentences spliced together. Show the logic with 'but' and 'after'."},
+   {t:"correct", s:"Many children work in hotels. Instead of going to school. Their parents need the money.", a:"Many children work in hotels instead of going to school because their parents need the money.", why:"'Instead of going to school' is a fragment. Join everything into one sentence."}
+  ]},
+{ id:17, group:"gram", title:"Subject–verb agreement", sub:"Find the real subject",
+  lede:"Examiners plant agreement errors in nearly every sentence-correction question. The trick is finding the real subject.",
+  lesson:`<h3>Rules that catch candidates</h3>
+  <ul><li><b>Ignore the phrase in between:</b> "The <i>quality</i> of government schools <b>is</b> declining."</li>
+  <li><b>along with / as well as / with</b> do not add to the subject: "The minister, along with his staff, <b>was</b> present."</li>
+  <li><b>each, every, everyone, either, neither</b> are singular: "Each of the provinces <b>has</b>…"</li>
+  <li><b>either…or / neither…nor:</b> the verb agrees with the nearer subject: "Neither the minister nor his advisers <b>were</b>…"</li>
+  <li><b>the number of</b> takes a singular verb; <b>a number of</b> takes a plural: "The number of girls <b>has</b> risen; a number of NGOs <b>have</b> opened schools."</li>
+  <li><b>one of the + plural noun + who/that:</b> the verb agrees with the plural noun: "one of those officers who <b>have</b> never taken a bribe."</li>
+  <li><b>Uncountable and -ics nouns</b> are singular: news, information, advice, economics, politics (as a subject).</li></ul>`,
+  items:[
+   {t:"fill", q:"Choose the correct verb for each gap.", parts:["The quality of government schools ","{0}"," declining. One of the main reasons ","{1}"," the shortage of trained teachers. There ","{2}"," also many schools without boundary walls."], choices:["is","are"], a:["is","is","are"], why:"The subjects are quality (singular), one (singular) and many schools (plural)."},
+   {t:"fill", q:"Choose the correct verb for each gap.", parts:["Each of the provinces ","{0}"," its own education department. The number of out-of-school girls ","{1}"," risen, while a number of NGOs ","{2}"," opened community schools."], choices:["has","have"], a:["has","has","have"], why:"Each takes a singular verb, 'the number of' is singular, and 'a number of' is plural."},
+   {t:"fill", q:"Choose the correct verb for each gap.", parts:["Neither the minister nor his advisers ","{0}"," present. The committee, along with its chairman, ","{1}"," criticised in the press. Bread and butter ","{2}"," his only breakfast."], choices:["was","were"], a:["were","was","was"], why:"The verb agrees with the nearer subject (advisers). 'Along with' adds nothing to the subject. 'Bread and butter' is one dish."},
+   {t:"mcq", q:"The news from the flood-hit districts ___ alarming.", o:["are","is","were","have been"], a:1, why:"'News' is uncountable and takes a singular verb."},
+   {t:"correct", s:"The standard of education in rural areas are very low.", a:"The standard of education in rural areas is very low.", why:"The subject is 'standard' (singular)."},
+   {t:"correct", s:"Every one of the candidates have submitted their forms.", a:"Every one of the candidates has submitted his or her form.", why:"'Every one' is singular, so the verb and the pronoun are singular too."},
+   {t:"correct", s:"He is one of those officers who has never taken a bribe.", a:"He is one of those officers who have never taken a bribe.", why:"'Who' refers to 'officers' (plural), not to 'one'."},
+   {t:"correct", s:"His knowledge of languages and economics help him a lot.", a:"His knowledge of languages and economics helps him a great deal.", why:"The subject is 'knowledge'. This is the same trap as CSS 2023."}
+  ]},
+{ id:18, group:"gram", title:"Tenses", sub:"Present perfect & sequence",
+  lede:"Your 'it is almost eleven years passed' was a tense error. Most tense mistakes in essays come from three rules.",
+  lesson:`<h3>Three rules</h3>
+  <ol class="steps"><li><b>Present perfect</b> (have/has + V3) for a period that continues to now: <i>since 2015, for eleven years, so far, yet, already, recently</i>. "Almost eleven years <b>have passed</b>."</li>
+  <li><b>Simple past</b> for a finished time: <i>in 2015, yesterday, ago, last year</i>. Never "has won in 1992".</li>
+  <li><b>Sequence of tenses:</b> after a past reporting verb, the next clause also moves to the past: "He said that he <b>was</b> tired." The exception is universal truths: "The teacher said that the earth <b>moves</b> round the sun."</li></ol>
+  <p><b>since</b> + a point in time (since 2010) · <b>for</b> + a length of time (for eight years) · <b>ago</b> + simple past (three years ago).</p>
+  <p><b>Conditionals:</b> no "will" in the if-clause: "If he <b>works</b> hard, he will pass."</p>`,
+  items:[
+   {t:"fill", q:"Choose the right verb form for each gap.", parts:["CPEC ","{0}"," in 2015. Since then, almost eleven years ","{1}",", and the project ","{2}"," roads and power plants, but few industrial jobs."], choices:["was launched","has been launched","have passed","passed","has delivered","delivered"], a:["was launched","have passed","has delivered"], why:"'In 2015' is a finished time, so simple past. 'Since then' runs up to now, so present perfect."},
+   {t:"fill", q:"Choose since, for or ago.", parts:["He has lived in Hyderabad ","{0}"," 2010. He has taught at the university ","{1}"," eight years. He started his PhD three years ","{2}","."], choices:["since","for","ago"], a:["since","for","ago"], why:"Since + a point, for + a period, ago + simple past."},
+   {t:"mcq", q:"I ___ the Vice Chancellor yesterday.", o:["have met","met","have been meeting","had met"], a:1, why:"'Yesterday' is a finished time, so simple past."},
+   {t:"mcq", q:"He said that he ___ tired.", o:["is","was","has been","will be"], a:1, why:"A past reporting verb moves the next clause back into the past."},
+   {t:"mcq", q:"Our teacher told us that the earth ___ round the sun.", o:["moved","moves","had moved","was moving"], a:1, why:"A universal truth stays in the present, even after a past reporting verb."},
+   {t:"correct", s:"I am living in Hyderabad since 2010.", a:"I have been living in Hyderabad since 2010.", why:"'Since' needs the present perfect (continuous), not the present continuous."},
+   {t:"correct", s:"Pakistan has won the Cricket World Cup in 1992.", a:"Pakistan won the Cricket World Cup in 1992.", why:"A definite past time ('in 1992') takes the simple past."},
+   {t:"correct", s:"When I reached the station, the train already left.", a:"When I reached the station, the train had already left.", why:"Use the past perfect for the earlier of two past actions."},
+   {t:"correct", s:"If he will work hard, he will pass the examination.", a:"If he works hard, he will pass the examination.", why:"First conditional: present tense in the if-clause."},
+   {t:"correct", s:"It is not raining since last month.", a:"It has not rained since last month.", why:"'Since' needs the present perfect. This is from CSS 2022."}
+  ]},
+{ id:19, group:"gram", title:"Articles", sub:"a, an, the, or nothing",
+  lede:"Articles are the error examiners notice first, and there is no equivalent in Sindhi or Urdu. Learn the rules once and check every noun.",
+  lesson:`<h3>The rules that matter in exam writing</h3>
+  <ul><li><b>a / an:</b> a singular countable noun, mentioned for the first time or in general. Choose by <i>sound</i>: an hour, an MPhil, an SP; a university, a European, a one-day match.</li>
+  <li><b>the:</b> something specific or already mentioned; unique things (the sun, the world); superlatives (the most…); ordinals (the first); rivers, seas and mountain ranges (the Indus, the Arabian Sea, the Himalayas); musical instruments (plays the guitar); countries with "Republic", "Kingdom" or plural names (the UK, the United States).</li>
+  <li><b>No article:</b> abstract or uncountable nouns used in general (<i>Education is</i>… <i>Poverty causes crime</i>); plural nouns in general (<i>Children need</i>…); most countries, cities and languages (Pakistan, Sindhi); games (plays cricket); meals (at lunch).</li></ul>`,
+  items:[
+   {t:"fill", q:"Choose a, an, the, or — (no article).", parts:["","{0}"," Indus is ","{1}"," longest river in Pakistan. It is ","{2}"," important source of water for ","{3}"," agriculture."], choices:["a","an","the","—"], a:["the","the","an","—"], why:"Rivers take 'the'; superlatives take 'the'; 'an important' (vowel sound); agriculture in general takes no article."},
+   {t:"fill", q:"Choose a, an, the, or — (no article).", parts:["He is ","{0}"," honest officer and ","{1}"," university lecturer. He plays ","{2}"," flute but dislikes ","{3}"," cricket."], choices:["a","an","the","—"], a:["an","a","the","—"], why:"'An honest' (silent h); 'a university' (a 'yoo' sound); instruments take 'the'; games take no article."},
+   {t:"mcq", q:"___ education is the right of every child.", o:["The","An","A","No article"], a:3, why:"An abstract noun used in general takes no article."},
+   {t:"mcq", q:"She has completed ___ MPhil in linguistics.", o:["a","an","the","no article"], a:1, why:"MPhil is pronounced 'em-fil', which begins with a vowel sound, so 'an'."},
+   {t:"correct", s:"Honesty is a best policy.", a:"Honesty is the best policy.", why:"A superlative takes 'the'."},
+   {t:"correct", s:"The poverty is a major cause of the crime in our society.", a:"Poverty is a major cause of crime in our society.", why:"Abstract nouns used in general take no article."},
+   {t:"correct", s:"He is an European and an useful member of the team.", a:"He is a European and a useful member of the team.", why:"'European' and 'useful' begin with a 'yoo' (consonant) sound."},
+   {t:"correct", s:"Sun rises in east and sets in west.", a:"The sun rises in the east and sets in the west.", why:"Unique things and compass directions take 'the'."}
+  ]},
+{ id:20, group:"gram", title:"Parallelism & correlatives", sub:"not only… but also, either… or",
+  lede:"Your first topic sentence ('The question is not about that… but it is what about…') broke this rule. Balanced structures make sentences sound educated.",
+  lesson:`<h3>Keep paired and listed items in the same form</h3>
+  <ul><li><b>Lists:</b> "The policy aims at reducing poverty, improving schools and creating jobs", not "…and to create jobs".</li>
+  <li><b>Correlatives</b> are not only… but also, either… or, neither… nor, both… and, whether… or. Put the <i>same grammatical form</i> after each half, and place the first half directly before the part being paired.</li></ul>
+  <div class="pair"><div class="w"><b>Unbalanced</b>He not only failed in English but also in Essay.</div><div class="s"><b>Balanced</b>He failed not only in English but also in Essay.</div></div>
+  <ul><li><b>not X but Y:</b> "The problem is not <i>how many</i> children are out of school but <i>how much</i> those in school are learning."</li>
+  <li><b>Comparisons:</b> compare like with like: "Pakistan's literacy rate is lower than <i>that of</i> Sri Lanka", not "…lower than Sri Lanka".</li></ul>`,
+  items:[
+   {t:"mcq", q:"Which sentence is correctly parallel?", o:["The policy aims at reducing poverty, improving schools, and to create jobs.","The policy aims at reducing poverty, improving schools, and creating jobs.","The policy aims to reduce poverty, improving schools, and job creation.","The policy aims at poverty reduction, to improve schools, and creating jobs."], a:1, why:"All three items are -ing forms after 'aims at'."},
+   {t:"mcq", q:"Which places 'not only' correctly?", o:["He not only failed in English but also in Essay.","Not only he failed in English but also in Essay.","He failed not only in English but also in Essay.","He failed in not only English but also failed in Essay."], a:2, why:"'Not only… but also' pairs 'in English' with 'in Essay', so each half comes directly before its phrase."},
+   {t:"mcq", q:"Choose the correct comparison.", o:["Pakistan's literacy rate is lower than Sri Lanka.","Pakistan's literacy rate is lower than that of Sri Lanka.","Pakistan's literacy rate is lower than Sri Lanka's literacy.","Pakistan's literacy rate is more lower than Sri Lanka."], a:1, why:"Compare rate with rate ('that of'), not a rate with a country."},
+   {t:"correct", s:"The question is not about that Pakistan has the most out-of-school children, but it is what about the students who are enrolled in schools.", a:"The real question is not how many children are out of school but how much those in school are learning.", why:"This is your own sentence, rebuilt with a balanced 'not X but Y'. Both halves are 'how + clause'."},
+   {t:"correct", s:"She likes reading, writing and to travel.", a:"She likes reading, writing and travelling.", why:"Keep all list items in the -ing form."},
+   {t:"correct", s:"Either you can apply now or wait until next year.", a:"You can either apply now or wait until next year.", why:"'Either… or' should pair two verbs: 'either apply… or wait'."},
+   {t:"correct", s:"Our aim is not to punish but reforming offenders.", a:"Our aim is not to punish offenders but to reform them.", why:"Both halves must be infinitives: 'to punish… to reform'."},
+   {t:"write", q:"Write THREE sentences on exam topics: one with 'not only… but also', one with 'either… or' or 'neither… nor', and one with 'not X but Y'.", task:"Write three sentences on Pakistani exam topics using (1) not only… but also, (2) either… or / neither… nor, (3) not X but Y.", focus:"parallel structure and correct use of correlative conjunctions: is each correlative placed directly before the pair it joins, and are both halves in the same grammatical form? Also check articles, agreement and tense.", max:9}
+  ]},
+{ id:21, group:"gram", title:"Sentence combining", sub:"Build complex sentences",
+  lede:"Short, choppy sentences read as weak English. Combining two or three ideas into one controlled sentence is what separates a 12/20 essay from a 16/20 one.",
+  lesson:`<h3>Five combining tools</h3>
+  <ul><li><b>Coordination:</b> and, but, so, yet, or, with a comma before them when joining full clauses.</li>
+  <li><b>Subordination:</b> although, because, while, whereas, unless, since, when, if. "<i>Although</i> Pakistan has coal, it imports fuel."</li>
+  <li><b>Relative clause:</b> who, which, whose. Put commas around it if it adds extra information: "The Indus, <i>which</i> is Pakistan's lifeline, is shrinking."</li>
+  <li><b>Participial phrase:</b> "<i>Hit by floods,</i> Sindh lost much of its cotton crop."</li>
+  <li><b>Appositive:</b> "Dr Abdus Salam, <i>a Pakistani physicist</i>, won the Nobel Prize."</li></ul>
+  <p>Variety is the goal. Don't make every sentence long; mix one combined sentence with a short, punchy one.</p>`,
+  items:[
+   {t:"mcq", q:"Best combination: \"Pakistan has abundant coal. It still imports expensive fuel.\"", o:["Pakistan has abundant coal and it still imports expensive fuel.","Although Pakistan has abundant coal, it still imports expensive fuel.","Pakistan has abundant coal, it still imports expensive fuel.","Because Pakistan has abundant coal, it still imports expensive fuel."], a:1, why:"'Although' shows the contrast. 'And' hides the logic, C is a comma splice, and 'because' gives the wrong logic."},
+   {t:"mcq", q:"Which relative clause is punctuated correctly (Pakistan has only one capital)?", o:["Islamabad which is the capital of Pakistan is a planned city.","Islamabad, which is the capital of Pakistan, is a planned city.","Islamabad, that is the capital of Pakistan, is a planned city.","Islamabad which is the capital of Pakistan, is a planned city."], a:1, why:"It is extra information, so it needs commas on both sides and 'which', not 'that'."},
+   {t:"correct", s:"The Indus is Pakistan's lifeline. It is shrinking because of climate change.", a:"The Indus, which is Pakistan's lifeline, is shrinking because of climate change.", why:"A non-defining relative clause. "+COMBO_NOTE},
+   {t:"correct", s:"The floods hit Sindh in 2022. Millions of people lost their homes.", a:"When the floods hit Sindh in 2022, millions of people lost their homes.", why:"Subordinate with 'when'. "+COMBO_NOTE},
+   {t:"correct", s:"Dr Abdus Salam won the Nobel Prize in Physics. He was a Pakistani scientist.", a:"Dr Abdus Salam, a Pakistani scientist, won the Nobel Prize in Physics.", why:"An appositive. "+COMBO_NOTE},
+   {t:"correct", s:"Girls' education is neglected. This hurts the economy. Educated women add to the workforce.", a:"Neglecting girls' education hurts the economy, because educated women add to the workforce.", why:"Three ideas in one sentence: a gerund subject plus a 'because' clause. "+COMBO_NOTE},
+   {t:"correct", s:"The government announced free textbooks. Many parents still keep their children at home. They need them to earn.", a:"Although the government announced free textbooks, many parents still keep their children at home because they need them to earn.", why:"Contrast ('although') plus a reason ('because'). "+COMBO_NOTE},
+   {t:"write", q:"Combine these short sentences into a smooth paragraph of 3–4 sentences. Use at least one 'although/whereas', one relative clause and one participial phrase.", ctx:"Sindh is an agricultural province. Most of its farmers depend on the Indus. The river's flow is falling. Glaciers are melting faster. Rainfall has become irregular. Farmers are planting less cotton. Rural incomes are dropping. Many young men are moving to Karachi.",
+     task:"Combine the given short sentences into a smooth paragraph of 3–4 sentences, using at least one 'although/whereas', one relative clause and one participial phrase.", focus:"sentence combining. Are the ideas joined with correct subordinators, relative clauses and participial phrases? Is the logic (cause, contrast, result) clear? Are there any comma splices, dangling participles or agreement errors?", max:10}
+  ]},
+{ id:22, group:"gram", title:"Punctuation", sub:"5 marks in the paper",
+  lede:"CSS sets an unpunctuated passage every year (Q5a, 5 marks). The same rules keep your essays free of comma splices.",
+  lesson:`<h3>Rules you'll use every time</h3>
+  <ul><li><b>Capitals:</b> sentence starts, proper nouns, days, months, languages, the pronoun I.</li>
+  <li><b>Comma:</b> after an introductory word or clause ("However, …", "When the rains came, …"); before and/but/so when joining two full clauses; around extra (non-defining) information; between list items; before a direct quotation.</li>
+  <li><b>Semicolon:</b> between two closely linked full sentences, and before however, therefore or moreover when they join sentences.</li>
+  <li><b>Colon:</b> before a list or an explanation that the first clause sets up.</li>
+  <li><b>Apostrophe:</b> possession (the children's books, the boys' hostel, Ali's pen). Remember <i>it's</i> = it is, but <i>its</i> = belonging to it.</li>
+  <li><b>Inverted commas:</b> around exact spoken words, with the end punctuation inside: He said, "Open your books."</li></ul>
+  <p>Method for the paper: first mark the sentence ends, then the speech, then the commas.</p>`,
+  items:[
+   {t:"mcq", q:"Choose the correct sentence.", o:["The committee submitted it's report.","The committee submitted its report.","The committee submitted its' report.","The committee submitted it is report."], a:1, why:"'Its' is possessive. 'It's' means 'it is'."},
+   {t:"mcq", q:"Choose the correctly punctuated sentence.", o:["Prices are rising, therefore, people are cutting spending.","Prices are rising; therefore, people are cutting spending.","Prices are rising therefore people are cutting spending.","Prices are rising: therefore people, are cutting spending."], a:1, why:"'Therefore' joins two sentences, so use a semicolon before it and a comma after it."},
+   {t:"mcq", q:"\"My brother who lives in Karachi is a doctor.\" The writer has only one brother. What is needed?", o:["Nothing","Commas around 'who lives in Karachi'","A semicolon after 'brother'","A colon after 'Karachi'"], a:1, why:"With only one brother, the clause is extra information (non-defining), so it takes commas."},
+   {t:"correct", s:"pakistan which came into being in 1947 is the fifth most populous country in the world", a:"Pakistan, which came into being in 1947, is the fifth most populous country in the world.", why:"A capital letter, commas around the non-defining clause, and a full stop."},
+   {t:"correct", s:"the teacher said open your books on page ten", a:"The teacher said, \"Open your books on page ten.\"", why:"A comma before the speech, inverted commas, a capital at the start of the speech, and the full stop inside."},
+   {t:"correct", s:"however the government did not listen to the farmers demands", a:"However, the government did not listen to the farmers' demands.", why:"A comma after an introductory 'however', and a plural possessive: farmers'."},
+   {t:"correct", s:"ali asked his father why do the rich get richer his father smiled and said because they make money work for them while the poor work for money", a:"Ali asked his father, \"Why do the rich get richer?\" His father smiled and said, \"Because they make money work for them, while the poor work for money.\"", why:"This is exam-style: two speech sentences, a question mark inside the inverted commas, and capitals for names and sentence starts."}
+  ]},
+{ id:23, group:"gram", title:"Common errors", sub:"Errors examiners see every year",
+  lede:"These errors are so common in South Asian English that examiners look for them. Each one costs marks in every paper you write.",
+  lesson:`<h3>Wrong → right</h3>
+  <div style="overflow-x:auto"><table class="pattern"><tr><th>Avoid</th><th>Write</th></tr>
+  ${[["discuss about","discuss"],["return back / revert back","return / revert"],["cope up with","cope with"],["each and every","every"],["one of the best student","one of the best students"],["he told that","he said that / he told me that"],["since two years","for two years"],["I am agree","I agree"],["reply me","reply to me"],["married with","married to"],["good in English","good at English"],["in the other hand","on the other hand"],["comprises of","comprises / consists of"],["pay attention towards","pay attention to"],["more better","better"],["inspite of","in spite of / despite"],["prepone","bring forward"],["the reason is because","the reason is that"]].map(r=>`<tr><td style="color:var(--bad)">${r[0]}</td><td style="color:var(--ok)">${r[1]}</td></tr>`).join("")}</table></div>`,
+  items:[
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The committee will","discuss about","the new budget","in tomorrow's meeting."], a:1, why:"'Discuss' already means 'talk about': the committee will discuss the new budget."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["He is","one of the best student","in our","department."], a:1, why:"'One of the best students': 'one of' takes a plural noun."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["I have been teaching","at this university","since","eight years."], a:2, why:"'For eight years'. Use 'since' with a starting point, such as 'since 2018'."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["My cousin","is married with","a doctor","from Karachi."], a:1, why:"'Married to' someone."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["On the one hand, education is free;","in the other hand,","books are expensive."], a:1, why:"'On the other hand'."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["Pakistan must","cope up with","the challenge of","climate change."], a:1, why:"'Cope with'. 'Cope up' is not standard English."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The report","comprises of","twelve chapters","on governance."], a:1, why:"'Comprises twelve chapters' or 'consists of twelve chapters'."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The minister","told that","the project","would be completed soon."], a:1, why:"'Said that', or 'told the reporters that'. 'Tell' needs a person as its object. This error appears in CSS 2022."},
+   {t:"spot", label:"Find the error", q:"Click the part that contains the error.", s:["The reason for his failure","is because","he did not","practise writing."], a:1, why:"'The reason… is that'. 'Reason' and 'because' say the same thing twice."},
+   {t:"correct", s:"Each and every student should return back the library books before the exams.", a:"Every student should return the library books before the exams.", why:"'Each and every' is wordy, and 'return back' is redundant."},
+   {t:"correct", s:"I am agree that he is more better in English than me.", a:"I agree that he is better at English than I am.", why:"'Agree' is a verb (not 'am agree'); 'more better' is a double comparative; 'good at' a subject; 'than I am'."}
+  ]}
+);
+
+/* ---------- essay topic bank ---------- */
+const BANK = [
+ ["Youth Bulge: a demographic dividend or a demographic bomb?","2026","Pakistan's youth bulge will become a demographic bomb rather than a dividend unless the state invests urgently in skills and jobs for its young population."],
+ ["Local Government System: the missing link in Pakistan's governance structure.","2026","Pakistan's governance fails at the grassroots because successive governments have starved elected local bodies of power, funds and continuity."],
+ ["Cyber Security as the new national security frontier.","2026","In an age when conflicts are fought through networks, Pakistan's security depends as much on protecting its digital infrastructure as on guarding its borders."],
+ ["Emerging Multipolar World Order: opportunities and risks for Pakistan.","2026","A multipolar world lets Pakistan diversify its partnerships, but only a strong economy will keep it from becoming a pawn in great-power rivalry."],
+ ["The one who controls the sea, rules the world.","2026","Because most world trade travels by sea, maritime power remains the foundation of global influence, as China's rapid naval expansion shows."],
+ ["There is nothing so likely to produce peace as to be well prepared to meet an enemy.","2026","Credible military preparedness preserves peace because it convinces a potential aggressor that war would cost more than it could gain."],
+ ["Revitalising agriculture sector of Pakistan.","2026","Pakistan's agriculture can be revived only by replacing water-wasting traditional practices with research-led, climate-smart farming."],
+ ["Countering the growing menace of beggary.","2026","Because beggary in Pakistan has become an organised business, it can be countered only by breaking begging networks while giving the genuinely destitute real social protection."],
+ ["Politicisation of sports – a new challenge.","2026","When governments turn sport into a political tool, they destroy merit in national teams and weaken sport's power to bring rival nations together."],
+ ["Nations have no permanent friends and enemies, they have only permanent interests.","2026","Pakistan's changing relationship with the United States shows that foreign policy is driven by national interest rather than lasting friendship."],
+ ["Dynastic Politics is the Worst Mockery of Democracy.","2025","Dynastic politics mocks democracy because it turns political parties into family property and denies ordinary members any path to leadership."],
+ ["Hamas–Israel Conflict: A Test Case for World Conscience.","2025","The Hamas–Israel conflict has tested the world's conscience by exposing how inconsistently the international community applies humanitarian law to civilian suffering."],
+ ["An investment in knowledge pays the best interest.","2025","For a developing country like Pakistan, investment in knowledge pays the best interest because skilled people create wealth long after factories and roads have aged."],
+ ["Frailty is no more the name of woman.","2025","Frailty is no longer the name of woman, as women today lead governments, armies and economies once thought to be men's domain."],
+ ["Reforestation as a global urgency.","2025","Reforestation has become a global urgency because forests are the cheapest and most effective defence against both climate change and biodiversity loss."],
+ ["True peace is the presence of justice.","2025","Peace imposed without justice is only a pause between conflicts, because people denied their rights will eventually rise against the order that wrongs them."],
+ ["Hope: the greatest driving force.","2024","Hope is the greatest driving force in human life because it gives individuals and nations the courage to act when the odds seem impossible."],
+ ["CPEC and \"Indo–Middle East–Europe\", new war fronts.","2024","The rivalry between CPEC and the India–Middle East–Europe Corridor shows that great powers now compete through trade routes rather than armies."],
+ ["The power of propaganda and the Muslim World.","2024","The Muslim world keeps losing the battle of narratives because it reacts to propaganda instead of building credible media institutions of its own."],
+ ["Phase out of fossil fuel and Arab economies.","2024","The global shift away from fossil fuels threatens oil-dependent Arab economies unless they speed up diversification into finance, tourism and renewable energy."],
+ ["Pragmatism vs Passion in politics.","2024","Passion may win elections, but only pragmatism can deliver the compromises that effective governance requires."],
+ ["BRICS and Pakistan: Prospects of Recovery.","2024","Closer ties with BRICS could widen Pakistan's access to trade and finance, but they cannot replace the domestic reforms that economic recovery demands."],
+ ["Artificial Intelligence: The Death of Creativity.","2024","Artificial intelligence will not kill human creativity; by automating routine and imitative work, it will make original thought more valuable than ever."],
+ ["Pathways to Pakistan's Prosperity.","2024","Pakistan's path to prosperity runs through human capital, because no economy can grow sustainably while millions of its children remain out of school."],
+ ["Globalization and National Economies.","2024","Globalisation rewards national economies that compete through productivity and punishes those that survive on imports and borrowing."],
+ ["Political Polarization; Governance and Society.","2024","Political polarisation paralyses governance in Pakistan because it turns every policy into a partisan battle and every opponent into an enemy."],
+ ["Instruction in youth is like engraving in stone.","2023","What a child learns early shapes the adult for life, which is why a nation's character is decided in its primary schools rather than its universities."],
+ ["The one who uses force is afraid of reasoning.","2023","Those who resort to force reveal the weakness of their case, because people confident of their arguments rely on persuasion rather than coercion."],
+ ["Not all recycling projects are cost-effective.","2023","Recycling is worthwhile only where collection and processing cost less than the resources saved, so governments should fund it selectively rather than as a symbol."],
+ ["The fool speaks, and the wise listens.","2023","The wise listen more than they speak because listening is how they learn, while the fool speaks to display what he does not know."],
+ ["A friend walks in when everyone else walks out.","2023","True friendship is proved in adversity, because only a real friend stays when there is nothing left to gain."],
+ ["Online learning is not only convenient but often more effective than traditional classroom instruction.","2023","Online learning may be more convenient, but in Pakistan it is rarely more effective than classroom teaching because most students lack devices, connectivity and supervision."],
+ ["To encourage healthy eating, higher taxes should be imposed on soft drinks and junk food.","2023","Higher taxes on sugary drinks and junk food can improve public health, but only if the revenue is spent on making healthy food cheaper."],
+ ["People have become overly dependent on technology.","2023","Dependence on technology becomes harmful when people let devices replace the skills of thinking, remembering and relating that they once exercised themselves."],
+ ["Both parents should assume equal responsibility in raising a child.","2023","Children grow up more confident and balanced when both parents share responsibility for raising them, rather than leaving it to the mother alone."],
+ ["Boys will be boys.","2023","The saying 'boys will be boys' does lasting harm because it excuses aggressive behaviour in males and teaches society to tolerate it."],
+ ["An analysis of the concept of globalization of markets.","2022","The globalisation of markets has increased world wealth but distributed it unequally, rewarding countries with skilled workforces and penalising those that export only raw materials."],
+ ["Digital democracy: social media and political participation.","2022","Social media has widened political participation in Pakistan, but it has also replaced informed debate with viral outrage."],
+ ["Global trade and trade policies of China.","2022","China's trade policies have reshaped global commerce by combining export-led growth with infrastructure lending that binds partner economies to it."],
+ ["Imagination is more important than knowledge.","2022","Imagination matters more than knowledge because knowledge records what is already known, while imagination creates what does not yet exist."],
+ ["Global politics and international relations.","2022","International relations today are shaped less by military alliances than by economic interdependence, which makes economic strength the real basis of global influence."],
+ ["The controversial issues of feminism in contemporary women's rights movements.","2022","Contemporary feminism is divided less over women's rights than over how far those rights should challenge local culture and religion."],
+ ["World food systems: the economics of agriculture.","2022","World food systems produce enough to feed everyone, yet hunger persists because distribution, prices and waste, not production, decide who eats."],
+ ["Is there such a thing as ethical consumerism?","2022","Ethical consumerism exists, but it cannot reform global markets alone because most consumers choose on price, not principle."],
+ ["Human development and economic sustainability.","2022","Economic growth is sustainable only when it is built on human development, because healthy and educated people are the engine of lasting productivity."],
+ ["How is terrorism and its perception shaped by the Mass Media?","2022","Mass media shape the perception of terrorism by amplifying spectacular attacks, which gives terrorists the publicity they seek."],
+ ["Do not waste water even if you were at a running stream.","2021","Pakistan's water crisis shows the wisdom of this teaching, because a nation that wastes water in times of plenty will thirst in times of scarcity."],
+ ["Meaning purposive education.","2021","Purposive education prepares students to think, work and live as responsible citizens, rather than merely to pass examinations."],
+ ["COVID-19: A wake up call for Pakistani researchers.","2021","COVID-19 exposed how little Pakistan invests in research, and it showed that a country which cannot produce its own knowledge must depend on others in a crisis."],
+ ["Human inventions move the societies backward.","2021","Human inventions move societies backward only when they outpace the wisdom and laws needed to use them responsibly."],
+ ["Universal human equality is utopic.","2021","Universal human equality may never be fully achieved, but striving for it remains essential because every gain in equality has expanded human freedom."],
+ ["Bureaucracy doldrums.","2021","Pakistan's bureaucracy is stuck in the doldrums because a colonial-era structure rewards caution and seniority instead of performance."],
+ ["Gender equality: A popular slogan.","2021","In Pakistan gender equality has remained a popular slogan rather than a reality, because laws protecting women are poorly enforced."],
+ ["Pros and cons of globalization.","2021","Globalisation has lifted millions out of poverty, but it has also left weak economies more exposed to shocks they cannot control."],
+ ["Intercultural communication is a panacea to avoid the 3rd world war.","2021","Intercultural communication can reduce the risk of global war by replacing stereotypes with understanding, though it cannot by itself resolve conflicts of interest."],
+ ["I fall upon the thorns of life! I bleed.","2021","Suffering, as Shelley's line suggests, is inseparable from a sensitive life, but it can also become the source of deeper understanding and art."],
+ ["Do we really need literature in our lives?","2020","We need literature because it teaches empathy, letting us live other lives and understand people unlike ourselves."],
+ ["Women universities as agents of change.","2020","Women's universities act as agents of change in conservative societies by opening higher education to women whose families would not otherwise allow it."],
+ ["Pakistan and the future of Kashmir cause.","2020","The future of the Kashmir cause depends less on rhetoric than on Pakistan's ability to build economic and diplomatic strength and keep the issue before the international community."],
+ ["Polarized politics: the issues and challenges of democracy in Pakistan.","2020","Polarised politics threatens democracy in Pakistan because parties now treat each other as enemies to be eliminated rather than rivals to be defeated at the polls."],
+ ["Global power dynamics and Pakistan's foreign policy.","2020","Shifting global power dynamics demand that Pakistan balance its ties with China and the United States instead of depending on either one."],
+ ["Pakistan's informal economy: the way forward.","2020","Pakistan's large informal economy can be brought into the tax net only by making formal registration simpler and cheaper than staying outside it."],
+ ["Promoting tourism in Pakistan: opportunities and challenges.","2020","Pakistan's natural and cultural wealth could make tourism a major earner, but poor infrastructure and security perceptions keep that potential unrealised."],
+ ["I do not agree with what you have to say, but I'll defend to the death your right to say it.","2020","Freedom of expression means defending even the speech we dislike, because a right granted only to agreeable opinions is no right at all."],
+ ["Is Pakistan ready for digital revolution?","2020","Pakistan is not yet ready for a digital revolution, because low digital literacy and patchy connectivity exclude most of its population."],
+ ["IMF bailouts: roads to stability or recipes for disaster.","2020","IMF bailouts bring Pakistan only temporary relief, because without structural reform each programme simply postpones the next crisis."],
+ ["Let there be more light in the corridors of worship places.","2019","Places of worship can become centres of learning and tolerance only if they open themselves to knowledge rather than sectarian division."],
+ ["New war fronts lie in economic zones.","2019","Modern rivalries are fought increasingly in economic zones, where control of trade routes and markets matters more than control of territory."],
+ ["Urdu literature and progressive movement.","2019","The Progressive Writers' Movement transformed Urdu literature by turning it from romance towards the struggles of ordinary people."],
+ ["Art for peace.","2019","Art promotes peace by revealing the shared humanity behind the labels that divide nations and communities."],
+ ["Truth is lived, not taught.","2019","Truth is learned more from the example of people's lives than from sermons, which is why children imitate what adults do rather than what they say."],
+ ["New Waves of feminism and our culture.","2019","New waves of feminism will take root in Pakistan only if they speak to local realities, such as women's education, safety and economic rights."],
+ ["Democracy and illiteracy do not move together.","2019","Democracy struggles where illiteracy is widespread, because voters who cannot read are easily swayed by patronage and propaganda."],
+ ["Sometimes we do not see what we see.","2019","We often fail to see what is in front of us, because prejudice and habit filter reality before it reaches our judgement."],
+ ["Expanding information technology: a curse or blessing.","2019","Information technology is a blessing when it spreads knowledge and opportunity, but it becomes a curse when it spreads misinformation faster than truth."],
+ ["Classrooms decide the future of the nation.","2019","A nation's future is decided in its classrooms, because the quality of teaching today determines the quality of citizens tomorrow."],
+ ["Real development should transform people's lives, not just economic statistics.","2018","Real development is measured by better health, education and opportunity for ordinary people, not by GDP growth alone."],
+ ["Higher Education in Pakistan: Ills and Remedies.","2018","Higher education in Pakistan produces degrees rather than skills, because universities reward rote learning over research and critical thought."],
+ ["Too many of us are not living our dreams because we are living our fears.","2018","Most people fail to pursue their dreams not for lack of ability but because fear of failure keeps them in safe, unfulfilling routines."],
+ ["China Pakistan Economic Corridor (CPEC) and its Socio-economic Implications for the Region and the World.","2018","CPEC could transform Pakistan's economy and regional connectivity, but only if its benefits reach ordinary workers and less-developed provinces."],
+ ["Beware the barrenness of a busy life!","2018","A life filled with constant activity can be barren if busyness leaves no time for reflection, relationships and purpose."],
+ ["The Emerging Power of Social Media: Prospects and Problems.","2018","Social media gives ordinary citizens unprecedented power to be heard, but the same openness makes it a powerful tool for misinformation."],
+ ["In the fight against terrorism and corruption, it is imperative not to compromise human rights and civil liberties.","2018","Fighting terrorism and corruption by sacrificing civil liberties is self-defeating, because it destroys the very rights the state is meant to protect."],
+ ["The threat of Global Warming and the ways to counter it.","2018","Global warming can be countered only through a rapid shift to clean energy combined with adaptation for vulnerable countries like Pakistan."],
+ ["Will 'Rule of law' always remain an impracticable myth in our country?","2018","Rule of law need not remain a myth in Pakistan, but it will become real only when the powerful are held to the same law as the weak."],
+ ["Democracy in Pakistan: Hopes and Hurdles.","2018","Democracy in Pakistan survives despite repeated interruptions, but weak political parties remain its biggest hurdle."],
+ ["Is colonial mentality impeding Pakistan's progress?","2017","A colonial mentality still impedes Pakistan's progress, as seen in a governance system that treats citizens as subjects to be controlled rather than served."],
+ ["Brexit means globalization is the rhetoric of the privileged, and capitalism will return ferociously as ever.","2017","Brexit revealed that globalisation has lost the support of those it left behind, who now see it as a project serving the privileged."],
+ ["More and more International military engagements by the United Nations; is the world moving towards peace?","2017","More UN military engagements do not mean the world is moving towards peace; they show how often the UN is called in after prevention has failed."],
+ ["Modernity is an unending project.","2017","Modernity is an unending project because each generation must reinvent its institutions to meet new technologies and new demands for freedom."],
+ ["Feminism is not really a Third World issue.","2017","Feminism is very much a Third World issue, because women in developing countries face the starkest denials of education, safety and economic rights."],
+ ["Literature is a lonely planet of idealists.","2017","Literature may be a lonely planet of idealists, but its ideals have repeatedly inspired the real-world reforms that practical people later carry out."],
+ ["Being a minority is a fate no one wants. Can nationalism be really inclusive?","2017","Nationalism can be inclusive only when it is based on shared citizenship rather than a single religion, language or ethnicity."],
+ ["Ideologies thrive on notions of resistance, yet change is a simulation.","2017","Ideologies draw their energy from resisting an enemy, but once in power they often reproduce the very order they promised to change."],
+ ["Are modern wars not holy wars?","2017","Modern wars are rarely holy wars; religion is usually invoked to mobilise support for conflicts driven by power, resources and territory."],
+ ["Life without controversy is no life. But why one should not choose the safe haven of conformism?","2017","Choosing controversy over conformity is often worthwhile, because progress begins with those willing to question accepted ideas."],
+ ["World as a global village: Learning to live together.","2016","As technology turns the world into a global village, peaceful coexistence depends on learning to respect cultures unlike our own."],
+ ["We have to learn to be our own best friends, because we fall too easily into the trap of being our own worst enemies.","2016","Self-respect is the foundation of achievement, because people who constantly doubt themselves defeat their own efforts before others can."],
+ ["Water crisis and national unity.","2016","Pakistan's water crisis threatens national unity because disputes over the sharing of Indus waters deepen mistrust between the provinces."],
+ ["The place of Urdu in Pakistan and Supreme Court's ruling on making Urdu the official language of the country.","2016","Making Urdu the official language would bring government closer to ordinary citizens, but it must be done without marginalising English or the regional languages."],
+ ["Crisis of good governance in Pakistan: Need for reforms and institution building.","2016","Pakistan's crisis of governance stems from weak institutions, so lasting reform depends on building institutions rather than relying on individuals."],
+ ["Promotion of tax culture in Pakistan: Perspective, prospects, and challenges.","2016","A tax culture will take root in Pakistan only when citizens see their taxes return to them as better public services."],
+ ["Gender equality is a myth!","2016","Gender equality is not a myth but an unfinished project, as the steady expansion of women's rights over the last century shows."],
+ ["The creation of new provinces in Pakistan: Implications for an integrated country.","2016","New provinces could strengthen Pakistan's unity by bringing government closer to neglected regions, provided they are created by consensus rather than imposed."],
+ ["Does foreign aid help to achieve economic stability?","2016","Foreign aid rarely brings lasting economic stability, because it eases the pressure for the domestic reforms that stability requires."],
+ ["Frailty, thy name is woman.","2016","Shakespeare's line reflects the prejudice of its age rather than any truth about women, whose resilience history has repeatedly shown."],
+ ["The war on terror has contributed to the growing abuse of human rights.","2015","The war on terror has eroded human rights worldwide by normalising detention without trial, surveillance and targeted killings."],
+ ["Anticipation is often greater than realization.","2015","Anticipation is often sweeter than achievement, because the imagined reward is free of the disappointments that reality brings."],
+ ["Punctuality is the virtue of the bored.","2015","Punctuality is not the virtue of the bored but the discipline of the purposeful, because it shows respect for other people's time."],
+ ["The introduction of new digital technologies has radically altered identities.","2015","Digital technologies have altered identity by letting people present curated online selves that can differ sharply from their real lives."],
+ ["In a hierarchy, every employee tends to rise to his level of incompetence.","2015","The Peter Principle describes Pakistan's public sector well, because promotion by seniority lifts officers into roles they are not equipped to perform."],
+ ["I disapprove of what you say, but I defend to death your right to say it.","2015","Tolerance of opposing views is the foundation of a free society, because silencing others today makes it easier to silence ourselves tomorrow."],
+ ["Luxury predecessors become the necessity of successors.","2015","Yesterday's luxuries become today's necessities, as mobile phones show, and this constant expansion of wants fuels both progress and debt."],
+ ["When life throws you lemons, make lemonade.","2015","Adversity can be turned into opportunity by those who treat setbacks as lessons rather than defeats."],
+ ["Government should eliminate subsidies and incentives for manufacturers and consumers of electric cars.","2015","Governments should not yet eliminate incentives for electric cars, because the shift away from fossil fuels still needs public support to reach scale."],
+ ["Labor-saving devices are more troublesome than they are worth.","2015","Labour-saving devices are worth their trouble, because the time they free has allowed millions, especially women, to pursue education and work."]
+];
+EX.push(
+{ id:24, group:"essay", title:"Topic sentence trainer", sub:"Real CSS essay topics",
+  lede:"One essay title, one strong topic sentence, every day. Take a position, narrow it to one reason, and write it in a single clean sentence.",
+  lesson:`<h3>From an essay title to a topic sentence in three moves</h3>
+  <ol class="steps"><li><b>Decide your position.</b> Is it true or false? A dividend or a bomb? Agree or disagree? Write it in a few words before anything else.</li>
+  <li><b>Find your main reason.</b> Ask "why?" once. The answer becomes your controlling idea.</li>
+  <li><b>Write one sentence:</b> topic + position + reason. Check that someone could disagree with it.</li></ol>
+  <div class="formula">[Topic] + [your position] + because / unless / by + [one reason]</div>
+  <div class="pair"><div class="w"><b>Weak: no position</b>The youth bulge is an important issue for Pakistan.</div><div class="s"><b>Strong</b>Pakistan's youth bulge will become a demographic bomb unless the state invests in skills and jobs for its young people.</div></div>
+  <p><b>Useful frames:</b> "X will … unless …" · "X is … because …" · "Although …, X …" · "X is not … but …" · "Only by … can Pakistan …"</p>
+  <p class="note">All titles are from the actual CSS English Essay papers, 2015–2026, with all ten topics for every year except 2025, where six of the ten could be confirmed. The sample sentences show one possible position, and you may argue the other side.</p>`,
+  items:[{t:"bank"}]}
+);
+
+function rBank(ex){
+  const wrap = el("div");
+  const filt = el("select",{class:"top","aria-label":"Filter topics"}, [["all","All years (2015–2026)"]].concat(["2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016","2015"].map(y=>[y,"CSS "+y])).map(([v,l])=>el("option",{value:v},l)));
+  filt.value = state.drafts["bank-filter"] || "all"; if (!filt.value) filt.value = "all";
+  const list = ()=>BANK.map((b,k)=>k).filter(k=>filt.value==="all"||BANK[k][1]===filt.value);
+  let cur = +(state.drafts["bank-cur"]||0); if (!(cur>=0 && cur<BANK.length)) cur = 0;
+  const body = el("div");
+  function go(k){ cur = k; state.drafts["bank-cur"]=String(k); save(); draw(); }
+  filt.addEventListener("change",()=>{ state.drafts["bank-filter"]=filt.value; save(); const l=list(); if(!l.includes(cur)) go(l[0]); else draw(); });
+  function draw(){
+    body.innerHTML="";
+    const [topic, yr, model] = BANK[cur], l = list(), pos = l.indexOf(cur);
+    const done = !!state.items["bank-"+cur];
+    const prevB = el("button",{class:"btn ghost",type:"button",onclick:()=>go(l[(pos-1+l.length)%l.length])},"← Previous");
+    const nextB = el("button",{class:"btn ghost",type:"button",onclick:()=>go(l[(pos+1)%l.length])},"Next →");
+    const randB = el("button",{class:"btn ghost",type:"button",onclick:()=>{ const pool=l.filter(k=>k!==cur); if(pool.length) go(pool[Math.floor(Math.random()*pool.length)]); }},"Random");
+    const untried = el("button",{class:"btn ghost",type:"button",onclick:()=>{ const u = l.filter(k=>!state.items["bank-"+k]&&k!==cur); if(u.length) go(u[0]); }},"Next untried");
+    const stance = el("input",{type:"text",class:"titlein",placeholder:"e.g. a bomb, unless jobs are created"}); stance.value = state.drafts["bank-st-"+cur]||"";
+    stance.addEventListener("input",()=>{ state.drafts["bank-st-"+cur]=stance.value; save(); });
+    const cnt = el("span",{class:"meta"});
+    const ta = paper("bank-ts-"+cur, true, "Your topic sentence…", ()=>cnt.textContent = wc(ta.value)+" words · aim for 15–35");
+    cnt.textContent = wc(ta.value)+" words · aim for 15–35";
+    const checks = ["It names the topic of the title","It takes a clear position someone could disagree with","It gives one specific reason or condition (because / unless / by…)","It is one idea: not a list, not a question, not an announcement","It is free of clichés ('backbone of a nation', 'burning issue')","It is grammatically correct, with no comma splice"];
+    const checkEl = el("div",{class:"opts"}, checks.map(c=>el("label",{class:"chk",style:"font-family:var(--sans);font-size:14px"}, el("input",{type:"checkbox"}), el("span",null,c))));
+    const sample = el("div",{class:"why",hidden:true}, el("b",null,"Sample topic sentence: "), model, el("div",{class:"meta",style:"margin-top:4px"},"This is one possible position. Compare its structure with yours: topic, position, then reason."));
+    const markDone = ()=>{ if(!state.items["bank-"+cur]){ state.items["bank-"+cur]=true; save(); updateNav(); drawGrid(); } };
+    const showB = el("button",{class:"btn ghost",type:"button",onclick:()=>{ if (wc(ta.value)<4 && sample.hidden){ ta.focus(); ta.placeholder="Write your own attempt first, then compare."; return; } sample.hidden=!sample.hidden; showB.textContent=sample.hidden?"Compare with a sample":"Hide sample"; markDone(); }},"Compare with a sample");
+    const fb = feedbackBlock(()=>{ if (wc(ta.value)<4){ ta.focus(); return null; } markDone();
+      return {task:"Write one topic sentence that takes a clear position on the CSS essay title: \""+topic+"\"", context:stance.value.trim()?"Candidate's intended position: "+stance.value.trim():"", text:ta.value.trim(),
+        fmt:`Reply in plain text, under 200 words, in exactly this shape:
+Score: n/5 (1 mark each: names the topic; clear arguable position; one specific reason or condition; single focused idea with no cliché, question or announcement; grammatically correct)
+What works: one sentence.
+Main problem: one sentence, quoting the candidate's words.
+Grammar: list any errors with corrections, or write "None".
+Stronger version (keeping the candidate's position): one sentence.
+Opposite position: one strong topic sentence arguing the other side.`, focus:"writing an effective topic sentence for a CSS essay title."}; });
+    body.append(el("div",{class:"card"},
+      el("div",{class:"qn"}, el("span",null,"Topic "+(pos+1)+" of "+l.length+(done?" · done ✓":"")), el("span",{class:"pill"}, "CSS "+yr)),
+      el("div",{class:"topicbox"}, topic),
+      el("div",{class:"row"}, prevB, nextB, randB, untried),
+      el("label",{class:"subl"},"Step 1 · Your position in a few words"), stance,
+      el("label",{class:"subl"},"Step 2 · Your topic sentence"), ta, el("div",{class:"row"},cnt),
+      el("div",{class:"subl"},"Step 3 · Check it yourself"), checkEl,
+      el("div",{class:"row"}, showB), sample, fb));
+  }
+  const gridBox = el("div",{class:"card"});
+  function drawGrid(){
+    gridBox.innerHTML="";
+    const n = BANK.filter((b,k)=>state.items["bank-"+k]).length;
+    gridBox.append(el("div",{class:"qn"}, el("span",null,"All topics"), el("span",null,n+"/"+BANK.length+" practised")));
+    const g = el("div",{class:"chips"});
+    BANK.forEach((b,k)=>g.append(el("button",{type:"button",class:"chipb"+(state.items["bank-"+k]?" done":"")+(k===cur?" cur":""),title:b[0],onclick:()=>{ if(filt.value!=="all"&&b[1]!==filt.value){ filt.value="all"; state.drafts["bank-filter"]="all"; } go(k); drawGrid(); window.scrollTo({top:wrap.offsetTop-10}); }}, (state.items["bank-"+k]?"✓ ":"")+b[0])));
+    gridBox.append(g);
+  }
+  const origGo = go; go = function(k){ origGo(k); drawGrid(); };
+  wrap.append(el("div",{class:"row",style:"margin:0 0 12px"}, el("b",null,"Show:"), filt), body, gridBox);
+  draw(); drawGrid();
+  return wrap;
+}
+{ const GO = {para:0, essay:1, gram:2, comp:3}; EX.sort((a,b)=>(GO[a.group||"para"]-GO[b.group||"para"]) || a.id-b.id); }
+
+/* ---------- helpers ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs){
+    const v = attrs[k];
+    if (k==="class") n.className = v;
+    else if (k==="html") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else if (v===true) n.setAttribute(k,"");
+    else if (v!==false && v!=null) n.setAttribute(k,v);
+  }
+  for (const c of kids.flat()) if (c!=null) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+const wc = t => (t.trim().match(/\S+/g)||[]).length;
+const esc = s => s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function renderMark(text){
+  const lines = esc(text).split(/\n/);
+  let html = "", inList = false;
+  for (let ln of lines){
+    ln = ln.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/^#+\s*/,"");
+    const m = ln.match(/^\s*[-•*]\s+(.*)/);
+    if (m){ if(!inList){html+="<ul>";inList=true;} html+="<li>"+m[1]+"</li>"; }
+    else { if(inList){html+="</ul>";inList=false;} if (ln.trim()) html+="<p>"+ln+"</p>"; }
+  }
+  if (inList) html+="</ul>";
+  return html;
+}
+function seededShuffle(arr, seed){
+  const a = arr.map((v,i)=>i); let s = seed;
+  for (let i=a.length-1;i>0;i--){ s = (s*9301+49297)%233280; const j = Math.floor(s/233280*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  if (a.every((v,i)=>v===i)) a.reverse();
+  return a;
+}
+function autoItems(ex){ return ex.items.map((it,i)=>({it,i})).filter(x=>!["write","peel","timed","comp","precis"].includes(x.it.t)); }
+function exProgress(ex){
+  if (ex.items[0] && ex.items[0].t==="bank") return {done: BANK.filter((b,k)=>state.items["bank-"+k]).length, total: BANK.length};
+  const auto = autoItems(ex);
+  if (!auto.length){ const k = ex.id+"-done"; return {done: state.items[k]?1:0, total:1}; }
+  const done = auto.filter(x=>state.items[ex.id+"-"+x.i]).length;
+  return {done,total:auto.length};
+}
+function record(key, val){ state.items[key]=val; save(); updateNav(); }
+
+/* ---------- AI feedback block ---------- */
+function feedbackBlock(getPayload){
+  // getPayload() => {task, context, text, focus, max, rubric?}
+  const out = el("div",{class:"fb",hidden:true});
+  const note = el("div",{class:"note"});
+  const aiBtn = el("button",{class:"btn accent",type:"button"},"Get feedback from Claude");
+  const stopBtn = el("button",{class:"btn ghost",type:"button",hidden:true},"Stop");
+  const copyBtn = el("button",{class:"btn ghost",type:"button"},"Copy for marking in chat");
+  const copied = el("span",{class:"copied",hidden:true},"Copied. Paste it into our chat.");
+  let ctl = null;
+
+  function refreshAi(){
+    aiBtn.hidden = aiStatus === "none";
+    if (aiStatus === "none") note.textContent = "AI feedback isn't available in this view. Copy your answer and paste it into our chat, and I'll mark it.";
+    else if (aiStatus === "pending") note.textContent = "";
+    else note.textContent = "Feedback uses your own Claude usage. You'll be asked to allow it the first time.";
+  }
+  aiListeners.push(refreshAi); refreshAi();
+
+  function buildPrompt(p){
+    const fmt = p.fmt ? p.fmt : p.rubric
+? `Mark it on this rubric, each criterion out of 4: Topic sentence; Unity & development; Evidence & example; Coherence; Language accuracy.
+Reply in plain text, under 300 words, in exactly this shape:
+Topic sentence: n/4 — short reason
+Unity & development: n/4 — short reason
+Evidence & example: n/4 — short reason
+Coherence: n/4 — short reason
+Language accuracy: n/4 — short reason
+Total: n/20
+Two biggest fixes:
+- ...
+- ...
+Corrected sentences (up to three of the weakest, original → corrected):
+- ...`
+: `Reply in plain text, under 200 words, in exactly this shape:
+Score: n/${p.max}
+What works: one sentence.
+Fix 1: one specific, actionable point.
+Fix 2: one specific, actionable point.
+Better version: rewrite the weakest sentence (or each sentence, if there are three or fewer short ones).`;
+    return `You are a strict but encouraging examiner for the Pakistani CSS and SPSC CCE English Essay paper. You are coaching a candidate, a university English lecturer, whose weakest skill is writing.
+
+Exercise: ${p.task}
+${p.context ? "Context given to the candidate:\n"+p.context+"\n" : ""}
+Candidate's answer:
+"""
+${p.text}
+"""
+
+Judge ONLY this skill: ${p.focus}
+Be specific: quote the candidate's words when pointing out a problem. Correct any grammar errors you see in your "better version". If a factual figure looks wrong or invented, say so briefly.
+${fmt}
+Do not use headings or markdown other than "- " bullets.`;
+  }
+
+  aiBtn.addEventListener("click", async ()=>{
+    const p = getPayload(); if (!p) return;
+    if (!sample){ return; }
+    out.hidden = false; out.innerHTML = ""; const box = el("div",{class:"mark"}, el("p",null,"Reading your answer…")); out.append(box);
+    aiBtn.disabled = true; stopBtn.hidden = false;
+    ctl = new AbortController();
+    try{
+      const res = await sample(buildPrompt(p), {signal:ctl.signal, cache:false, onText:({text})=>{ box.innerHTML = renderMark(text); }});
+      box.innerHTML = renderMark(res.text);
+      if (res.truncated) out.append(el("div",{class:"note"},"The feedback was cut short. Try a shorter answer."));
+    }catch(e){
+      const code = e && e.code;
+      if (code === "cancelled"){ box.innerHTML = e.text ? renderMark(e.text) : "<p>Stopped.</p>"; }
+      else if (["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(code)){ out.hidden = true; setAi("none"); }
+      else if (code === "rate_limited"){ box.innerHTML = (e.text?renderMark(e.text):"") + "<p>Too many requests just now. Wait a minute and try again, or copy it into the chat.</p>"; }
+      else if (code === "refused"){ box.innerHTML = "<p>Claude couldn't mark this one. Try rewording, or paste it into the chat.</p>"; }
+      else { box.innerHTML = (e && e.text ? renderMark(e.text) : "") + "<p>Something interrupted the feedback. Try again, or copy it into the chat.</p>"; }
+    }finally{ aiBtn.disabled = false; stopBtn.hidden = true; }
+  });
+  stopBtn.addEventListener("click", ()=>{ if (ctl) ctl.abort(); });
+
+  copyBtn.addEventListener("click", ()=>{
+    const p = getPayload(); if (!p) return;
+    const txt = `Please mark this (${p.rubric ? "full paragraph, out of 20 on the Workshop rubric" : "Paragraph Gym exercise"}).\nExercise: ${p.task}\n${p.context? "Context: "+p.context.replace(/\n/g," ")+"\n":""}\nMy answer:\n${p.text}`;
+    const fallback = ()=>{
+      let ta = out.querySelector("textarea.copyout");
+      out.hidden = false;
+      if (!ta){ ta = el("textarea",{class:"copyout",readonly:true}); out.append(el("div",{class:"note"},"Select all and copy:"), ta); }
+      ta.value = txt; ta.focus(); ta.select();
+    };
+    try{
+      navigator.clipboard.writeText(txt).then(()=>{ copied.hidden=false; setTimeout(()=>copied.hidden=true,3000); }, fallback);
+    }catch(e){ fallback(); }
+  });
+
+  return el("div",null, el("div",{class:"row"}, aiBtn, stopBtn, copyBtn, copied), note, out);
+}
+
+function paper(key, short, placeholder, onInput){
+  const ta = el("textarea",{class:"paper"+(short?" short":""),placeholder:placeholder||"Write here…",spellcheck:"true"});
+  ta.value = state.drafts[key] || "";
+  ta.addEventListener("input", ()=>{ state.drafts[key]=ta.value; save(); if(onInput) onInput(); });
+  return ta;
+}
+
+/* ---------- item renderers ---------- */
+function rMcq(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const opts = el("div",{class:"opts"});
+  const why = el("div",{class:"why",hidden:true}, el("b",null,"Why: "), it.why);
+  const btns = it.o.map((o,j)=>el("button",{class:"opt",type:"button",onclick:()=>choose(j)}, String.fromCharCode(65+j)+". "+o));
+  function choose(j, silent){
+    btns.forEach((b,k)=>{ b.disabled = true; if (k===it.a) b.classList.add("right"); if (k===j && j!==it.a) b.classList.add("wrong"); });
+    why.hidden = false;
+    if (!silent) record(key,{c:j,ok:j===it.a});
+  }
+  opts.append(...btns);
+  const retry = el("button",{class:"btn ghost",type:"button",hidden:!prev,onclick:()=>{ btns.forEach(b=>{b.disabled=false;b.classList.remove("right","wrong");}); why.hidden=true; retry.hidden=true; }},"Try again");
+  btns.forEach(b=>b.addEventListener("click",()=>retry.hidden=false));
+  card.append(el("div",{class:"qn"},"Drill "+(i+1)), el("p",{class:"q"},it.q), it.ctx?el("div",{class:"ctx"},it.ctx):null, opts, why, el("div",{class:"row"},retry));
+  if (prev) choose(prev.c,true);
+  return card;
+}
+function rMulti(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const boxes = it.o.map((o,j)=>{ const cb = el("input",{type:"checkbox"}); const lab = el("label",{class:"chk"},cb,el("span",null,o)); return {cb,lab}; });
+  const why = el("div",{class:"why",hidden:true}, el("b",null,"Why: "), it.why);
+  const check = el("button",{class:"btn",type:"button"},"Check");
+  const reset = el("button",{class:"btn ghost",type:"button",hidden:true},"Try again");
+  function grade(sel, silent){
+    let ok = true;
+    boxes.forEach(({cb,lab},j)=>{ cb.disabled = true; const should = it.a.includes(j), did = sel.includes(j);
+      if (did) cb.checked = true;
+      if (should && did) lab.classList.add("right"); else if (!should && did){lab.classList.add("wrong"); ok=false;} else if (should && !did){lab.classList.add("missed"); ok=false;} });
+    why.hidden = false; check.hidden = true; reset.hidden = false;
+    if (!silent) record(key,{c:sel,ok});
+  }
+  check.addEventListener("click",()=>grade(boxes.map((b,j)=>b.cb.checked?j:-1).filter(j=>j>=0)));
+  reset.addEventListener("click",()=>{ boxes.forEach(({cb,lab})=>{cb.disabled=false;cb.checked=false;lab.className="chk";}); why.hidden=true; check.hidden=false; reset.hidden=true; });
+  card.append(el("div",{class:"qn"},"Drill "+(i+1)), el("p",{class:"q"},it.q), el("div",{class:"opts"},boxes.map(b=>b.lab)), el("div",{class:"note"},"Dashed green border = a supporting sentence you missed."), el("div",{class:"row"},check,reset), why);
+  if (prev) grade(prev.c,true);
+  return card;
+}
+function rSpot(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const why = el("div",{class:"why",hidden:true}, el("b",null,"Why: "), it.why);
+  const btns = it.s.map((s,j)=>el("button",{type:"button",onclick:()=>pick(j)}, s));
+  const para = el("div",{class:"spot"}); btns.forEach((b,j)=>{ para.append(b, j<btns.length-1?" ":""); });
+  const retry = el("button",{class:"btn ghost",type:"button",hidden:true,onclick:()=>{ btns.forEach(b=>{b.disabled=false;b.className="";}); why.hidden=true; retry.hidden=true; }},"Try again");
+  function pick(j,silent){
+    btns.forEach((b,k)=>{ b.disabled=true; if(k===it.a) b.classList.add("right"); if(k===j&&j!==it.a) b.classList.add("wrong"); });
+    why.hidden=false; retry.hidden=false;
+    if(!silent) record(key,{c:j,ok:j===it.a});
+  }
+  card.append(el("div",{class:"qn"},(it.label||"Paragraph")+" "+(i+1)), el("p",{class:"q"},it.q||"Click the sentence that breaks unity."), para, why, el("div",{class:"row"},retry));
+  if (prev) pick(prev.c,true);
+  return card;
+}
+function rFill(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const sels = [];
+  const para = el("div",{class:"fill"});
+  it.parts.forEach(p=>{ const m = p.match(/^\{(\d)\}$/);
+    if (m){ const s = el("select",{"aria-label":"Gap "+(+m[1]+1)}, el("option",{value:""},"— choose —"), it.choices.map(c=>el("option",{value:c},c))); sels[+m[1]]=s; para.append(s); }
+    else para.append(p); });
+  const why = el("div",{class:"why",hidden:true}, el("b",null,"Why: "), it.why);
+  const check = el("button",{class:"btn",type:"button"},"Check");
+  const reset = el("button",{class:"btn ghost",type:"button",hidden:true},"Try again");
+  function grade(vals,silent){
+    let ok = true;
+    sels.forEach((s,k)=>{ s.value = vals[k]||""; s.disabled = true; const r = vals[k]===it.a[k]; s.classList.add(r?"right":"wrong"); if(!r) ok=false; });
+    why.hidden=false; check.hidden=true; reset.hidden=false;
+    const ans = el("div",{class:"note"},"Answers: "+it.a.join(" · ")); why.querySelector(".note")||why.append(ans);
+    if(!silent) record(key,{c:vals,ok});
+  }
+  check.addEventListener("click",()=>grade(sels.map(s=>s.value)));
+  reset.addEventListener("click",()=>{ sels.forEach(s=>{s.disabled=false;s.value="";s.className="";}); why.hidden=true; check.hidden=false; reset.hidden=true; });
+  card.append(el("div",{class:"qn"},"Drill "+(i+1)), el("p",{class:"q"},it.q), para, el("div",{class:"row"},check,reset), why);
+  if (prev) grade(prev.c,true);
+  return card;
+}
+function rOrder(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const order = seededShuffle(it.s, ex.id*31+i*7+3);
+  let chosen = [];
+  const pool = el("div",{class:"pool"});
+  const list = el("ol");
+  const why = el("div",{class:"why",hidden:true}, el("b",null,"Why: "), it.why);
+  const check = el("button",{class:"btn",type:"button",disabled:true},"Check");
+  const reset = el("button",{class:"btn ghost",type:"button"},"Reset");
+  let graded = false;
+  function draw(){
+    pool.innerHTML=""; list.innerHTML="";
+    order.forEach(idx=>{ if(!chosen.includes(idx)) pool.append(el("button",{type:"button",onclick:()=>{ if(graded) return; chosen.push(idx); draw(); }}, it.s[idx])); });
+    chosen.forEach((idx,pos)=>{ const li = el("li",null,it.s[idx]); if (graded) li.classList.add(idx===pos?"right":"wrong"); list.append(li); });
+    if (!pool.children.length && !graded) pool.append(el("div",{class:"note"},"All placed. Press Check."));
+    check.disabled = chosen.length !== it.s.length || graded;
+  }
+  function grade(silent){
+    graded = true; const ok = chosen.every((v,k)=>v===k); why.hidden=false; draw();
+    if (!ok){ const right = el("div",{class:"note"},"Correct order: "+ it.s.map((s,k)=>(k+1)+". "+s.split(" ").slice(0,4).join(" ")+"…").join("  ")); why.append(right); }
+    if(!silent) record(key,{c:chosen.slice(),ok});
+  }
+  check.addEventListener("click",()=>grade());
+  reset.addEventListener("click",()=>{ chosen=[]; graded=false; why.hidden=true; why.querySelectorAll(".note").forEach(n=>n.remove()); draw(); });
+  card.append(el("div",{class:"qn"},"Drill "+(i+1)), el("p",{class:"q"},it.q), el("div",{class:"subl"},"Sentences"), pool, el("div",{class:"subl"},"Your paragraph"), el("div",{class:"built"},list), el("div",{class:"row"},check,reset), why);
+  if (prev){ chosen = prev.c.slice(); grade(true); } else draw();
+  return card;
+}
+function rWrite(ex,it,i){
+  const key = "w"+ex.id+"-"+i;
+  const card = el("div",{class:"card"});
+  const cnt = el("span",{class:"meta"});
+  const ta = paper(key, it.short, it.short?"Write your sentence…":"Write here…", ()=>cnt.textContent = wc(ta.value)+" words");
+  cnt.textContent = wc(ta.value)+" words";
+  const fb = feedbackBlock(()=>{ if (wc(ta.value)<5){ ta.focus(); return null; } state.items[ex.id+"-done"]=true; save(); updateNav();
+    return {task:it.task, context:it.ctx, text:ta.value.trim(), focus:it.focus, max:it.max}; });
+  card.append(el("div",{class:"qn"}, el("span",null,"Writing task"), el("span",{class:"pill"},"Marked by Claude")), el("p",{class:"q"},it.q),
+    it.ctx?el("div",{class:"ctx",style:"white-space:pre-line"},it.ctx):null, ta, el("div",{class:"row"},cnt), fb);
+  return card;
+}
+function rPeel(ex){
+  const card = el("div",{class:"card"});
+  const topicSel = el("select",{class:"top","aria-label":"Topic"}, TOPICS.map(t=>el("option",{value:t},t)));
+  topicSel.value = state.drafts["peel-topic"] || TOPICS[0];
+  topicSel.addEventListener("change",()=>{ state.drafts["peel-topic"]=topicSel.value; save(); });
+  const parts = [
+    {k:"P",name:"Point",hint:"one topic sentence with a controlling idea"},
+    {k:"E1",name:"Explain",hint:"2–3 sentences: why or how?"},
+    {k:"E2",name:"Evidence / Example",hint:"a specific figure, case or report, plus what it proves"},
+    {k:"L",name:"Link",hint:"a concluding sentence that closes the point"}];
+  const preview = el("div",{class:"preview"});
+  const cnt = el("div",{class:"meta"});
+  const tas = {};
+  function upd(){
+    const txt = parts.map(p=>tas[p.k].value.trim()).filter(Boolean).join(" ");
+    preview.innerHTML = ""; if (txt) preview.textContent = txt; else preview.append(el("span",{class:"ph"},"Your paragraph will appear here as you write."));
+    const n = wc(txt); cnt.textContent = n+" words · target 150–220"+(n>0&&n<150?" (too short)":n>220?" (trim it)":"");
+  }
+  const grid = el("div",{class:"peel"});
+  parts.forEach(p=>{ tas[p.k] = paper("peel-"+p.k, p.k!=="E1", "", upd);
+    grid.append(el("div",null, el("label",null, el("span",{class:"tag"},p.k[0]), p.name+" ", el("span",null,"("+p.hint+")")), tas[p.k])); });
+  upd();
+  const fb = feedbackBlock(()=>{ const txt = parts.map(p=>tas[p.k].value.trim()).filter(Boolean).join(" ");
+    if (wc(txt)<40){ tas.P.focus(); return null; } state.items[ex.id+"-done"]=true; save(); updateNav();
+    return {task:"Write one PEEL paragraph (150–220 words) on: "+topicSel.value, text:txt, rubric:true,
+      focus:"the whole paragraph as a CSS/CCE exam answer, using the 20-mark rubric. Also check that the four PEEL parts are present and in order."}; });
+  card.append(el("div",{class:"qn"},el("span",null,"Builder"),el("span",{class:"pill"},"Marked out of 20")),
+    el("div",{class:"row",style:"margin-top:0"}, el("b",null,"Topic:"), topicSel), el("div",{style:"height:12px"}), grid,
+    el("div",{class:"subl"},"Preview"), preview, cnt, fb);
+  return card;
+}
+let timerInt = null;
+function rTimed(ex){
+  const card = el("div",{class:"card"});
+  let topic = state.drafts["timed-topic"] || TOPICS[Math.floor(Math.random()*TOPICS.length)];
+  const tbox = el("div",{class:"topicbox"}, topic);
+  const newT = el("button",{class:"btn ghost",type:"button"},"New topic");
+  newT.addEventListener("click",()=>{ let t; do{ t = TOPICS[Math.floor(Math.random()*TOPICS.length)]; }while(t===topic && TOPICS.length>1); topic=t; tbox.textContent=t; state.drafts["timed-topic"]=t; save(); });
+  state.drafts["timed-topic"]=topic; save();
+  const LIMIT = 20*60; let left = LIMIT, running=false;
+  const clock = el("div",{class:"timer"},"20:00");
+  const startB = el("button",{class:"btn",type:"button"},"Start");
+  const resetB = el("button",{class:"btn ghost",type:"button"},"Reset");
+  const status = el("span",{class:"meta"});
+  function show(){ const a=Math.abs(left), m=Math.floor(a/60), s=a%60; clock.textContent=(left<0?"+":"")+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0"); clock.classList.toggle("over",left<0);
+    status.textContent = left<0 ? "Time's up. Finish your sentence and revise." : left<=180 && running ? "Revision time: check grammar and transitions." : ""; }
+  startB.addEventListener("click",()=>{ if(running){ clearInterval(timerInt); running=false; startB.textContent="Resume"; return; }
+    running=true; startB.textContent="Pause"; clearInterval(timerInt); timerInt=setInterval(()=>{ left--; show(); },1000); ta.focus(); });
+  resetB.addEventListener("click",()=>{ clearInterval(timerInt); running=false; left=LIMIT; startB.textContent="Start"; show(); });
+  const cnt = el("span",{class:"meta"});
+  const ta = paper("timed-text", false, "Topic sentence first…", ()=>cnt.textContent=wc(ta.value)+" words · target 180–250");
+  ta.style.minHeight="300px";
+  cnt.textContent=wc(ta.value)+" words · target 180–250";
+  const clearB = el("button",{class:"btn ghost",type:"button"},"Clear page");
+  let armed=false;
+  clearB.addEventListener("click",()=>{ if(!armed){ armed=true; clearB.textContent="Click again to clear"; setTimeout(()=>{armed=false;clearB.textContent="Clear page";},3000); return; }
+    ta.value=""; state.drafts["timed-text"]=""; save(); cnt.textContent="0 words · target 180–250"; armed=false; clearB.textContent="Clear page"; });
+  const fb = feedbackBlock(()=>{ if (wc(ta.value)<40){ ta.focus(); return null; } state.items[ex.id+"-done"]=true; save(); updateNav();
+    const used = LIMIT-left; return {task:"Timed paragraph (20 minutes, 180–250 words) on: "+topic+(used>0?` (time used: ${Math.floor(used/60)} min)`:""), text:ta.value.trim(), rubric:true,
+      focus:"the whole paragraph as a CSS/CCE exam answer written under time pressure, using the 20-mark rubric."}; });
+  card.append(el("div",{class:"qn"},el("span",null,"Exam conditions"),el("span",{class:"pill"},"Marked out of 20")), tbox,
+    el("div",{class:"row"}, newT), el("div",{class:"row"}, clock, startB, resetB, status), el("div",{style:"height:10px"}), ta, el("div",{class:"row"},cnt,clearB), fb);
+  show();
+  return card;
+}
+
+function passageEl(p, numbered){
+  const box = el("div",{class:"ctx passage"});
+  box.append(el("div",{class:"ptitle"}, p.title));
+  let n = 0;
+  p.paras.forEach(par=>{ const pe = el("p"); par.forEach(s=>{ n++; if (numbered) pe.append(el("sup",null,n)); pe.append(s+" "); }); box.append(pe); });
+  box.append(el("div",{class:"meta"}, passWords(p)+" words"));
+  return box;
+}
+function rComp(ex,it,i){
+  const p = PASS[it.p], card = el("div",{class:"card"});
+  const tas = it.qs.map((q,k)=>paper("comp-"+it.p+"-"+k, true, "Your answer, in your own words…"));
+  const qsEl = el("div",{class:"peel"});
+  it.qs.forEach((q,k)=>{
+    const model = el("div",{class:"why",hidden:true}, el("b",null,"Model answer: "), q.m);
+    const show = el("button",{class:"btn ghost",type:"button",onclick:()=>{ model.hidden=!model.hidden; show.textContent = model.hidden?"Show model answer":"Hide model answer"; }},"Show model answer");
+    qsEl.append(el("div",null, el("label",null,"Q"+(k+1)+". "+q.q+" ", el("span",null,"(4 marks)")), tas[k], el("div",{class:"row",style:"margin-top:6px"},show), model));
+  });
+  const fb = feedbackBlock(()=>{ const ans = it.qs.map((q,k)=>"Q"+(k+1)+". "+q.q+"\nAnswer: "+(tas[k].value.trim()||"(no answer)")).join("\n\n");
+    if (tas.every(t=>wc(t.value)<3)){ tas[0].focus(); return null; } state.items[ex.id+"-done"]=true; save(); updateNav();
+    return {task:"Answer five comprehension questions on the passage '"+p.title+"' (CSS English paper, 4 marks each).", context:allSent(p).join(" "), text:ans,
+      fmt:`Mark each answer out of 4: accuracy (did it find the right information?), completeness, and own words (deduct for copied sentences).
+Reply in plain text, under 300 words, in exactly this shape:
+Q1: n/4 — short reason
+Q2: n/4 — short reason
+Q3: n/4 — short reason
+Q4: n/4 — short reason
+Q5: n/4 — short reason
+Total: n/20
+Biggest fix:
+- one point
+Improved answer for the weakest question:
+- ...`, focus:"reading comprehension answers."}; });
+  card.append(el("div",{class:"qn"},el("span",null,"Passage"),el("span",{class:"pill"},"20 marks")), passageEl(p,false), qsEl, fb);
+  return card;
+}
+function rTag(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key], p = PASS[it.p], sents = allSent(p);
+  const card = el("div",{class:"card"});
+  const LBL = {M:"Main",S:"Support",C:"Cut"};
+  let pick = prev ? prev.c.slice() : sents.map(()=>null);
+  const rows = el("div",{class:"tagrows"});
+  const why = el("div",{class:"why",hidden:true});
+  const check = el("button",{class:"btn",type:"button"},"Check");
+  const reset = el("button",{class:"btn ghost",type:"button",hidden:true},"Try again");
+  let graded = false;
+  function draw(){
+    rows.innerHTML="";
+    sents.forEach((s,k)=>{
+      const seg = el("div",{class:"seg",role:"group","aria-label":"Sentence "+(k+1)});
+      ["M","S","C"].forEach(t=>seg.append(el("button",{type:"button",class:(pick[k]===t?"on ":"")+"t"+t,disabled:graded,onclick:()=>{ pick[k]=t; draw(); }},LBL[t])));
+      const row = el("div",{class:"tagrow"+(graded?(pick[k]===p.tags[k]?" right":" wrong"):"")}, el("div",{class:"ts"}, el("sup",null,k+1), s), seg);
+      if (graded && pick[k]!==p.tags[k]) row.append(el("div",{class:"meta",style:"grid-column:1/-1"},"Answer: "+LBL[p.tags[k]]+(p.notes[k]?" — "+p.notes[k]:"")));
+      else if (graded && p.notes[k]) row.append(el("div",{class:"meta",style:"grid-column:1/-1"},p.notes[k]));
+      rows.append(row);
+    });
+    check.disabled = graded || pick.some(x=>!x);
+  }
+  function grade(silent){
+    graded = true; const right = pick.filter((x,k)=>x===p.tags[k]).length; const ok = right/sents.length >= 0.8;
+    why.innerHTML=""; why.append(el("b",null,right+"/"+sents.length+" correct. "), ok?"Good sorting. The Main sentences are the skeleton of your précis.":"Look again at the ones marked wrong. Examples and illustrations are almost always Cut.");
+    why.hidden=false; check.hidden=true; reset.hidden=false; draw();
+    if(!silent) record(key,{c:pick.slice(),ok});
+  }
+  check.addEventListener("click",()=>grade());
+  reset.addEventListener("click",()=>{ pick=sents.map(()=>null); graded=false; why.hidden=true; check.hidden=false; reset.hidden=true; draw(); });
+  card.append(el("div",{class:"qn"},el("span",null,"Step 1 · Find the relevant data"),el("span",{class:"pill"},"Sort each sentence")),
+    el("p",{class:"q"},p.title+". Mark each sentence Main (keep), Support (compress) or Cut (example, illustration or repetition)."), rows, el("div",{class:"row"},check,reset), why);
+  if (prev) grade(true); else draw();
+  return card;
+}
+function rPrecis(ex,it,i){
+  const p = PASS[it.p], card = el("div",{class:"card"});
+  const total = passWords(p), target = Math.round(total/3);
+  const title = el("input",{type:"text",class:"titlein",placeholder:"Title"}); title.value = state.drafts["pt-"+it.p]||"";
+  title.addEventListener("input",()=>{ state.drafts["pt-"+it.p]=title.value; save(); });
+  const cnt = el("span",{class:"meta"});
+  const ta = paper("pr-"+it.p, false, "Write your précis…", upd);
+  function upd(){ const n = wc(ta.value); cnt.textContent = n+" words · target about "+target+" (one-third of "+total+")"+(n>target*1.2?" · too long":n>0&&n<target*0.75?" · too short":""); }
+  upd();
+  const model = el("div",{class:"why",hidden:true}, el("b",null,"Model précis: "+p.model.title+" ("+wc(p.model.text)+" words). "), p.model.text);
+  const show = el("button",{class:"btn ghost",type:"button",onclick:()=>{ model.hidden=!model.hidden; show.textContent=model.hidden?"Show model précis":"Hide model précis"; }},"Show model précis");
+  const det = el("details",{open:true}, el("summary",null,"Passage (sentences numbered)"), passageEl(p,true));
+  const fb = feedbackBlock(()=>{ if (wc(ta.value)<30){ ta.focus(); return null; } state.items[ex.id+"-done"]=true; save(); updateNav();
+    return {task:"Write a précis of about "+target+" words with a suitable title (CSS English paper, 20 marks).", context:allSent(p).join(" "), text:"Title: "+(title.value.trim()||"(none)")+"\n\n"+ta.value.trim(),
+      fmt:`Mark it the way a CSS examiner would, out of 20: Main ideas covered 8; Conciseness and length (target ${target} words; the candidate wrote ${wc(ta.value)}) 4; Own words and language accuracy 5; Title 3.
+Reply in plain text, under 300 words, in exactly this shape:
+Main ideas: n/8 — which key points are missing or which unnecessary details were kept
+Conciseness & length: n/4 — reason
+Own words & language: n/5 — reason, quoting any copied phrase or error
+Title: n/3 — reason, and a better title if needed
+Total: n/20
+Two biggest fixes:
+- ...
+- ...`, focus:"précis writing."}; });
+  card.append(el("div",{class:"qn"},el("span",null,"Step 2 · Write the précis"),el("span",{class:"pill"},"20 marks")), det,
+    el("label",{class:"subl"},"Title"), title, el("div",{style:"height:8px"}), ta, el("div",{class:"row"},cnt), el("div",{class:"row"},show), model, fb);
+  return card;
+}
+function rCorrect(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const ta = paper(ex.id===14 ? "cor-"+i : "cor-"+ex.id+"-"+i, true, "Rewrite the corrected sentence…"); ta.style.minHeight="64px";
+  const key2 = el("div",{class:"why",hidden:true}, el("b",null,"Key: "), it.a, el("br"), el("span",{class:"meta"},it.why));
+  const verdict = el("span",{class:"meta"});
+  const gotIt = el("button",{class:"btn ghost",type:"button",hidden:true,onclick:()=>{ record(key,{ok:true}); verdict.textContent="Marked correct ✓"; }},"I got it");
+  const missed = el("button",{class:"btn ghost",type:"button",hidden:true,onclick:()=>{ record(key,{ok:false}); verdict.textContent="Marked for review"; }},"I missed it");
+  const show = el("button",{class:"btn",type:"button",onclick:()=>{ key2.hidden=false; gotIt.hidden=false; missed.hidden=false; show.hidden=true; }},"Check");
+  if (prev){ key2.hidden=false; show.hidden=true; gotIt.hidden=false; missed.hidden=false; verdict.textContent = prev.ok?"Marked correct ✓":"Marked for review"; }
+  card.append(el("div",{class:"qn"},el("span",null,"Sentence "+(i+1)),el("span",{class:"pill"},it.y?"CSS "+it.y:"Rewrite it")), el("p",{class:"q",style:"font-family:var(--serif);font-size:17px"},it.s), ta, el("div",{class:"row"},show,gotIt,missed,verdict), key2);
+  return card;
+}
+function rPrep(ex,it,i){
+  const key = ex.id+"-"+i, prev = state.items[key];
+  const card = el("div",{class:"card"});
+  const parts = it.s.split("___");
+  const inp = el("input",{type:"text",class:"prepin","aria-label":"Preposition",autocomplete:"off",autocapitalize:"off",spellcheck:"false"});
+  const why = el("div",{class:"why",hidden:true});
+  const check = el("button",{class:"btn",type:"button"},"Check");
+  function grade(v,silent){
+    const ok = it.a.includes(v.trim().toLowerCase().replace(/\s+/g," "));
+    inp.value=v; inp.classList.remove("right","wrong"); inp.classList.add(ok?"right":"wrong");
+    why.innerHTML=""; why.append(el("b",null,(ok?"Correct. ":"Answer: "+it.a.join(" / ")+". ")), it.why); why.hidden=false;
+    if(!silent) record(key,{c:v,ok});
+  }
+  check.addEventListener("click",()=>{ if(inp.value.trim()) grade(inp.value); });
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter" && inp.value.trim()) grade(inp.value); });
+  card.append(el("div",{class:"qn"},el("span",null,"Item "+(i+1)),el("span",{class:"pill"},"CSS "+it.y)), el("div",{class:"fill"}, parts[0], inp, parts[1]||""), el("div",{class:"row"},check), why);
+  if (prev) grade(prev.c,true);
+  return card;
+}
+
+/* ---------- views ---------- */
+function updateNav(){
+  const nav = $("#nav"); nav.innerHTML="";
+  const cur = current();
+  nav.append(el("a",{href:"#start",class:cur===0?"on":""}, el("span",{class:"n"},"★"), el("span",{class:"lbl"},"Start here",el("small",null,"How to use the gym"))));
+  let d=0,t=0,lastG=null;
+  EX.forEach(ex=>{ const p = exProgress(ex); d+=p.done; t+=p.total;
+    const g = ex.group||"para"; if (g!==lastG){ nav.append(el("div",{class:"navg"}, g==="comp"?"Composition paper":g==="gram"?"Grammar & structure":g==="essay"?"Essay topic bank":"Paragraph track")); lastG=g; }
+    const done = p.done===p.total;
+    nav.append(el("a",{href:"#ex-"+ex.id,class:cur===ex.id?"on":""}, el("span",{class:"n"+(done?" done":"")}, done?"✓":ex.id), el("span",{class:"lbl"}, ex.title, el("small",null, ex.sub+" · "+p.done+"/"+p.total)))); });
+  $("#overallPct").textContent = Math.round(d/t*100)+"%";
+}
+function current(){ const m = location.hash.match(/^#ex-(\d+)$/); return m ? +m[1] : 0; }
+function renderStart(){
+  const m = $("#main"); m.innerHTML="";
+  m.append(el("div",{class:"eyebrow"},"Start here"), el("h2",null,"Build the paragraph before the essay"),
+    el("p",{class:"lede"},"A CSS or CCE essay is ten to fifteen good paragraphs in a row. Train each part separately, then put them together under time pressure. Progress is saved in this browser."),
+    el("div",{class:"lesson"}, el("h3",null,"How to use it"), el("ol",{class:"steps"},
+      el("li",null,"Go in order. Each exercise opens with a short lesson, then drills that are checked instantly with an explanation."),
+      el("li",null,"Writing tasks are marked by Claude: press Get feedback. If that isn't available here, press Copy for marking and paste it into our chat."),
+      el("li",null,"Aim for 15/20 or more on Exercise 7 three times in a row before moving to Exercise 8."),
+      el("li",null,"When Exercise 8 scores 15+ consistently, start full essays: outline first, then one paragraph at a time."))));
+  const card = ex=>{ const p=exProgress(ex); return el("a",{href:"#ex-"+ex.id}, el("div",{class:"k"},(ex.group==="comp"?"Paper skill ":ex.group==="gram"?"Grammar ":ex.group==="essay"?"Daily practice · ":"Exercise ")+ex.id), el("h3",null,ex.title), el("p",null,ex.sub), el("div",{class:"bar"}, el("i",{style:"width:"+Math.round(p.done/p.total*100)+"%"}))); };
+  m.append(el("h3",{style:"margin:22px 0 10px"},"Paragraph track: for the essay"), el("div",{class:"grid"}, EX.filter(e=>!e.group||e.group==="essay").map(card)));
+  m.append(el("h3",{style:"margin:28px 0 6px"},"Composition paper track: English (Précis & Composition)"),
+    el("p",{class:"lede",style:"margin-bottom:10px"},"Pattern of recent CSS papers (2022, 2023, 2026). The SPSC CCE English paper follows a similar précis-and-composition pattern, so check the current CCE syllabus for exact marks."),
+    el("div",{style:"overflow-x:auto;margin-bottom:14px"}, el("table",{class:"pattern"},
+      el("tr",null, el("th",null,"Question"), el("th",null,"Marks"), el("th",null,"Practise in")),
+      [["Synonyms + antonyms (MCQs)","10 + 10","Synonyms & antonyms"],["Précis with title","20","Précis"],["Comprehension (5 questions)","20","Comprehension"],["Sentence correction (5 of 8)","10","Sentence correction"],["Punctuation","5","Grammar: Punctuation"],["Prepositions (5 of 8)","5","Prepositions"],["Pairs of words (5 of 8)","10","Pairs of words"],["Urdu → English translation","10","Idioms & phrases"]].map(r=>el("tr",null,r.map(c=>el("td",null,c)))))),
+    el("div",{class:"grid"}, EX.filter(e=>e.group==="comp").map(card)));
+  m.append(el("h3",{style:"margin:28px 0 6px"},"Grammar & sentence structure track"),
+    el("p",{class:"lede",style:"margin-bottom:10px"},"Built around the errors that cost marks in every paper: comma splices, agreement, tenses, articles and unbalanced structures. Do one topic a day alongside the paragraph track."),
+    el("div",{class:"grid"}, EX.filter(e=>e.group==="gram").map(card)));
+}
+function renderEx(id){
+  const ex = EX.find(e=>e.id===id); const m = $("#main"); m.innerHTML="";
+  clearInterval(timerInt);
+  m.append(el("div",{class:"eyebrow"},"Exercise "+ex.id+" of "+EX.length), el("h2",null,ex.title), el("p",{class:"lede"},ex.lede), el("div",{class:"lesson",html:ex.lesson}));
+  ex.items.forEach((it,i)=>{
+    const f = {mcq:rMcq,multi:rMulti,spot:rSpot,fill:rFill,order:rOrder,write:rWrite,peel:rPeel,timed:rTimed,comp:rComp,tag:rTag,precis:rPrecis,correct:rCorrect,prep:rPrep,bank:rBank}[it.t];
+    m.append(f(ex,it,i));
+  });
+  const prev = EX.find(e=>e.id===id-1), next = EX.find(e=>e.id===id+1);
+  m.append(el("div",{class:"pager"}, prev?el("a",{href:"#ex-"+prev.id},"← "+prev.title):el("a",{href:"#start"},"← Start here"), next?el("a",{href:"#ex-"+next.id},next.title+" →"):el("span")));
+}
+function route(){ const c = current(); if (c && EX.find(e=>e.id===c)) renderEx(c); else renderStart(); updateNav(); window.scrollTo(0,0);
+  const nav = $("#nav"), on = nav.querySelector("a.on"); if (on){ nav.scrollLeft = on.offsetLeft - nav.offsetLeft - 16; } }
+window.addEventListener("hashchange", route);
+route();
+})();
+</script>
