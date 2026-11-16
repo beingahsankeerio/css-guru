@@ -1,4 +1,4 @@
-# CCE English Gym
+# CSS GURU
 
 Writing practice for the SPSC CCE / CSS English papers. Live at https://css-guru.vercel.app
 

@@ -1,4 +1,4 @@
-// CCE English Gym service worker: works offline, always fetches the newest version when online.
+// CSS GURU service worker: works offline, always fetches the newest version when online.
 const CACHE = "gym-v1";
 const CORE = ["/", "/manifest.json", "/icons/icon-192.png", "/icons/icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
